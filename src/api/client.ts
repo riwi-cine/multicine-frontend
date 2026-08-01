@@ -1,9 +1,10 @@
 import axios from 'axios'
+import { apiConfig } from '@/config/api'
 import { normalizeApiError } from './error'
 
 export const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
-  timeout: 10_000,
+  baseURL: apiConfig.baseURL,
+  timeout: apiConfig.timeout,
   headers: {
     'Content-Type': 'application/json',
   },

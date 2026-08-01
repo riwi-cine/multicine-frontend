@@ -1,6 +1,0 @@
-export * from './auth.service'
-export * from './movie.service'
-export * from './payment.service'
-export * from './profile.service'
-export * from './reservation.service'
-export * from './theater.service'

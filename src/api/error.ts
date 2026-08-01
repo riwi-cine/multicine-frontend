@@ -1,4 +1,5 @@
 import axios from 'axios'
+import type { ApiErrorResponse } from '@/types/error'
 
 export class ApiError extends Error {
   readonly status?: number
@@ -34,8 +35,13 @@ export function normalizeApiError(error: unknown): ApiError {
     }
 
     const { status, data } = error.response
-    const message = data?.message ?? error.message
-    return new ApiError(message, status, error.code, data)
+    const payload = (data ?? {}) as ApiErrorResponse
+    return new ApiError(
+      payload.message ?? error.message,
+      status,
+      error.code,
+      data,
+    )
   }
 
   return new ApiError('Ha ocurrido un error inesperado.')
