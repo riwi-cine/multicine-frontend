@@ -29,12 +29,12 @@ El proyecto sigue una arquitectura organizada por funcionalidades (Feature-Based
 Convención:
 
 ```text
-feature/HU-FE-001-configuracion-plataforma
-feature/HU-FE-002-autenticacion
-feature/HU-FE-003-cartelera
-feature/HU-FE-004-detalle-pelicula
-feature/HU-FE-005-reservas
-feature/HU-FE-006-perfil
+feature/HU-CINE-001-configuracion-frontend
+feature/HU-CINE-002-servicios-api
+feature/HU-CINE-003-cartelera
+feature/HU-CINE-004-detalle-pelicula
+feature/HU-CINE-005-reservas
+feature/HU-CINE-006-perfil
 ```
 
 ## 5. Ramas de soporte
