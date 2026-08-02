@@ -1,6 +1,6 @@
 # Guía para enviar y aprobar Pull Requests
 
-Guía operativa paso a paso para que el equipo de desarrollo envíe Pull Requests (PR) y el administrador (Tech Lead) los apruebe y fusione. Complementa `CONTRIBUTING.md` y `docs/ESTRATEGIA-CONTROL-VERSIONES.md`.
+Guía operativa paso a paso para que el equipo de desarrollo envíe Pull Requests (PR) y el administrador (Tech Lead) los apruebe y fusione. Complementa `CONTRIBUTING.md` (en esta carpeta) y `ESTRATEGIA-CONTROL-VERSIONES.md`.
 
 ## 1. Contexto
 
