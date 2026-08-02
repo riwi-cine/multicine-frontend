@@ -56,7 +56,7 @@ Reglas de nomenclatura:
 1. Tomar la HU asignada del **Product Backlog**.
 2. Crear la rama correspondiente (ver sección 2 y 3).
 3. Implementar **únicamente** los criterios de aceptación de la HU. No adelantar funcionalidades de otras historias.
-4. Respetar la arquitectura definida en `README.md` (capa UI → servicios → cliente API).
+4. Respetar la arquitectura definida en `../README.md` (capa UI → servicios → cliente API).
 5. No modificar archivos o componentes ajenos al alcance, salvo necesidad justificada.
 6. Validar antes de commitear:
    ```bash
@@ -125,7 +125,7 @@ Reglas:
 ### Permitido
 
 - Archivos dentro del alcance de la HU asignada.
-- Documentación (`docs/`, `README.md`, `CONTRIBUTING.md`).
+- Documentación (`docs/`, `../README.md`).
 - Pruebas y configuración de calidad (si es necesario para la HU).
 - Dependencias y configuración de build **con justificación** y aprobación del Tech Lead.
 

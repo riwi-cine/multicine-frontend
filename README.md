@@ -148,7 +148,7 @@ multicine-frontend/
 ├── docker-compose.yml        Orquestación local con Docker
 ├── nginx.conf                Configuración de Nginx (producción)
 ├── README.md                 Este documento
-└── CONTRIBUTING.md           Guía de contribución para el equipo
+└── docs/                     Documentación técnica del proyecto (incluye la guía de contribución `CONTRIBUTING.md`)
 ```
 
 ## Flujo de ramas
@@ -201,7 +201,7 @@ Ver la referencia completa en `docs/CONVENCIONES-DESARROLLO.md`.
 
 ## Proceso para contribuir
 
-1. Leer `CONTRIBUTING.md` antes de comenzar.
+1. Leer `docs/CONTRIBUTING.md` antes de comenzar.
 2. Crear una rama `feature/*` desde `develop`.
 3. Implementar la Historia de Usuario asignada (un solo alcance por rama).
 4. Validar con `npm run lint` y `npm run build`.
