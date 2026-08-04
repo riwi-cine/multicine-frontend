@@ -11,7 +11,7 @@ function Hero() {
 
   return (
     <section
-      id="inicio"
+      id="home"
       className="relative isolate flex min-h-svh items-end overflow-hidden pb-24 pt-32 lg:items-center lg:pb-28"
     >
       <div className="absolute inset-0 -z-10" aria-hidden="true">
@@ -32,10 +32,10 @@ function Hero() {
                   <span className="absolute inline-flex size-full animate-ping rounded-full bg-coral-400 opacity-75" />
                   <span className="relative inline-flex size-1.5 rounded-full bg-coral-400" />
                 </span>
-                ESTRENO DE LA SEMANA
+                THIS WEEK'S PREMIERE
               </Badge>
               <span className="font-mono text-xs tracking-[0.25em] text-muted-foreground uppercase">
-                EN CINES · {movie.format}
+                IN THEATERS · {movie.format}
               </span>
             </div>
           </Reveal>
@@ -88,7 +88,7 @@ function Hero() {
                   aria-hidden="true"
                 />
                 <Ticket data-icon="inline-start" />
-                Comprar entradas
+                Buy tickets
               </Button>
               <Button
                 size="lg"
@@ -96,7 +96,7 @@ function Hero() {
                 className="h-12 rounded-xl border-white/20 bg-white/5 px-7 text-base text-white backdrop-blur-md hover:border-ocean-400/60 hover:bg-ocean-500/15 hover:text-white"
               >
                 <Play data-icon="inline-start" className="fill-current" />
-                Ver tráiler
+                Watch trailer
               </Button>
             </div>
           </Reveal>
@@ -104,11 +104,11 @@ function Hero() {
       </div>
 
       <a
-        href="#cartelera"
+        href="#showtimes"
         className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-muted-foreground transition-colors hover:text-white sm:flex"
       >
         <span className="font-mono text-[0.65rem] tracking-[0.3em] uppercase">
-          Descubre la cartelera
+          Discover showtimes
         </span>
         <ChevronDown className="size-4 animate-bob" />
       </a>

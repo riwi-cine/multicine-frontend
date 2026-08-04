@@ -7,12 +7,12 @@ import SectionHeading from './SectionHeading'
 
 function Promotions() {
   return (
-    <section id="promociones" className="scroll-mt-24 py-20 sm:py-28">
+    <section id="promotions" className="scroll-mt-24 py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          eyebrow="Ofertas y beneficios"
-          title="Promociones que Enamoran"
-          description="Descuentos y experiencias pensadas para que el cine sea un plan para todos. Aprovecha las ofertas vigentes."
+          eyebrow="Offers & Benefits"
+          title="Promotions You'll Love"
+          description="Discounts and experiences designed to make movies a plan for everyone. Take advantage of current offers."
         />
 
         <div className="mt-12 grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
@@ -53,10 +53,10 @@ function Promotions() {
                   </p>
 
                   <a
-                    href="#cartelera"
+                    href="#showtimes"
                     className="mt-auto flex items-center gap-1.5 pt-5 font-mono text-xs tracking-wider text-white/70 uppercase transition-colors group-hover:text-white"
                   >
-                    Ver promoción
+                    View promotion
                     <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-1" />
                   </a>
                 </article>

@@ -7,19 +7,19 @@ import SectionHeading from './SectionHeading'
 
 function NowShowing() {
   return (
-    <section id="cartelera" className="scroll-mt-24 py-20 sm:py-28">
+    <section id="showtimes" className="scroll-mt-24 py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
           <SectionHeading
-            eyebrow="Ahora en salas"
-            title="En Cartelera"
-            description="Las historias que están brillando en las pantallas de Multicine esta semana. Elige tu función y vive el océano en grande."
+            eyebrow="Now Showing"
+            title="In Theaters"
+            description="The stories shining on Multicine screens this week. Pick your showtime and experience the ocean in grand style."
           />
           <Button
             variant="outline"
             className="hidden shrink-0 rounded-xl border-white/15 bg-white/5 text-white hover:bg-white/10 hover:text-white sm:inline-flex"
           >
-            Ver cartelera completa
+            View all showtimes
             <ArrowUpRight data-icon="inline-end" />
           </Button>
         </div>

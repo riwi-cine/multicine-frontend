@@ -5,7 +5,7 @@ import SectionHeading from './SectionHeading'
 function Benefits() {
   return (
     <section
-      id="beneficios"
+      id="benefits"
       className="relative scroll-mt-24 overflow-hidden py-20 sm:py-28"
     >
       <div
@@ -14,9 +14,9 @@ function Benefits() {
       />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          eyebrow="La experiencia"
-          title="Beneficios de Multicine"
-          description="Tecnología de vanguardia y comodidades premium para que cada visita al cine sea inolvidable."
+          eyebrow="The Experience"
+          title="Multicine Benefits"
+          description="Cutting-edge technology and premium amenities to make every visit to the movies unforgettable."
           align="center"
         />
 

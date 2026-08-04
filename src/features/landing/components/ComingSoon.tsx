@@ -17,22 +17,22 @@ function ComingSoon() {
       const next = new Set(prev)
       if (next.has(id)) {
         next.delete(id)
-        toast.info(`${title} se eliminó de tus favoritos`)
+        toast.info(`${title} removed from favorites`)
       } else {
         next.add(id)
-        toast.success(`${title} agregado a favoritos`)
+        toast.success(`${title} added to favorites`)
       }
       return next
     })
   }
 
   return (
-    <section id="proximos" className="scroll-mt-24 py-20 sm:py-28">
+    <section id="coming-soon" className="scroll-mt-24 py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          eyebrow="Próximamente"
-          title="Próximos Estrenos"
-          description="Guarda las fechas de los lanzamientos que se vienen. Agrega tus favoritos y sé el primero en verlos."
+          eyebrow="Coming Soon"
+          title="Upcoming Releases"
+          description="Save the dates for upcoming releases. Add your favorites and be the first to watch them."
         />
 
         <div className="mt-12 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3 xl:grid-cols-6">
@@ -80,7 +80,7 @@ function ComingSoon() {
                           isFavorite && 'scale-110 fill-current',
                         )}
                       />
-                      {isFavorite ? 'En favoritos' : 'Agregar a favoritos'}
+                      {isFavorite ? 'In favorites' : 'Add to favorites'}
                     </Button>
                   </div>
                 </article>

@@ -8,9 +8,9 @@ import type { Movie, MovieStatus } from '../data/movies'
 import MovieArtwork from './MovieArtwork'
 
 const STATUS_STYLES: Record<MovieStatus, string> = {
-  Estreno: 'bg-coral-500 text-white',
-  Hoy: 'bg-ocean-500 text-white',
-  Próximamente: 'bg-white/10 text-white/80 backdrop-blur-md',
+  Premiere: 'bg-coral-500 text-white',
+  Today: 'bg-ocean-500 text-white',
+  'Coming Soon': 'bg-white/10 text-white/80 backdrop-blur-md',
 }
 
 interface MovieCardProps {
@@ -60,7 +60,7 @@ function MovieCard({
               {movie.description}
             </p>
             <Button size="sm" className="mt-3 w-full rounded-lg">
-              Ver detalles
+              View details
             </Button>
           </div>
         </div>

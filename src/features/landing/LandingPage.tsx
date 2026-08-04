@@ -13,10 +13,10 @@ function LandingPage() {
   return (
     <div className="relative min-h-screen overflow-x-clip bg-background text-foreground">
       <Helmet>
-        <title>Multicine · Cine como en el océano</title>
+        <title>Multicine · Cinema like the ocean</title>
         <meta
           name="description"
-          content="Vive el cine como nunca en Multicine. Cartelera, estrenos, promociones y salas premium inspiradas en el océano profundo."
+          content="Experience cinema like never before at Multicine. Showtimes, premieres, promotions and premium theaters inspired by the deep ocean."
         />
       </Helmet>
 

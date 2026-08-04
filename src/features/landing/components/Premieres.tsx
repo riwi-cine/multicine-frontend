@@ -19,20 +19,20 @@ function Premieres() {
   }
 
   return (
-    <section id="estrenos" className="scroll-mt-24 py-20 sm:py-28">
+    <section id="premieres" className="scroll-mt-24 py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-end justify-between gap-6">
           <SectionHeading
-            eyebrow="Lo nuevo"
-            title="Estrenos Destacados"
-            description="Los títulos que acaban de aterrizar en las salas de Multicine."
+            eyebrow="What's New"
+            title="Featured Premieres"
+            description="Titles that just landed in Multicine theaters."
           />
           <div className="flex shrink-0 items-center gap-2">
             <Button
               type="button"
               variant="outline"
               size="icon"
-              aria-label="Ver estrenos anteriores"
+              aria-label="View previous premieres"
               onClick={() => scrollBy(-1)}
               className="rounded-full border-white/15 bg-white/5 text-white hover:border-ocean-400/60 hover:bg-ocean-500/15 hover:text-white"
             >
@@ -42,7 +42,7 @@ function Premieres() {
               type="button"
               variant="outline"
               size="icon"
-              aria-label="Ver próximos estrenos"
+              aria-label="View upcoming premieres"
               onClick={() => scrollBy(1)}
               className="rounded-full border-white/15 bg-white/5 text-white hover:border-ocean-400/60 hover:bg-ocean-500/15 hover:text-white"
             >

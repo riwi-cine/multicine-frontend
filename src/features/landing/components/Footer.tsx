@@ -32,18 +32,18 @@ const SOCIAL_LINKS: SocialLink[] = [
 ]
 
 const QUICK_LINKS = [
-  { label: 'Cartelera', href: '#cartelera' },
-  { label: 'Estrenos', href: '#estrenos' },
-  { label: 'Promociones', href: '#promociones' },
-  { label: 'Salas', href: '#beneficios' },
-  { label: 'Próximos estrenos', href: '#proximos' },
+  { label: 'Showtimes', href: '#showtimes' },
+  { label: 'Premieres', href: '#premieres' },
+  { label: 'Promotions', href: '#promotions' },
+  { label: 'Theaters', href: '#benefits' },
+  { label: 'Coming Soon', href: '#coming-soon' },
 ]
 
 const POLICY_LINKS = [
-  'Términos y condiciones',
-  'Política de privacidad',
-  'Política de cookies',
-  'Reembolsos',
+  'Terms and Conditions',
+  'Privacy Policy',
+  'Cookie Policy',
+  'Refunds',
 ]
 
 const CONTACT_ITEMS = [
@@ -60,8 +60,7 @@ function Footer() {
           <div>
             <Logo />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
-              La experiencia cinematográfica premium inspirada en el océano
-              profundo. Tecnología de vanguardia e historias que te sumergen.
+              The premium cinematic experience inspired by the deep ocean. Cutting-edge technology and stories that immerse you.
             </p>
             <div className="mt-6 flex items-center gap-2">
               {SOCIAL_LINKS.map((social) => (
@@ -87,9 +86,9 @@ function Footer() {
             </div>
           </div>
 
-          <nav aria-label="Enlaces rápidos">
+          <nav aria-label="Quick links">
             <h3 className="font-mono text-xs tracking-[0.25em] text-white/60 uppercase">
-              Enlaces rápidos
+              Quick Links
             </h3>
             <ul className="mt-4 space-y-2.5">
               {QUICK_LINKS.map((link) => (
@@ -107,7 +106,7 @@ function Footer() {
 
           <div>
             <h3 className="font-mono text-xs tracking-[0.25em] text-white/60 uppercase">
-              Contacto
+              Contact
             </h3>
             <ul className="mt-4 space-y-3">
               {CONTACT_ITEMS.map((item) => {
@@ -125,9 +124,9 @@ function Footer() {
             </ul>
           </div>
 
-          <nav aria-label="Políticas">
+          <nav aria-label="Policies">
             <h3 className="font-mono text-xs tracking-[0.25em] text-white/60 uppercase">
-              Políticas
+              Policies
             </h3>
             <ul className="mt-4 space-y-2.5">
               {POLICY_LINKS.map((policy) => (
@@ -146,10 +145,10 @@ function Footer() {
 
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 sm:flex-row">
           <p className="text-xs text-muted-foreground">
-            © 2026 Multicine. Todos los derechos reservados.
+            © 2026 Multicine. All rights reserved.
           </p>
           <p className="font-mono text-[0.65rem] tracking-[0.25em] text-white/40 uppercase">
-            Diseñado en el océano profundo
+            Designed in the deep ocean
           </p>
         </div>
       </div>
