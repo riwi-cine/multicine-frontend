@@ -49,6 +49,65 @@ npm install
 cp .env.example .env
 ```
 
+## JSON Server (Mock API)
+
+Para desarrollo local se incluye **JSON Server** que simula la API REST usando el archivo `mock-api/db.json`.
+
+### Instalación
+
+```bash
+npm install json-server
+```
+
+### Ejecutar API falsa
+
+```bash
+npm run server
+```
+
+Esto levanta el servidor en `http://localhost:3000` observando `mock-api/db.json`.
+
+### Endpoints disponibles
+
+| Recurso | Endpoints |
+|---------|-----------|
+| Países | `GET /countries` |
+| Departamentos | `GET /departments` |
+| Ciudades | `GET /cities` |
+| Cines | `GET /cinemas` |
+| Salas | `GET /rooms` |
+| Asientos | `GET /seats` |
+| Películas | `GET /movies` |
+| Funciones | `GET /functions` |
+| Estrenos por país | `GET /movieReleases` |
+| Usuarios | `GET /users` |
+| Autenticación | `POST /auth/login`, `POST /auth/register` |
+| Reservas / Carrito | `GET/POST /carts`, `GET/POST /cartSnacks` |
+| Pedidos | `GET/POST /orders` |
+| Pagos | `GET/POST /payments` |
+| Tickets | `GET/POST /tickets` |
+| Promociones | `GET /promotions` |
+| Gift Cards | `GET /giftCards` |
+
+### Ejemplos
+
+```bash
+# Obtener todas las películas
+curl http://localhost:3000/movies
+
+# Obtener cines filtrados por ciudad
+curl "http://localhost:3000/cinemas?cityId=1"
+
+# Obtener funciones de una película
+curl "http://localhost:3000/functions?movieId=1"
+```
+
+### Variables de entorno
+
+El frontend usa `VITE_API_URL` (configurada en `.env.development` como `http://localhost:3000`).
+
+---
+
 ## Configuración de variables de entorno
 
 El proyecto se configura mediante variables de entorno (ver `.env.example`):
