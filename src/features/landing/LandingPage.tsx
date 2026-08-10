@@ -1,37 +1,31 @@
-import { Helmet } from 'react-helmet-async'
-
-import Benefits from './components/Benefits'
-import ComingSoon from './components/ComingSoon'
-import Footer from './components/Footer'
-import Hero from './components/Hero'
 import Navbar from './components/Navbar'
-import NowShowing from './components/NowShowing'
-import Premieres from './components/Premieres'
-import Promotions from './components/Promotions'
+import Hero from './components/Hero'
+import MovieCarousel from './components/MovieCarousel'
+import ComingSoonGrid from './components/ComingSoonGrid'
+import PromotionsSection from './components/PromotionsSection'
+import ExperienceSection from './components/ExperienceSection'
+import Footer from './components/Footer'
+import {
+  nowShowing,
+  comingSoon,
+  promotions,
+  benefits,
+} from '@/features/movies/data/movies.mock'
 
-function LandingPage() {
+export default function LandingPage() {
   return (
-    <div className="relative min-h-screen overflow-x-clip bg-background text-foreground">
-      <Helmet>
-        <title>Multicine · Cinema like the ocean</title>
-        <meta
-          name="description"
-          content="Experience cinema like never before at Multicine. Showtimes, premieres, promotions and premium theaters inspired by the deep ocean."
-        />
-      </Helmet>
-
+    <div className="relative min-h-screen overflow-hidden bg-background text-foreground">
       <Navbar />
-      <main>
+
+      <main className="relative">
         <Hero />
-        <NowShowing />
-        <Premieres />
-        <Promotions />
-        <Benefits />
-        <ComingSoon />
+        <MovieCarousel id="cartelera" title="Cartelera" movies={nowShowing} />
+        <ComingSoonGrid id="proximamente" title="Próximamente" movies={comingSoon} />
+        <PromotionsSection id="promociones" title="Promociones" promotions={promotions} />
+        <ExperienceSection id="experiencia" benefits={benefits} />
       </main>
+
       <Footer />
     </div>
   )
 }
-
-export default LandingPage

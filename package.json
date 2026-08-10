@@ -8,8 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "preview": "vite preview",
-    "server": "json-server --watch mock-api/db.json --port 3000"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.3.0",
