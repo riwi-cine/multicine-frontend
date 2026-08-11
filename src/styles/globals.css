@@ -61,72 +61,122 @@
 }
 
 :root {
-  --background: oklch(0.135 0.04 260);
-  --foreground: oklch(0.97 0.008 250);
-  --card: oklch(0.2 0.05 258);
-  --card-foreground: oklch(0.97 0.008 250);
-  --popover: oklch(0.2 0.05 258);
-  --popover-foreground: oklch(0.97 0.008 250);
-  --primary: oklch(0.68 0.22 38);
-  --primary-foreground: oklch(0.25 0.02 30);
-  --secondary: oklch(0.26 0.06 256);
-  --secondary-foreground: oklch(0.97 0.008 250);
-  --muted: oklch(0.23 0.05 258);
-  --muted-foreground: oklch(0.74 0.03 250);
-  --accent: oklch(0.68 0.22 38);
-  --accent-foreground: oklch(0.25 0.02 30);
-  --destructive: oklch(0.63 0.21 27);
-  --border: oklch(0.9 0.02 250 / 12%);
-  --input: oklch(0.9 0.02 250 / 15%);
-  --ring: oklch(0.68 0.22 38);
-  --chart-1: oklch(0.68 0.22 38);
-  --chart-2: oklch(0.6 0.13 240);
-  --chart-3: oklch(0.62 0.11 206);
-  --chart-4: oklch(0.82 0.13 85);
-  --chart-5: oklch(0.72 0.15 300);
+  /* ─────────────────────────────
+     Colores base
+     ───────────────────────────── */
+
+  --background: #FFF7F8;
+  --foreground: #24151A;
+
+  --card: #FFFFFF;
+  --card-foreground: #24151A;
+
+  --popover: #FFFFFF;
+  --popover-foreground: #24151A;
+
+
+  /* ─────────────────────────────
+     Marca Multicine
+     ───────────────────────────── */
+
+  --primary: #C24366;
+  --primary-foreground: #FFFFFF;
+
+  --secondary: #881144;
+  --secondary-foreground: #FFFFFF;
+
+  --accent: #FF69B4;
+  --accent-foreground: #24151A;
+
+
+  /* ─────────────────────────────
+     Estados y superficies
+     ───────────────────────────── */
+
+  --muted: #F8E9ED;
+  --muted-foreground: #6F5960;
+
+  --destructive: #DC2626;
+
+  --border: #E8CDD4;
+  --input: #E8CDD4;
+  --ring: #C24366;
+
+
+  /* ─────────────────────────────
+     Gráficos
+     ───────────────────────────── */
+
+  --chart-1: #C24366;
+  --chart-2: #881144;
+  --chart-3: #FF69B4;
+  --chart-4: #243A66;
+  --chart-5: #800021;
+
+
+  /* ─────────────────────────────
+     Bordes redondeados
+     ───────────────────────────── */
+
   --radius: 0.625rem;
-  --sidebar: oklch(0.17 0.045 259);
-  --sidebar-foreground: oklch(0.97 0.008 250);
-  --sidebar-primary: oklch(0.68 0.22 38);
-  --sidebar-primary-foreground: oklch(0.25 0.02 30);
-  --sidebar-accent: oklch(0.26 0.06 256);
-  --sidebar-accent-foreground: oklch(0.97 0.008 250);
-  --sidebar-border: oklch(0.9 0.02 250 / 10%);
-  --sidebar-ring: oklch(0.68 0.22 38);
+
+
+  /* ─────────────────────────────
+     Sidebar
+     ───────────────────────────── */
+
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #24151A;
+  --sidebar-primary: #C24366;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F8E9ED;
+  --sidebar-accent-foreground: #24151A;
+  --sidebar-border: #E8CDD4;
+  --sidebar-ring: #C24366;
 }
 
 .dark {
-  --background: oklch(0.135 0.04 260);
-  --foreground: oklch(0.97 0.008 250);
-  --card: oklch(0.2 0.05 258);
-  --card-foreground: oklch(0.97 0.008 250);
-  --popover: oklch(0.2 0.05 258);
-  --popover-foreground: oklch(0.97 0.008 250);
-  --primary: oklch(0.68 0.22 38);
-  --primary-foreground: oklch(0.25 0.02 30);
-  --secondary: oklch(0.26 0.06 256);
-  --secondary-foreground: oklch(0.97 0.008 250);
-  --muted: oklch(0.23 0.05 258);
-  --muted-foreground: oklch(0.74 0.03 250);
-  --accent: oklch(0.68 0.22 38);
-  --accent-foreground: oklch(0.25 0.02 30);
-  --destructive: oklch(0.63 0.21 27);
-  --border: oklch(0.9 0.02 250 / 12%);
-  --input: oklch(0.9 0.02 250 / 15%);
-  --ring: oklch(0.68 0.22 38);
-  --chart-1: oklch(0.68 0.22 38);
-  --chart-2: oklch(0.6 0.13 240);
-  --chart-3: oklch(0.62 0.11 206);
-  --chart-4: oklch(0.82 0.13 85);
-  --chart-5: oklch(0.72 0.15 300);
-  --sidebar: oklch(0.17 0.045 259);
-  --sidebar-foreground: oklch(0.97 0.008 250);
-  --sidebar-primary: oklch(0.68 0.22 38);
-  --sidebar-primary-foreground: oklch(0.25 0.02 30);
-  --sidebar-accent: oklch(0.26 0.06 256);
-  --sidebar-accent-foreground: oklch(0.97 0.008 250);
-  --sidebar-border: oklch(0.9 0.02 250 / 10%);
-  --sidebar-ring: oklch(0.68 0.22 38);
+  --background: #FFF7F8;
+  --foreground: #24151A;
+
+  --card: #FFFFFF;
+  --card-foreground: #24151A;
+
+  --popover: #FFFFFF;
+  --popover-foreground: #24151A;
+
+  --primary: #C24366;
+  --primary-foreground: #FFFFFF;
+
+  --secondary: #881144;
+  --secondary-foreground: #FFFFFF;
+
+  --muted: #F8E9ED;
+  --muted-foreground: #6F5960;
+
+  --accent: #FF69B4;
+  --accent-foreground: #24151A;
+
+  --destructive: #DC2626;
+
+  --border: #E8CDD4;
+  --input: #E8CDD4;
+  --ring: #C24366;
+
+  --chart-1: #C24366;
+  --chart-2: #881144;
+  --chart-3: #FF69B4;
+  --chart-4: #243A66;
+  --chart-5: #800021;
+
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #24151A;
+  --sidebar-primary: #C24366;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F8E9ED;
+  --sidebar-accent-foreground: #24151A;
+  --sidebar-border: #E8CDD4;
+  --sidebar-ring: #C24366;
 }
 
 @layer base {
@@ -140,9 +190,9 @@
     @apply scroll-smooth font-sans;
   }
   ::selection {
-    background: oklch(0.68 0.22 38 / 0.4);
-    color: white;
-  }
+  background: rgb(194 67 102 / 40%);
+  color: #24151A;
+}
 }
 
 @utility scrollbar-none {
