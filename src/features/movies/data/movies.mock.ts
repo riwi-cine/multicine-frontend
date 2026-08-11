@@ -31,6 +31,8 @@ export interface Movie {
   status: MovieStatus
   releaseDate?: string
   format: string
+  image: string
+  trailerUrl?: string
   palette: MoviePalette
 }
 
@@ -51,294 +53,417 @@ export interface Benefit {
   description: string
 }
 
+/* =========================================================
+   FEATURED MOVIE
+   ========================================================= */
+
 export const featuredMovie: Movie = {
-  id: 'abismo-silente',
-  title: 'Abismo Silente',
-  genres: ['Ciencia ficción', 'Thriller', 'Aventura'],
-  duration: '2h 14min',
+  id: 'spider-man-brand-new-day',
+  title: 'Spider-Man: Brand New Day',
+  genres: ['Acción', 'Aventura', 'Ciencia ficción'],
+  duration: '2h 25min',
   rating: 'PG-13',
-  score: 8.6,
+  score: 0,
   description:
-    'Cuando una expedición desciende al punto más profundo del océano, descubren una señal que no debería existir. El silencio del abismo guarda un secreto que cambiará la historia de la humanidad.',
+    'Peter Parker vive completamente solo y se dedica a tiempo completo a proteger Nueva York como Spider-Man. Pero una nueva amenaza y una misteriosa transformación pondrán a prueba todo lo que creía conocer.',
   status: 'Premiere',
+  releaseDate: '31 de jul 2026',
   format: 'IMAX · Dolby Atmos',
-  palette: { from: '#04222f', to: '#0e5f7a', glow: '#39d0f2' },
+  image: 'https://image.tmdb.org/t/p/original/vjMvFSmGUxEtqVdaZgvFee9XkZl.jpg',
+  trailerUrl: 'https://www.youtube.com/embed/62bIsvRcPv0',
+  palette: {
+    from: '#090b18',
+    to: '#8b1e2d',
+    glow: '#ef4444',
+  },
 }
 
+/* =========================================================
+   NOW SHOWING
+   ========================================================= */
+
 export const nowShowing: Movie[] = [
-  {
-    id: 'abismo-silente',
-    title: 'Abismo Silente',
-    genres: ['Ciencia ficción', 'Thriller'],
-    duration: '2h 14min',
-    rating: 'PG-13',
-    score: 8.6,
-    description:
-      'Una expedición al punto más profundo del océano descubre una señal que no debería existir.',
-    status: 'Premiere',
-    format: 'IMAX · Dolby Atmos',
-    palette: { from: '#04222f', to: '#0e5f7a', glow: '#39d0f2' },
-  },
-  {
-    id: 'luz-de-medianoche',
-    title: 'Luz de Medianoche',
-    genres: ['Drama', 'Romance'],
-    duration: '1h 58min',
-    rating: 'PG',
-    score: 8.1,
-    description:
-      'Dos extraños se encuentran en un faro abandonado y descubren que el pasado se ilumina cuando lo miran juntos.',
-    status: 'Today',
-    format: '4K',
-    palette: { from: '#33080f', to: '#e03a5a', glow: '#ff7a95' },
-  },
-  {
-    id: 'profundidad-9',
-    title: 'Profundidad 9',
-    genres: ['Acción', 'Aventura'],
-    duration: '2h 21min',
-    rating: 'PG-13',
-    score: 8.9,
-    description:
-      'Un equipo de rescate submarino se enfrenta a una criatura legendaria en una batalla por llegar a la superficie.',
-    status: 'Today',
-    format: '4DX · Dolby Atmos',
-    palette: { from: '#062e22', to: '#0f9d6f', glow: '#5af2b8' },
-  },
-  {
-    id: 'ultimo-horizonte',
-    title: 'El Último Horizonte',
-    genres: ['Ciencia ficción', 'Drama'],
-    duration: '2h 38min',
-    rating: 'R',
-    score: 9.0,
-    description:
-      'La última tripulación que viaja más allá del sistema solar decide si regresar o continuar hacia lo desconocido.',
-    status: 'Today',
-    format: 'IMAX',
-    palette: { from: '#12103a', to: '#4f46e5', glow: '#9aa2ff' },
-  },
-  {
-    id: 'coral',
-    title: 'Coral',
-    genres: ['Animación', 'Familiar'],
-    duration: '1h 44min',
-    rating: 'G',
-    score: 7.9,
-    description:
-      'Una joven estrella de mar emprende la búsqueda del arrecife perdido para salvar su hogar de la oscuridad.',
-    status: 'Premiere',
-    format: '4K',
-    palette: { from: '#04262e', to: '#06b6d4', glow: '#7ae8ff' },
-  },
-  {
-    id: 'resaca-azul',
-    title: 'Resaca Azul',
-    genres: ['Comedia'],
-    duration: '1h 52min',
-    rating: 'PG-13',
-    score: 7.4,
-    description:
-      'Cuatro amigos despiertan en una isla desierta sin recordar cómo llegaron, con solo una brújula rota.',
-    status: 'Coming Soon',
-    format: '4K',
-    palette: { from: '#2b1506', to: '#d97706', glow: '#ffc37a' },
-  },
-]
-
-export const premieres: Movie[] = [
   featuredMovie,
-  {
-    id: 'ultimo-horizonte',
-    title: 'El Último Horizonte',
-    genres: ['Ciencia ficción', 'Drama'],
-    duration: '2h 38min',
-    rating: 'R',
-    score: 9.0,
-    description:
-      'La última tripulación que viaja más allá del sistema solar decide si regresar o continuar hacia lo desconocido.',
-    status: 'Premiere',
-    format: 'IMAX',
-    palette: { from: '#12103a', to: '#4f46e5', glow: '#9aa2ff' },
-  },
-  {
-    id: 'mareas-de-marte',
-    title: 'Mareas de Marte',
-    genres: ['Ciencia ficción'],
-    duration: '2h 6min',
-    rating: 'PG-13',
-    score: 8.4,
-    description:
-      'En la primera colonia marciana, un océano subterráneo despierta algo que esperaba ser encontrado.',
-    status: 'Premiere',
-    format: 'IMAX · 4DX',
-    palette: { from: '#2e0628', to: '#d6249f', glow: '#ff7ae0' },
-  },
-  {
-    id: 'ojo-de-tormenta',
-    title: 'Ojo de la Tormenta',
-    genres: ['Thriller'],
-    duration: '1h 47min',
-    rating: 'R',
-    score: 8.0,
-    description:
-      'Un meteorólogo atrapado en el ojo de un huracán descubre que la tormenta no es natural.',
-    status: 'Premiere',
-    format: '4K · Dolby Atmos',
-    palette: { from: '#051a3a', to: '#2563eb', glow: '#7aa7ff' },
-  },
-  {
-    id: 'ciudad-sumergida',
-    title: 'La Ciudad Sumergida',
-    genres: ['Aventura'],
-    duration: '2h 12min',
-    rating: 'PG-13',
-    score: 8.3,
-    description:
-      'Un arqueólogo encuentra una ciudad perdida bajo el mar con tecnología ancestral intacta.',
-    status: 'Premiere',
-    format: 'IMAX',
-    palette: { from: '#0f172a', to: '#475569', glow: '#94a3b8' },
-  },
-  {
-    id: 'noche-de-sirenas',
-    title: 'Noche de Sirenas',
-    genres: ['Fantasía'],
-    duration: '1h 55min',
-    rating: 'PG',
-    score: 7.8,
-    description:
-      'Una vez al año, las sirenas suben a la superficie para reclamar un tesoro robado siglos atrás.',
-    status: 'Premiere',
-    format: '4K',
-    palette: { from: '#3a0e2a', to: '#ff6f61', glow: '#ff8a7a' },
-  },
-  {
-    id: 'senales-del-abismo',
-    title: 'Señales del Abismo',
-    genres: ['Thriller'],
-    duration: '2h 2min',
-    rating: 'R',
-    score: 8.2,
-    description:
-      'Un grabador de sonido marino capta frecuencias imposibles bajo la Fosa de las Marianas.',
-    status: 'Premiere',
-    format: 'Dolby Atmos',
-    palette: { from: '#2b1506', to: '#d97706', glow: '#ffc37a' },
-  },
-  {
-    id: 'punto-de-ebullicion',
-    title: 'Punto de Ebullición',
-    genres: ['Acción'],
-    duration: '1h 49min',
-    rating: 'PG-13',
-    score: 7.9,
-    description:
-      'Un volcán submarino amenaza la costa y solo un equipo de vulcanólogos puede detener la erupción.',
-    status: 'Premiere',
-    format: '4DX',
-    palette: { from: '#33080f', to: '#e03a5a', glow: '#ff7a95' },
-  },
-  {
-    id: 'faro-en-la-niebla',
-    title: 'Faro en la Niebla',
-    genres: ['Drama', 'Misterio'],
-    duration: '1h 58min',
-    rating: 'PG-13',
-    score: 8.5,
-    description:
-      'El nuevo guardián de un faro remoto descubre cartas de su predecesor anunciando su propia llegada.',
-    status: 'Premiere',
-    format: '4K',
-    palette: { from: '#062a3a', to: '#0d6e8c', glow: '#39d0f2' },
-  },
-]
 
-export const comingSoon: Movie[] = [
   {
-    id: 'aurora-boreal',
-    title: 'Aurora Boreal',
-    genres: ['Ciencia ficción'],
-    duration: '2h 8min',
+    id: 'dune-part-two',
+    title: 'Dune: Parte Dos',
+    genres: ['Ciencia ficción', 'Aventura', 'Drama'],
+    duration: '2h 47min',
     rating: 'PG-13',
     score: 8.7,
     description:
-      'La aurora boreal se detiene sobre el Ártico y el tiempo empieza a girar en espiral.',
-    status: 'Coming Soon',
-    releaseDate: '05 de sep 2026',
+      'Paul Atreides se une a Chani y a los Fremen mientras busca vengarse de quienes destruyeron a su familia.',
+    status: 'Today',
     format: 'IMAX · Dolby Atmos',
-    palette: { from: '#062e22', to: '#0f9d6f', glow: '#5af2b8' },
+    image:
+      'https://image.tmdb.org/t/p/original/mFnF8tpPMqEwti2J2aMhYGZYdv0.jpg',
+    palette: {
+      from: '#1c1208',
+      to: '#c27b32',
+      glow: '#f4c16d',
+    },
   },
+
   {
-    id: 'canto-del-coral',
-    title: 'El Canto del Coral',
-    genres: ['Animación'],
+    id: 'oppenheimer',
+    title: 'Oppenheimer',
+    genres: ['Drama', 'Historia'],
+    duration: '3h 1min',
+    rating: 'R',
+    score: 8.6,
+    description:
+      'La historia del físico J. Robert Oppenheimer y su papel fundamental en el desarrollo de la bomba atómica durante la Segunda Guerra Mundial.',
+    status: 'Today',
+    format: 'IMAX · Dolby Atmos',
+    image:
+      'https://image.tmdb.org/t/p/original/bMwjsrY3tR6BZEy9dhEAhS9FqKk.jpg',
+    palette: {
+      from: '#160909',
+      to: '#9f251f',
+      glow: '#ff6b4a',
+    },
+  },
+
+  {
+    id: 'deadpool-wolverine',
+    title: 'Deadpool & Wolverine',
+    genres: ['Acción', 'Comedia', 'Ciencia ficción'],
+    duration: '2h 8min',
+    rating: 'R',
+    score: 7.8,
+    description:
+      'Deadpool se ve obligado a unir fuerzas con Wolverine para enfrentarse a una amenaza que podría cambiar el destino de ambos.',
+    status: 'Today',
+    format: 'IMAX · Dolby Atmos',
+    image:
+      'https://image.tmdb.org/t/p/original/zjGVwDFpHLKueusW5TF9r4gn8Er.jpg',
+    palette: {
+      from: '#250509',
+      to: '#b91c1c',
+      glow: '#ef4444',
+    },
+  },
+
+  {
+    id: 'godzilla-x-kong',
+    title: 'Godzilla x Kong: El nuevo imperio',
+    genres: ['Acción', 'Aventura', 'Ciencia ficción'],
+    duration: '1h 55min',
+    rating: 'PG-13',
+    score: 6.5,
+    description:
+      'Godzilla y Kong deben unir fuerzas para enfrentarse a una amenaza colosal escondida en las profundidades de la Tierra.',
+    status: 'Premiere',
+    format: '4DX · IMAX',
+    image:
+      'https://media.themoviedb.org/t/p/w220_and_h330_face/z1p34vh7dEOnLDmyCrlUVLuoDzd.jpg',
+    palette: {
+      from: '#06151a',
+      to: '#075985',
+      glow: '#38bdf8',
+    },
+  },
+
+  {
+    id: 'inside-out-2',
+    title: 'Intensamente 2',
+    genres: ['Animación', 'Comedia', 'Aventura'],
     duration: '1h 36min',
-    rating: 'G',
+    rating: 'PG',
     score: 7.6,
     description:
-      'Un coral guardián reúne a los habitantes del arrecife para salvar su hogar del blanqueamiento.',
-    status: 'Coming Soon',
-    releaseDate: '12 de sep 2026',
-    format: '4K',
-    palette: { from: '#04262e', to: '#06b6d4', glow: '#7ae8ff' },
+      'Riley entra en la adolescencia y nuevas emociones llegan al centro de control, cambiando por completo su mundo interior.',
+    status: 'Today',
+    format: '4K · Dolby Atmos',
+    image:
+      'https://image.tmdb.org/t/p/original/p5ozvmdgsmbWe0H8Xk7Rc8SCwAB.jpg',
+    palette: {
+      from: '#18133b',
+      to: '#7c3aed',
+      glow: '#c084fc',
+    },
   },
+]
+
+/* =========================================================
+   PREMIERES
+   ========================================================= */
+
+export const premieres: Movie[] = [
+  featuredMovie,
+
   {
-    id: 'profundidad-cero',
-    title: 'Profundidad Cero',
-    genres: ['Thriller'],
-    duration: '1h 50min',
+    id: 'barbie',
+    title: 'Barbie',
+    genres: ['Comedia', 'Fantasía', 'Aventura'],
+    duration: '1h 54min',
+    rating: 'PG-13',
+    score: 7.7,
+    description:
+      'Barbie vive una existencia perfecta en Barbieland hasta que una serie de acontecimientos la obliga a descubrir el mundo real.',
+    status: 'Premiere',
+    format: '4K · Dolby Atmos',
+    image:
+      'https://image.tmdb.org/t/p/original/ctMserH8g2SeOAnCw5gFjdQF8mo.jpg',
+    palette: {
+      from: '#3b0a2a',
+      to: '#ec4899',
+      glow: '#f9a8d4',
+    },
+  },
+
+  {
+    id: 'top-gun-maverick',
+    title: 'Top Gun: Maverick',
+    genres: ['Acción', 'Drama'],
+    duration: '2h 11min',
+    rating: 'PG-13',
+    score: 8.3,
+    description:
+      'Después de décadas como uno de los mejores pilotos de la Armada, Maverick debe entrenar a una nueva generación para una misión peligrosa.',
+    status: 'Premiere',
+    format: 'IMAX · Dolby Atmos',
+    image:
+      'https://image.tmdb.org/t/p/original/7CxL8W0J8bzpIVVznQ0whiOKeDH.jpg',
+    palette: {
+      from: '#07111f',
+      to: '#155e75',
+      glow: '#38bdf8',
+    },
+  },
+
+  {
+    id: 'everything-everywhere',
+    title: 'Todo en todas partes al mismo tiempo',
+    genres: ['Acción', 'Comedia', 'Ciencia ficción'],
+    duration: '2h 19min',
+    rating: 'R',
+    score: 7.8,
+    description:
+      'Una mujer común descubre que puede acceder a las vidas de versiones alternativas de sí misma mientras una amenaza multiversal se acerca.',
+    status: 'Premiere',
+    format: '4K · Dolby Atmos',
+    image:
+      'https://image.tmdb.org/t/p/original/iN3vKCuOGRdZ9Cn3yRGCyMlaiST.jpg',
+    palette: {
+      from: '#1e0a3d',
+      to: '#9333ea',
+      glow: '#c084fc',
+    },
+  },
+
+  {
+    id: 'spider-man-no-way-home',
+    title: 'Spider-Man: Sin camino a casa',
+    genres: ['Acción', 'Aventura', 'Ciencia ficción'],
+    duration: '2h 28min',
+    rating: 'PG-13',
+    score: 8.2,
+    description:
+      'La identidad de Peter Parker queda expuesta y su intento de recuperar su vida normal termina abriendo las puertas del multiverso.',
+    status: 'Premiere',
+    format: 'IMAX · Dolby Atmos',
+    image:
+      'https://image.tmdb.org/t/p/original/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg',
+    palette: {
+      from: '#0b1026',
+      to: '#b91c1c',
+      glow: '#60a5fa',
+    },
+  },
+
+  {
+    id: 'the-batman',
+    title: 'The Batman',
+    genres: ['Acción', 'Crimen', 'Drama'],
+    duration: '2h 56min',
+    rating: 'PG-13',
+    score: 7.8,
+    description:
+      'Batman investiga una serie de asesinatos en Gotham y descubre una conspiración que está conectada con el pasado de la ciudad.',
+    status: 'Premiere',
+    format: 'IMAX · Dolby Atmos',
+    image:
+      'https://image.tmdb.org/t/p/original/lqGqvmqHr8T2Ll8w7mzAtNshUpb.jpg',
+    palette: {
+      from: '#08090d',
+      to: '#450a0a',
+      glow: '#ef4444',
+    },
+  },
+
+  {
+    id: 'no-time-to-die',
+    title: 'Sin tiempo para morir',
+    genres: ['Acción', 'Aventura', 'Thriller'],
+    duration: '2h 43min',
+    rating: 'PG-13',
+    score: 7.3,
+    description:
+      'James Bond ha dejado el servicio, pero una nueva amenaza lo obliga a regresar y enfrentarse a un enemigo extremadamente peligroso.',
+    status: 'Premiere',
+    format: 'IMAX · Dolby Atmos',
+    image:
+      'https://image.tmdb.org/t/p/original/64oEFJusPULAkC9RA53hSwZUAYq.jpg',
+    palette: {
+      from: '#07111c',
+      to: '#334155',
+      glow: '#94a3b8',
+    },
+  },
+
+  {
+    id: 'encanto',
+    title: 'Encanto',
+    genres: ['Animación', 'Fantasía', 'Comedia'],
+    duration: '1h 42min',
+    rating: 'PG',
+    score: 7.5,
+    description:
+      'Una familia extraordinaria vive escondida en las montañas de Colombia, donde cada integrante posee un don mágico excepto Mirabel.',
+    status: 'Premiere',
+    format: '4K · Dolby Atmos',
+    image:
+      'https://image.tmdb.org/t/p/original/5RuR7GhOI5fElADXZb0X2sr9w5n.jpg',
+    palette: {
+      from: '#102a22',
+      to: '#16a34a',
+      glow: '#86efac',
+    },
+  },
+]
+
+/* =========================================================
+   COMING SOON
+   ========================================================= */
+
+export const comingSoon: Movie[] = [
+  {
+    id: 'sinners',
+    title: 'Sinners',
+    genres: ['Terror', 'Thriller'],
+    duration: '2h 18min',
     rating: 'R',
     score: 8.1,
     description:
-      'Un buzo de rescate queda atrapado en un cañón submarino en su carrera contra el tiempo.',
+      'Dos hermanos gemelos regresan a su ciudad natal para comenzar una nueva vida, pero terminan enfrentándose a una amenaza sobrenatural.',
     status: 'Coming Soon',
-    releaseDate: '19 de sep 2026',
-    format: '4DX · Dolby Atmos',
-    palette: { from: '#04222f', to: '#0e5f7a', glow: '#39d0f2' },
+    releaseDate: '2025',
+    format: 'IMAX · Dolby Atmos',
+    image:
+      'https://image.tmdb.org/t/p/original/u8L5FEUcO8ygXAMwk06aWMqdSrl.jpg',
+    palette: {
+      from: '#160605',
+      to: '#7f1d1d',
+      glow: '#f87171',
+    },
   },
+
   {
-    id: 'reina-de-las-mareas',
-    title: 'Reina de las Mareas',
-    genres: ['Drama'],
-    duration: '2h 3min',
-    rating: 'PG',
-    score: 8.0,
-    description:
-      'Una bióloga marina hereda un faro y un secreto familiar atado al ritmo de las mareas.',
-    status: 'Coming Soon',
-    releaseDate: '26 de sep 2026',
-    format: '4K',
-    palette: { from: '#3a0e2a', to: '#ff6f61', glow: '#ff8a7a' },
-  },
-  {
-    id: 'hidra',
-    title: 'Hidra',
-    genres: ['Acción'],
-    duration: '2h 16min',
+    id: 'f1',
+    title: 'F1: La película',
+    genres: ['Acción', 'Drama'],
+    duration: '2h 36min',
     rating: 'PG-13',
-    score: 8.8,
+    score: 7.8,
     description:
-      'Un agente secreto persigue a una organización que controla los océanos del mundo.',
+      'Un antiguo piloto de Fórmula 1 regresa a las pistas para entrenar a un joven talento y enfrentarse a una última oportunidad de gloria.',
     status: 'Coming Soon',
-    releaseDate: '03 de oct 2026',
-    format: 'IMAX · 4DX',
-    palette: { from: '#2e0628', to: '#d6249f', glow: '#ff7ae0' },
+    releaseDate: '2025',
+    format: 'IMAX · Dolby Atmos',
+    image:
+      'https://image.tmdb.org/t/p/original/9PXZIUsSDh4alB80jheWX4fhZmy.jpg',
+    palette: {
+      from: '#090d18',
+      to: '#b91c1c',
+      glow: '#f97316',
+    },
   },
+
   {
-    id: 'vela-blanca',
-    title: 'Vela Blanca',
-    genres: ['Romance'],
-    duration: '1h 46min',
-    rating: 'PG',
-    score: 7.7,
+    id: 'black-widow',
+    title: 'Black Widow',
+    genres: ['Acción', 'Aventura', 'Thriller'],
+    duration: '2h 14min',
+    rating: 'PG-13',
+    score: 6.7,
     description:
-      'Una regata transoceánica une a dos rivales que descubren que el mar tiene sus propias reglas.',
+      'Natasha Romanoff se enfrenta a su pasado cuando una peligrosa conspiración la obliga a reunirse con figuras de su antigua familia.',
     status: 'Coming Soon',
-    releaseDate: '10 de oct 2026',
-    format: '4K',
-    palette: { from: '#051a3a', to: '#2563eb', glow: '#7aa7ff' },
+    releaseDate: '2021',
+    format: 'IMAX · Dolby Atmos',
+    image:
+      'https://image.tmdb.org/t/p/original/6azpBJGcLx9SKif8h9VMnflBfa.jpg',
+    palette: {
+      from: '#15080d',
+      to: '#9f1239',
+      glow: '#fb7185',
+    },
   },
+
+  {
+    id: 'a-quiet-place-part-two',
+    title: 'Un lugar en silencio: Parte II',
+    genres: ['Terror', 'Thriller', 'Ciencia ficción'],
+    duration: '1h 37min',
+    rating: 'PG-13',
+    score: 7.2,
+    description:
+      'La familia Abbott debe abandonar su hogar y enfrentarse a nuevas amenazas mientras busca un lugar seguro en un mundo dominado por criaturas letales.',
+    status: 'Coming Soon',
+    releaseDate: '2021',
+    format: 'Dolby Atmos',
+    image:
+      'https://image.tmdb.org/t/p/original/ojtkat19816bUNfpvCjn6KqWn5G.jpg',
+    palette: {
+      from: '#07130e',
+      to: '#365314',
+      glow: '#a3e635',
+    },
+  },
+
+  {
+    id: 'avatar-way-of-water',
+    title: 'Avatar: El camino del agua',
+    genres: ['Ciencia ficción', 'Aventura', 'Fantasía'],
+    duration: '3h 12min',
+    rating: 'PG-13',
+    score: 7.6,
+    description:
+      'Jake Sully y Neytiri forman una familia y buscan refugio junto a un nuevo clan mientras una antigua amenaza regresa a Pandora.',
+    status: 'Coming Soon',
+    releaseDate: '2022',
+    format: 'IMAX · 4DX',
+    image:
+      'https://image.tmdb.org/t/p/original/ckeTumMS4G31UQ9NNkmtW2QhfMF.jpg',
+    palette: {
+      from: '#032b3a',
+      to: '#0284c7',
+      glow: '#67e8f9',
+    },
+  },
+
+  {
+  id: 'dune',
+  title: 'Dune',
+  genres: ['Ciencia ficción', 'Aventura', 'Drama'],
+  duration: '2h 35min',
+  rating: 'PG-13',
+  score: 8.0,
+  description:
+    'Paul Atreides viaja al planeta más peligroso del universo mientras su familia se ve envuelta en una lucha por el recurso más valioso de la galaxia.',
+  status: 'Coming Soon',
+  releaseDate: '2021',
+  format: 'IMAX · Dolby Atmos',
+  image:
+    'https://image.tmdb.org/t/p/original/dhroRryMGr6V2JPAPQSvoVYVeG8.jpg',
+  palette: {
+    from: '#17100a',
+    to: '#92400e',
+    glow: '#f59e0b',
+  },
+},
 ]
 
 export const promotions: Promotion[] = [

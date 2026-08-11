@@ -1,5 +1,5 @@
 import Reveal from '@/reutilizables/components/Reveal'
-import { Badge } from '@/components/ui/badge'
+import { Badge } from '@/components/badge'
 import { cn } from '@/utils/cn'
 import MovieArtwork from '@/features/movies/components/MovieArtwork'
 import type { Movie } from '@/features/movies/data/movies.mock'
@@ -28,9 +28,12 @@ export default function MovieCard({
         <div className="relative aspect-[2/3] overflow-hidden">
           <MovieArtwork
             palette={movie.palette}
+            image={movie.image}
             className="transition-transform duration-500 group-hover:scale-105"
           />
+
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+
           <Badge className="absolute top-3 left-3 border border-white/10 bg-black/40 text-white/80 backdrop-blur-md">
             {movie.rating}
           </Badge>
@@ -40,9 +43,11 @@ export default function MovieCard({
           <h3 className="font-heading text-base font-semibold tracking-tight text-foreground transition-colors group-hover:text-primary">
             {movie.title}
           </h3>
+
           <p className="font-mono text-xs text-muted-foreground">
             {meta ?? `${movie.genres[0]} · ${movie.duration}`}
           </p>
+
           <a
             href="#"
             className="mt-auto pt-3 text-sm font-medium text-primary hover:underline"
