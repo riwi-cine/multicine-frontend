@@ -30,17 +30,8 @@ function Logo({ className, showText = true }: LogoProps) {
           alt="Logo Multicine"
           className="size-full object-contain"
         />
-
-        <span
-          className="
-            absolute -right-1 -bottom-1
-            size-2.5 rounded-full
-            bg-[#FF69B4]
-            ring-2 ring-white/70
-          "
-        />
+        
       </span>
-
       {showText && (
         <span className="font-heading text-lg font-bold tracking-tight text-foreground">
           MINE<span className="text-primary">ROYAL</span>
