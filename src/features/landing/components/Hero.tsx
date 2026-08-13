@@ -74,7 +74,7 @@ export default function Hero() {
 
           <Reveal delay={100}>
             <p className="font-mono text-sm text-white/75">
-              {FEATURED_YEAR} · {featuredMovie.genres[0]} ·{' '}
+              {FEATURED_YEAR} · {featuredMovie.genres[0] || 'Género'} ·{' '}
               {featuredMovie.duration}
             </p>
           </Reveal>
