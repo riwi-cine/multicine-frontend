@@ -17,7 +17,7 @@ export default function LandingPage() {
     <div className="relative min-h-screen overflow-hidden bg-background text-foreground">
       <Navbar />
 
-      <main className="relative">
+      <main className="relative flex flex-col min-h-screen space-y-8">
         <Hero />
         <MovieCarousel id="cartelera" title="Cartelera" movies={nowShowing} />
         <ComingSoonGrid id="proximamente" title="Próximamente" movies={comingSoon} />

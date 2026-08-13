@@ -164,6 +164,85 @@ export const nowShowing: Movie[] = [
       glow: '#38bdf8',
     },
   },
+    {
+    id: 'the-batman',
+    title: 'The Batman',
+    genres: ['Acción', 'Crimen', 'Drama'],
+    duration: '2h 56min',
+    rating: 'PG-13',
+    score: 7.8,
+    description:
+      'Batman investiga una serie de asesinatos en Gotham y descubre una conspiración que está conectada con el pasado de la ciudad.',
+    status: 'Today',
+    format: 'IMAX · Dolby Atmos',
+    image:
+      'https://image.tmdb.org/t/p/original/lqGqvmqHr8T2Ll8w7mzAtNshUpb.jpg',
+    palette: {
+      from: '#08090d',
+      to: '#450a0a',
+      glow: '#ef4444',
+    },
+  },
+
+  {
+    id: 'spider-man-no-way-home',
+    title: 'Spider-Man: Sin camino a casa',
+    genres: ['Acción', 'Aventura', 'Ciencia ficción'],
+    duration: '2h 28min',
+    rating: 'PG-13',
+    score: 8.2,
+    description:
+      'La identidad de Peter Parker queda expuesta y su intento de recuperar su vida normal termina abriendo las puertas del multiverso.',
+    status: 'Today',
+    format: 'IMAX · Dolby Atmos',
+    image:
+      'https://image.tmdb.org/t/p/original/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg',
+    palette: {
+      from: '#0b1026',
+      to: '#b91c1c',
+      glow: '#60a5fa',
+    },
+  },
+
+  {
+    id: 'avatar-way-of-water',
+    title: 'Avatar: El camino del agua',
+    genres: ['Ciencia ficción', 'Aventura', 'Fantasía'],
+    duration: '3h 12min',
+    rating: 'PG-13',
+    score: 7.6,
+    description:
+      'Jake Sully y Neytiri forman una familia y buscan refugio junto a un nuevo clan mientras una antigua amenaza regresa a Pandora.',
+    status: 'Today',
+    format: 'IMAX · 4DX',
+    image:
+      'https://image.tmdb.org/t/p/original/ckeTumMS4G31UQ9NNkmtW2QhfMF.jpg',
+    palette: {
+      from: '#032b3a',
+      to: '#0284c7',
+      glow: '#67e8f9',
+    },
+  },
+
+  {
+    id: 'top-gun-maverick',
+    title: 'Top Gun: Maverick',
+    genres: ['Acción', 'Drama'],
+    duration: '2h 11min',
+    rating: 'PG-13',
+    score: 8.3,
+    description:
+      'Después de décadas como uno de los mejores pilotos de la Armada, Maverick debe entrenar a una nueva generación para una misión peligrosa.',
+    status: 'Today',
+    format: 'IMAX · Dolby Atmos',
+    image:
+      'https://image.tmdb.org/t/p/original/7CxL8W0J8bzpIVVznQ0whiOKeDH.jpg',
+    palette: {
+      from: '#07111f',
+      to: '#155e75',
+      glow: '#38bdf8',
+    },
+  },
 
   {
     id: 'inside-out-2',
@@ -332,6 +411,7 @@ export const premieres: Movie[] = [
       glow: '#86efac',
     },
   },
+  
 ]
 
 /* =========================================================
