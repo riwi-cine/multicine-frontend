@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 
-import LandingPage from '@/features/landing'
+import LandingPage, { SelectLocationPage } from '@/features/landing'
+import RequireLocation from '@/routes/RequireLocation'
 
 function NotFound() {
   return (
@@ -12,10 +13,13 @@ function NotFound() {
 
 function AppRoutes() {
   return (
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <RequireLocation>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/location" element={<SelectLocationPage />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </RequireLocation>
   )
 }
 
