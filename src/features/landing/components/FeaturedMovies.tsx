@@ -2,7 +2,7 @@ import { Star, Ticket } from 'lucide-react'
 
 import { Badge } from '@/components/badge'
 import { Button } from '@/components/button'
-import Reveal from '@/reutilizables/components/Reveal'
+import Reveal from '@/components/reveal'
 import MovieArtwork from '@/features/movies/components/MovieArtwork'
 import type { Movie } from '@/features/movies/data/movies.mock'
 import MovieCard from './MovieCard'
@@ -124,7 +124,6 @@ export default function FeaturedMovies({
                 movie={movie}
                 actionLabel="Ver funciones"
                 index={index}
-                variant="active"
               />
             ))}
           </div>
