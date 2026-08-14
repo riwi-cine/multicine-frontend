@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { LOCATIONS, COUNTRIES } from '../data/locations'
 import { useNavigate } from 'react-router-dom'
 
