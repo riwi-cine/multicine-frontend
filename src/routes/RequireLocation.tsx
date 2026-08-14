@@ -15,7 +15,7 @@ export default function RequireLocation({ children }: { children: React.ReactNod
             if (!selected && !onSelectPage) {
                 navigate('/location', { replace: true })
             }
-        } catch (e) {
+        } catch {
             // fallback: do nothing
         }
     }, [location.pathname, navigate])
