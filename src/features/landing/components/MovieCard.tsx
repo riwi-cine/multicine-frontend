@@ -1,4 +1,4 @@
-import Reveal from '@/reutilizables/components/Reveal'
+import Reveal from '@/components/reveal'
 import { Badge } from '@/components/badge'
 import { cn } from '@/utils/cn'
 import MovieArtwork from '@/features/movies/components/MovieArtwork'

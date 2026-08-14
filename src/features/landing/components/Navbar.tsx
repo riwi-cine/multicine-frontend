@@ -17,7 +17,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/dropdown-menu'
-import Logo from '@/reutilizables/components/Logo'
+import Logo from '@/components/logo'
 
 const NAV_LINKS = [
   { label: 'Cartelera', href: '#cartelera' },

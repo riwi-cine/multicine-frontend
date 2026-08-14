@@ -1,7 +1,7 @@
 import { Ticket } from 'lucide-react'
 
 import { Button } from '@/components/button'
-import Reveal from '@/reutilizables/components/Reveal'
+import Reveal from '@/components/reveal'
 import { featuredMovie } from '@/features/movies/data/movies.mock'
 import MovieArtwork from '@/features/movies/components/MovieArtwork'
 import TrailerDialog from './TrailerDialog'
@@ -12,7 +12,7 @@ export default function Hero() {
   return (
     <section
       id="inicio"
-      className="relative isolate min-h-[680px] overflow-hidden pt-16"
+      className="relative isolate min-h-[500px] overflow-hidden pt-16 sm:min-h-[600px] lg:min-h-[680px]"
     >
       {/* Imagen de fondo */}
       <div className="absolute inset-0 -z-20">
@@ -49,11 +49,11 @@ export default function Hero() {
       {/* Contenido */}
       <div
         className="
-          mx-auto flex min-h-[680px]
+          mx-auto flex min-h-[500px]
           max-w-7xl items-center
           px-4 py-20
-          sm:px-6 sm:py-28
-          lg:px-8
+          sm:min-h-[600px] sm:px-6 sm:py-28
+          lg:min-h-[680px] lg:px-8
         "
       >
         <div className="flex max-w-2xl flex-col gap-5">

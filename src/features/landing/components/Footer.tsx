@@ -5,7 +5,7 @@ import {
   Share2,
 } from 'lucide-react'
 
-import Logo from '@/reutilizables/components/Logo'
+import Logo from '@/components/logo'
 
 const FOOTER_COLUMNS = [
   {

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
-import Reveal from '@/reutilizables/components/Reveal'
+import Reveal from '@/components/reveal'
 import type { Movie } from '@/features/movies/data/movies.mock'
 import MovieCard from './MovieCard'
 
@@ -12,8 +12,9 @@ interface MovieCarouselProps {
 
 const AUTO_PLAY_INTERVAL = 3500
 
-// Ancho base de la card
-const CARD_WIDTH = 240
+// Ancho base de la card - RESPONSIVO (usado en clases de Tailwind)
+const CARD_WIDTH_BASE = 240
+const CARD_WIDTH_MOBILE = 160
 
 // Relación de aspecto de un póster estándar (2:3)
 const POSTER_RATIO = 3 / 2
@@ -21,15 +22,29 @@ const POSTER_RATIO = 3 / 2
 // Espacio reservado para la información de la card activa
 const DETAIL_PANEL_HEIGHT = 110
 
-// Altura total del escenario del carrusel
-const STAGE_HEIGHT =
-  CARD_WIDTH * POSTER_RATIO + DETAIL_PANEL_HEIGHT
+// Altura total del escenario del carrusel - RESPONSIVO
+const STAGE_HEIGHT_BASE =
+  CARD_WIDTH_BASE * POSTER_RATIO + DETAIL_PANEL_HEIGHT
+const STAGE_HEIGHT_MOBILE =
+  CARD_WIDTH_MOBILE * POSTER_RATIO + DETAIL_PANEL_HEIGHT
 
-// Distancia horizontal desde el centro
+// Distancia horizontal desde el centro - RESPONSIVO
 const POSITION_DISTANCE = {
-  1: 280,
-  2: 500,
-  3: 680,
+  base: {
+    1: 200,
+    2: 360,
+    3: 500,
+  },
+  sm: {
+    1: 240,
+    2: 420,
+    3: 600,
+  },
+  lg: {
+    1: 280,
+    2: 500,
+    3: 680,
+  },
 }
 
 const POSITION_SCALE = {
@@ -46,6 +61,25 @@ const POSITION_OPACITY = {
   3: 0.4,
 }
 
+const useResponsiveCarousel = () => {
+  const [breakpoint, setBreakpoint] = useState<'base' | 'sm' | 'lg'>('base')
+
+  useEffect(() => {
+    const updateBreakpoint = () => {
+      const width = window.innerWidth
+      if (width >= 1024) setBreakpoint('lg')
+      else if (width >= 640) setBreakpoint('sm')
+      else setBreakpoint('base')
+    }
+
+    updateBreakpoint()
+    window.addEventListener('resize', updateBreakpoint)
+    return () => window.removeEventListener('resize', updateBreakpoint)
+  }, [])
+
+  return breakpoint
+}
+
 export default function MovieCarousel({
   movies,
   title,
@@ -54,6 +88,26 @@ export default function MovieCarousel({
   const [activeIndex, setActiveIndex] = useState(0)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [isPaused, setIsPaused] = useState(false)
+
+  const breakpoint = useResponsiveCarousel()
+
+  const stageHeight =
+    breakpoint === 'lg'
+      ? STAGE_HEIGHT_BASE
+      : breakpoint === 'sm'
+        ? STAGE_HEIGHT_BASE
+        : STAGE_HEIGHT_MOBILE
+
+  const getDistance = (absPos: number): number => {
+    const distances =
+      breakpoint === 'lg'
+        ? POSITION_DISTANCE.lg
+        : breakpoint === 'sm'
+          ? POSITION_DISTANCE.sm
+          : POSITION_DISTANCE.base
+
+    return distances[absPos as keyof typeof distances] || 0
+  }
 
   const totalMovies = movies.length
 
@@ -138,7 +192,7 @@ export default function MovieCarousel({
         {/* Escenario */}
         <div
           className="relative w-full"
-          style={{ height: `${STAGE_HEIGHT}px` }}
+          style={{ height: `${stageHeight}px` }}
         >
           {visibleMovies.map(
             ({ movie, index, relativePosition }) => {
@@ -149,9 +203,7 @@ export default function MovieCarousel({
               const distance =
                 absolutePosition === 0
                   ? 0
-                  : POSITION_DISTANCE[
-                      absolutePosition as keyof typeof POSITION_DISTANCE
-                    ]
+                  : getDistance(absolutePosition)
 
               const direction =
                 relativePosition < 0 ? -1 : 1
@@ -178,13 +230,13 @@ export default function MovieCarousel({
                     absolute
                     left-1/2
                     top-0
-                    w-55
                     -translate-x-1/2
                     cursor-pointer
                     transition-all
                     duration-700
                     ease-[cubic-bezier(0.22,1,0.36,1)]
-                    sm:w-57.5
+                    w-40
+                    sm:w-55
                     lg:w-60
                   "
                   style={{
