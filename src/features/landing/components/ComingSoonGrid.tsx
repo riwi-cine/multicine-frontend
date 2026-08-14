@@ -1,4 +1,4 @@
-import Reveal from '@/reutilizables/components/Reveal'
+import Reveal from '@/components/reveal'
 import type { Movie } from '@/features/movies/data/movies.mock'
 import MovieCard from './MovieCard'
 

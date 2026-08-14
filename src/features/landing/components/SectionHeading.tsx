@@ -1,4 +1,4 @@
-import Reveal from '@/reutilizables/components/Reveal'
+import Reveal from '@/components/reveal'
 import { cn } from '@/utils/cn'
 
 interface SectionHeadingProps {

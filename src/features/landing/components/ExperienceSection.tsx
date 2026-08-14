@@ -1,4 +1,4 @@
-import Reveal from '@/reutilizables/components/Reveal'
+import Reveal from '@/components/reveal'
 import MovieArtwork from '@/features/movies/components/MovieArtwork'
 import { featuredMovie } from '@/features/movies/data/movies.mock'
 import type { Benefit } from '@/features/movies/data/movies.mock'
@@ -15,7 +15,7 @@ export default function ExperienceSection({ benefits, id }: ExperienceSectionPro
     <section id={id} className="w-full py-20 sm:py-28">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8">
         <Reveal className="overflow-hidden rounded-2xl border border-white/5">
-          <div className="aspect-[4/3]">
+          <div className="aspect-[4/3] sm:aspect-[16/9]">
             <MovieArtwork palette={featuredMovie.palette} variant="backdrop" />
           </div>
         </Reveal>

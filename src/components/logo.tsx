@@ -33,7 +33,7 @@ function Logo({ className, showText = true }: LogoProps) {
         
       </span>
       {showText && (
-        <span className="font-heading text-lg font-bold tracking-tight text-foreground">
+        <span className="font-heading text-base font-bold tracking-tight text-foreground xs:text-lg lg:text-xl">
           MINE<span className="text-primary">ROYAL</span>
         </span>
       )}

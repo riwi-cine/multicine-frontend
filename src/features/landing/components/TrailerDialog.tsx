@@ -55,7 +55,10 @@ export default function TrailerDialog({
       <DialogContent
         className="
           !w-[90vw]
-          !max-w-[1200px]
+          !max-w-[95vw]
+          sm:!max-w-[1000px]
+          md:!max-w-[1100px]
+          lg:!max-w-[1200px]
           border-white/10
           bg-black
           p-0
