@@ -65,7 +65,7 @@
      Colores base
      ───────────────────────────── */
 
-  --background: #FFF7F8;
+  --background: #F1F3F6;
   --foreground: #24151A;
 
   --card: #FFFFFF;
@@ -136,7 +136,7 @@
 }
 
 .dark {
-  --background: #FFF7F8;
+  --background: #655454;
   --foreground: #24151A;
 
   --card: #FFFFFF;

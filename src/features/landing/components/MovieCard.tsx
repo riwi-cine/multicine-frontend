@@ -4,52 +4,33 @@ import { cn } from '@/utils/cn'
 import MovieArtwork from '@/features/movies/components/MovieArtwork'
 import type { Movie } from '@/features/movies/data/movies.mock'
 
-type MovieCardVariant = 'side' | 'active'
-
-interface MovieCardProps {
+type MovieCardProps = {
   movie: Movie
   actionLabel: string
   meta?: string
   index?: number
-  className?: string
-  variant?: MovieCardVariant
-}
-
-const variantStyles = {
-  side: {
-    info: 'max-h-0 overflow-hidden opacity-0 py-0',
-  },
-  active: {
-    info: 'max-h-40 opacity-100',
-  },
 }
 
 export default function MovieCard({
   movie,
   actionLabel,
-  meta,
   index = 0,
-  className,
-  variant = 'side',
 }: MovieCardProps) {
-  const styles = variantStyles[variant]
-
   return (
     <Reveal
       delay={Math.min(index * 60, 360)}
       className={cn(
-    'flex h-full shrink-0 flex-col transition-all duration-500 ease-out',
-    className,
-  )}
+        'group h-full shrink-0',
+      )}
     >
       <div
         className={cn(
-          'group h-full rounded-2xl bg-linear-to-br from-primary via-accent to-secondary p-[2px]',
-          'transition-all duration-500 ease-out',
+          'relative rounded-2xl bg-gradient-to-br from-primary via-accent to-secondary p-[2px]',
+          'transition-all duration-300 ease-out',
           'hover:shadow-[0_0_28px_-6px_var(--accent)]',
         )}
       >
-        <div className="flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-xl)-2px)] bg-card">
+        <div className="overflow-hidden rounded-[calc(var(--radius-xl)-2px)] bg-card">
           {/* Poster */}
           <div className="relative aspect-[2/3] overflow-hidden">
             <MovieArtwork
@@ -65,27 +46,73 @@ export default function MovieCard({
             </Badge>
           </div>
 
-          {/* Información */}
+          {/* Información desplegable */}
           <div
             className={cn(
-              'flex flex-1 flex-col gap-1.5 px-4 transition-all duration-500',
-              styles.info,
+              'grid grid-rows-[0fr] opacity-0',
+              'transition-all duration-400 ease-out',
+              'group-hover:grid-rows-[1fr] group-hover:opacity-100',
             )}
           >
-            <h3 className="font-heading text-base font-semibold tracking-tight text-foreground transition-colors duration-300 group-hover:text-primary">
-              {movie.title}
-            </h3>
+            <div className="overflow-hidden">
+              <div className="flex flex-col gap-3 px-4 py-4">
+                {/* Título */}
+                <div>
+                  <h3 className="font-heading text-base font-bold leading-tight tracking-tight text-foreground">
+                    {movie.title}
+                  </h3>
 
-            <p className="font-mono text-xs text-muted-foreground">
-              {meta ?? `${movie.genres[0] || 'Género'} · ${movie.duration}`}
-            </p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    {movie.genres.join(' · ')}
+                  </p>
+                </div>
 
-            <a
-              href="#"
-              className="mt-auto pt-3 text-sm font-medium text-primary transition-colors hover:text-secondary hover:underline"
-            >
-              {actionLabel}
-            </a>
+                {/* Datos principales */}
+                <div className="flex items-center gap-2 text-xs">
+                  <span className="inline-flex items-center rounded-md bg-muted px-2 py-1 font-medium text-foreground">
+                    {movie.rating}
+                  </span>
+
+                  <span className="text-muted-foreground">
+                    {movie.duration}
+                  </span>
+
+                  <span className="font-semibold text-foreground">
+                    ★ {movie.score}
+                  </span>
+                </div>
+
+                {/* Sinopsis */}
+                <p className="line-clamp-3 text-xs leading-relaxed text-muted-foreground">
+                  {movie.description}
+                </p>
+
+                {/* Formato */}
+                <div className="flex items-center justify-between gap-2 border-t border-border/60 pt-3">
+                  <span className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+                    Formato
+                  </span>
+
+                  <span className="text-right text-xs font-medium text-foreground">
+                    {movie.format}
+                  </span>
+                </div>
+
+                {/* Acción */}
+                <a
+                  href="#"
+                  className={cn(
+                    'mt-1 inline-flex w-full items-center justify-center rounded-lg',
+                    'bg-primary px-3 py-2.5',
+                    'text-xs font-semibold text-primary-foreground',
+                    'transition-all duration-200',
+                    'hover:bg-secondary hover:shadow-md',
+                  )}
+                >
+                  {actionLabel}
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>

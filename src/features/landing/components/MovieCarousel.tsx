@@ -12,7 +12,7 @@ interface MovieCarouselProps {
 
 const AUTO_PLAY_INTERVAL = 3500
 
-// Ancho base de la card - RESPONSIVO (usado en clases de Tailwind)
+// Ancho base de la card - RESPONSIVO
 const CARD_WIDTH_BASE = 240
 const CARD_WIDTH_MOBILE = 160
 
@@ -25,6 +25,7 @@ const DETAIL_PANEL_HEIGHT = 110
 // Altura total del escenario del carrusel - RESPONSIVO
 const STAGE_HEIGHT_BASE =
   CARD_WIDTH_BASE * POSTER_RATIO + DETAIL_PANEL_HEIGHT
+
 const STAGE_HEIGHT_MOBILE =
   CARD_WIDTH_MOBILE * POSTER_RATIO + DETAIL_PANEL_HEIGHT
 
@@ -49,16 +50,16 @@ const POSITION_DISTANCE = {
 
 const POSITION_SCALE = {
   0: 1,
-  1: 0.82,
-  2: 0.66,
-  3: 0.52,
+  1: 0.88,
+  2: 0.74,
+  3: 0.62,
 }
 
 const POSITION_OPACITY = {
   0: 1,
-  1: 0.85,
-  2: 0.65,
-  3: 0.4,
+  1: 0.92,
+  2: 0.78,
+  3: 0.62,
 }
 
 const useResponsiveCarousel = () => {
@@ -67,13 +68,20 @@ const useResponsiveCarousel = () => {
   useEffect(() => {
     const updateBreakpoint = () => {
       const width = window.innerWidth
-      if (width >= 1024) setBreakpoint('lg')
-      else if (width >= 640) setBreakpoint('sm')
-      else setBreakpoint('base')
+
+      if (width >= 1024) {
+        setBreakpoint('lg')
+      } else if (width >= 640) {
+        setBreakpoint('sm')
+      } else {
+        setBreakpoint('base')
+      }
     }
 
     updateBreakpoint()
+
     window.addEventListener('resize', updateBreakpoint)
+
     return () => window.removeEventListener('resize', updateBreakpoint)
   }, [])
 
@@ -117,6 +125,7 @@ export default function MovieCarousel({
     return movies
       .map((movie, index) => {
         let relativePosition = index - activeIndex
+
         const half = Math.floor(totalMovies / 2)
 
         if (relativePosition > half) {
@@ -133,9 +142,7 @@ export default function MovieCarousel({
           relativePosition,
         }
       })
-      .filter(
-        ({ relativePosition }) => Math.abs(relativePosition) <= 3,
-      )
+      .filter(({ relativePosition }) => Math.abs(relativePosition) <= 3)
   }, [movies, activeIndex, totalMovies])
 
   const goToMovie = useCallback(
@@ -156,10 +163,7 @@ export default function MovieCarousel({
   useEffect(() => {
     if (totalMovies <= 1 || isPaused) return
 
-    const interval = window.setInterval(
-      goNext,
-      AUTO_PLAY_INTERVAL,
-    )
+    const interval = window.setInterval(goNext, AUTO_PLAY_INTERVAL)
 
     return () => window.clearInterval(interval)
   }, [goNext, isPaused, totalMovies])
@@ -169,7 +173,14 @@ export default function MovieCarousel({
   return (
     <section
       id={id}
-      className="relative z-30 w-full py-10 sm:py-12"
+      className="
+        relative
+        z-30
+        w-full
+        bg-[#E3E7EF]
+        py-10
+        sm:py-12
+      "
     >
       {/* Título */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -182,87 +193,110 @@ export default function MovieCarousel({
 
       {/* Viewport del carrusel */}
       <div
-        className="relative w-full overflow-hidden"
+        className="relative w-full overflow-visible"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => {
           setIsPaused(false)
           setHoveredIndex(null)
         }}
       >
+        {/* Aura de fondo cinemática */}
+        <div
+          aria-hidden="true"
+          className="
+            pointer-events-none
+            absolute
+            left-1/2
+            top-1/2
+            z-0
+            h-80
+            w-[520px]
+            -translate-x-1/2
+            -translate-y-1/2
+            rounded-full
+            bg-gradient-to-r
+            from-[#243A66]/14
+            via-[#800021]/10
+            to-[#C24366]/4
+            blur-[110px]
+            transition-all
+            duration-700
+            ease-out
+            sm:h-[460px]
+            sm:w-[700px]
+          "
+        />
+
         {/* Escenario */}
         <div
-          className="relative w-full"
+          className="relative z-10 mx-auto w-full"
           style={{ height: `${stageHeight}px` }}
         >
-          {visibleMovies.map(
-            ({ movie, index, relativePosition }) => {
-              const absolutePosition = Math.abs(relativePosition)
-              const isActive = relativePosition === 0
-              const isHovered = hoveredIndex === index
+          {visibleMovies.map(({ movie, index, relativePosition }) => {
+            const absolutePosition = Math.abs(relativePosition)
 
-              const distance =
-                absolutePosition === 0
-                  ? 0
-                  : getDistance(absolutePosition)
+            const isActive = relativePosition === 0
 
-              const direction =
-                relativePosition < 0 ? -1 : 1
+            const isHovered = hoveredIndex === index
 
-              const scale =
-                POSITION_SCALE[
-                  absolutePosition as keyof typeof POSITION_SCALE
-                ]
+            const distance =
+              absolutePosition === 0
+                ? 0
+                : getDistance(absolutePosition)
 
-              const opacity =
-                POSITION_OPACITY[
-                  absolutePosition as keyof typeof POSITION_OPACITY
-                ]
+            const direction = relativePosition < 0 ? -1 : 1
 
-              const hoverScale =
-                isHovered && !isActive
-                  ? scale + 0.06
-                  : scale
+            const scale =
+              POSITION_SCALE[
+                absolutePosition as keyof typeof POSITION_SCALE
+              ]
 
-              return (
-                <div
-                  key={movie.id}
-                  className="
-                    absolute
-                    left-1/2
-                    top-0
-                    -translate-x-1/2
-                    cursor-pointer
-                    transition-all
-                    duration-700
-                    ease-[cubic-bezier(0.22,1,0.36,1)]
-                    w-40
-                    sm:w-55
-                    lg:w-60
-                  "
-                  style={{
-                    transform: `translate(calc(-50% + ${
-                      direction * distance
-                    }px), 0) scale(${hoverScale})`,
-                    opacity,
-                    zIndex: isActive
-                      ? 30
-                      : isHovered
-                        ? 20
-                        : 10 - absolutePosition,
-                  }}
-                  onMouseEnter={() => setHoveredIndex(index)}
-                  onClick={() => goToMovie(index)}
-                >
-                  <MovieCard
-                    movie={movie}
-                    actionLabel="Ver funciones"
-                    index={index}
-                    variant={isActive ? 'active' : 'side'}
-                  />
-                </div>
-              )
-            },
-          )}
+            const opacity =
+              POSITION_OPACITY[
+                absolutePosition as keyof typeof POSITION_OPACITY
+              ]
+
+            const hoverScale =
+              isHovered && !isActive ? scale + 0.06 : scale
+
+            const translateX =
+              direction * distance
+
+            return (
+              <div
+                key={movie.id}
+                className="
+                  absolute
+                  left-1/2
+                  top-0
+                  cursor-pointer
+                  transition-all
+                  duration-700
+                  ease-[cubic-bezier(0.22,1,0.36,1)]
+                  w-40
+                  sm:w-55
+                  lg:w-60
+                "
+                style={{
+                  transform: `translateX(calc(-50% + ${translateX}px)) scale(${hoverScale})`,
+                  opacity,
+                  zIndex: isActive
+                    ? 30
+                    : isHovered
+                      ? 20
+                      : 10 - absolutePosition,
+                }}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onClick={() => goToMovie(index)}
+              >
+                <MovieCard
+                  movie={movie}
+                  actionLabel="Ver funciones"
+                  index={index}
+                />
+              </div>
+            )
+          })}
         </div>
       </div>
     </section>
