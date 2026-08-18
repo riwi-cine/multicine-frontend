@@ -1,10 +1,12 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import FeaturedMovies from './components/FeaturedMovies'
 import MovieCarousel from './components/MovieCarousel'
 import CarteleraFilters from './components/CarteleraFilters'
+import CarteleraEmptyState from './components/CarteleraEmptyState'
+import MovieCardSkeleton from './components/MovieCardSkeleton'
 import ComingSoonGrid from './components/ComingSoonGrid'
 import PromotionsSection from './components/PromotionsSection'
 import ExperienceSection from './components/ExperienceSection'
@@ -22,6 +24,12 @@ export default function LandingPage() {
   const [genre, setGenre] = useState<string | null>(null)
   const [classification, setClassification] = useState<string | null>(null)
   const [search, setSearch] = useState('')
+  const [isLoadingCartelera, setIsLoadingCartelera] = useState(true)
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoadingCartelera(false), 900)
+    return () => clearTimeout(timer)
+  }, [])
 
   const filteredNowShowing = useMemo(() => {
     return nowShowing.filter((movie) => {
@@ -67,10 +75,14 @@ export default function LandingPage() {
             />
           </div>
 
-          {filteredNowShowing.length === 0 ? (
-            <p className="mx-auto max-w-7xl px-4 py-12 text-center text-sm text-muted-foreground sm:px-6 lg:px-8">
-              No se encontraron películas con los filtros seleccionados.
-            </p>
+          {isLoadingCartelera ? (
+            <div className="mx-auto flex max-w-7xl gap-4 overflow-hidden px-4 pb-10 sm:px-6 lg:px-8">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <MovieCardSkeleton key={i} />
+              ))}
+            </div>
+          ) : filteredNowShowing.length === 0 ? (
+            <CarteleraEmptyState />
           ) : (
             <MovieCarousel title="" movies={filteredNowShowing} />
           )}
