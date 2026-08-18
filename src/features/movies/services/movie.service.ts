@@ -23,7 +23,7 @@ export const movieService = {
   },
 
   getFunctionsByMovie: async (movieId: string): Promise<MovieFunction[]> => {
-    const response = await apiClient.get<MovieFunction[]>(`/functions?movieId=${movieId}`)
+    const response = await apiClient.get<MovieFunction[]>(`/movies/${movieId}/functions`)
     return response.data
   },
 
