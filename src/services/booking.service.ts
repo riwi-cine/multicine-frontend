@@ -2,8 +2,8 @@ import { apiClient } from '@/api'
 import type { MovieFunction, Seat, SeatLock, Cart, CartSnack, Snack, Order, Payment, Ticket, Promotion, GiftCard } from '@/types'
 
 export const bookingService = {
-  getFunction: async (id: string): Promise<MovieFunction> => {
-    const response = await apiClient.get<MovieFunction>(`/functions/${id}`)
+  getFunction: async (movieId: string): Promise<MovieFunction[]> => {
+    const response = await apiClient.get<MovieFunction[]>(`/movies/${movieId}/functions`)
     return response.data
   },
 
