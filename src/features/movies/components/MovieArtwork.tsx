@@ -1,4 +1,4 @@
-import { useId } from 'react'
+import { memo, useId, useState } from 'react'
 
 import { cn } from '@/utils/cn'
 import type { MoviePalette } from '../data/movies.mock'
@@ -10,7 +10,7 @@ interface MovieArtworkProps {
   className?: string
 }
 
-export default function MovieArtwork({
+function MovieArtwork({
   palette,
   image,
   variant = 'poster',
@@ -23,22 +23,28 @@ export default function MovieArtwork({
   const vignetteId = `mc-vignette-${rawId}`
   const grainId = `mc-grain-${rawId}`
 
+  const [imageFailed, setImageFailed] = useState(false)
+  const showImage = Boolean(image) && !imageFailed
   const { from, to, glow } = palette
   const isBackdrop = variant === 'backdrop'
 
   return (
-    <div className={cn('relative h-full w-full overflow-hidden bg-black', className)}>
-      {/* 1. Muestra la imagen real si existe */}
-      {image ? (
+    <div
+      className={cn(
+        'relative h-full w-full overflow-hidden bg-black',
+        className,
+      )}
+    >
+      {showImage ? (
         <img
           src={image}
           alt=""
           className="absolute inset-0 h-full w-full object-cover"
           loading="lazy"
+          onError={() => setImageFailed(true)}
         />
       ) : null}
 
-      {/* 2. Muestra la ilustración SVG o aplica los efectos sobre la imagen */}
       <svg
         viewBox={isBackdrop ? '0 0 960 540' : '0 0 320 480'}
         preserveAspectRatio="xMidYMid slice"
@@ -85,8 +91,7 @@ export default function MovieArtwork({
           </filter>
         </defs>
 
-        {/* Si NO hay imagen, renderizamos el fondo e ilustración abstracta en SVG */}
-        {!image && (
+        {!showImage && (
           <>
             <rect width="100%" height="100%" fill={`url(#${gradientId})`} />
             <rect width="100%" height="100%" fill={`url(#${glowId})`} />
@@ -112,9 +117,27 @@ export default function MovieArtwork({
                   strokeOpacity="0.14"
                   strokeWidth="1.5"
                 />
-                <circle cx="900" cy="180" r="10" fill="#ffffff" fillOpacity="0.3" />
-                <circle cx="820" cy="260" r="6" fill="#ffffff" fillOpacity="0.22" />
-                <circle cx="60" cy="120" r="14" fill="#ffffff" fillOpacity="0.12" />
+                <circle
+                  cx="900"
+                  cy="180"
+                  r="10"
+                  fill="#ffffff"
+                  fillOpacity="0.3"
+                />
+                <circle
+                  cx="820"
+                  cy="260"
+                  r="6"
+                  fill="#ffffff"
+                  fillOpacity="0.22"
+                />
+                <circle
+                  cx="60"
+                  cy="120"
+                  r="14"
+                  fill="#ffffff"
+                  fillOpacity="0.12"
+                />
                 <path
                   d="M0 400 Q140 360 280 400 T560 395 T840 405 T960 390 L960 540 L0 540 Z"
                   fill={glow}
@@ -153,7 +176,13 @@ export default function MovieArtwork({
                   strokeOpacity="0.35"
                   strokeWidth="1.5"
                 />
-                <circle cx="255" cy="330" r="46" fill={glow} fillOpacity="0.14" />
+                <circle
+                  cx="255"
+                  cy="330"
+                  r="46"
+                  fill={glow}
+                  fillOpacity="0.14"
+                />
                 <circle
                   cx="255"
                   cy="330"
@@ -163,9 +192,27 @@ export default function MovieArtwork({
                   strokeOpacity="0.12"
                   strokeWidth="1.5"
                 />
-                <circle cx="60" cy="120" r="10" fill="#ffffff" fillOpacity="0.3" />
-                <circle cx="285" cy="70" r="5" fill="#ffffff" fillOpacity="0.25" />
-                <circle cx="175" cy="95" r="4" fill="#ffffff" fillOpacity="0.18" />
+                <circle
+                  cx="60"
+                  cy="120"
+                  r="10"
+                  fill="#ffffff"
+                  fillOpacity="0.3"
+                />
+                <circle
+                  cx="285"
+                  cy="70"
+                  r="5"
+                  fill="#ffffff"
+                  fillOpacity="0.25"
+                />
+                <circle
+                  cx="175"
+                  cy="95"
+                  r="4"
+                  fill="#ffffff"
+                  fillOpacity="0.18"
+                />
                 <path
                   d="M0 410 Q80 370 160 400 T320 388 L320 480 L0 480 Z"
                   fill={glow}
@@ -186,10 +233,11 @@ export default function MovieArtwork({
           </>
         )}
 
-        {/* La viñeta y la textura de grano se aplican SIEMPRE (tenga foto o no) */}
         <rect width="100%" height="100%" fill={`url(#${vignetteId})`} />
         <rect width="100%" height="100%" filter={`url(#${grainId})`} />
       </svg>
     </div>
   )
 }
+
+export default memo(MovieArtwork)
