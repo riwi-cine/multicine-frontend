@@ -1,5 +1,5 @@
 import { Search } from 'lucide-react'
-import { useMemo } from 'react'
+import { memo, useMemo } from 'react'
 
 import { Input } from '@/components/input'
 import { cn } from '@/utils/cn'
@@ -17,7 +17,7 @@ interface CarteleraFiltersProps {
   onSearchChange: (search: string) => void
 }
 
-export default function CarteleraFilters({
+function CarteleraFilters({
   movies,
   genre,
   classification,
@@ -27,8 +27,9 @@ export default function CarteleraFilters({
   onSearchChange,
 }: CarteleraFiltersProps) {
   const allGenres = useMemo(() => {
+    const safeMovies = movies ?? []
     const set = new Set<string>()
-    movies.forEach((movie) => movie.genres.forEach((g) => set.add(g)))
+    safeMovies.forEach((movie) => (movie?.genres ?? []).forEach((g) => set.add(g)))
     return Array.from(set).sort()
   }, [movies])
 
@@ -107,3 +108,5 @@ export default function CarteleraFilters({
     </div>
   )
 }
+
+export default memo(CarteleraFilters)
