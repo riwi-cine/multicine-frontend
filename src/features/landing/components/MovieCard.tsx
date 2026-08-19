@@ -1,8 +1,8 @@
 import Reveal from '@/components/reveal'
 import { Badge } from '@/components/badge'
 import { cn } from '@/utils/cn'
-import MovieArtwork from '@/features/movies/components/MovieArtwork'
-import type { Movie } from '@/features/movies/data/movies.mock'
+import { MovieArtwork } from '@/features/movies'
+import type { Movie } from '@/features/movies'
 
 type MovieCardProps = {
   movie: Movie

@@ -1,7 +1,6 @@
 import Reveal from '@/components/reveal'
-import MovieArtwork from '@/features/movies/components/MovieArtwork'
-import { featuredMovie } from '@/features/movies/data/movies.mock'
-import type { Benefit } from '@/features/movies/data/movies.mock'
+import { MovieArtwork, featuredMovie } from '@/features/movies'
+import type { Benefit } from '@/features/movies'
 
 interface ExperienceSectionProps {
   benefits: Benefit[]
