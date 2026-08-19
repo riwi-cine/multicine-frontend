@@ -57,13 +57,6 @@ export interface Movie {
   rating: number
 }
 
-export interface MovieRelease {
-  id: string
-  countryId: string
-  movieId: string
-  releaseDate: string
-}
-
 export interface MovieFunction {
   id: string
   movieId: string

@@ -12,7 +12,7 @@ export default function Hero() {
   return (
     <section
       id="inicio"
-      className="relative isolate min-h-[500px] overflow-hidden pt-16 sm:min-h-[600px] lg:min-h-[680px]"
+      className="relative isolate min-h-125 overflow-hidden pt-16 sm:min-h-150 lg:min-h-170"
     >
       {/* Imagen de fondo */}
       <div className="absolute inset-0 -z-20">
@@ -28,7 +28,7 @@ export default function Hero() {
       <div
         className="
           absolute inset-0 -z-10
-          bg-gradient-to-r
+          bg-linear-to-r
           from-black/80
           via-black/55
           to-black/15
@@ -40,7 +40,7 @@ export default function Hero() {
         className="
           absolute inset-x-0 bottom-0 -z-10
           h-48
-          bg-gradient-to-t
+          bg-linear-to-t
           from-black/45
           to-transparent
         "
@@ -49,11 +49,11 @@ export default function Hero() {
       {/* Contenido */}
       <div
         className="
-          mx-auto flex min-h-[500px]
+          mx-auto flex min-h-125
           max-w-7xl items-center
           px-4 py-20
-          sm:min-h-[600px] sm:px-6 sm:py-28
-          lg:min-h-[680px] lg:px-8
+          sm:min-h-150 sm:px-6 sm:py-28
+          lg:min-h-170 lg:px-8
         "
       >
         <div className="flex max-w-2xl flex-col gap-5">
@@ -91,7 +91,7 @@ export default function Hero() {
                 size="lg"
                 className="
                   h-12 rounded-xl px-7
-                  bg-gradient-to-r
+                  bg-linear-to-r
                   from-[#800021]
                   to-[#C24366]
                   text-base text-white

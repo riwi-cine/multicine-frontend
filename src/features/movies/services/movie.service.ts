@@ -1,51 +1,60 @@
 import { apiClient } from '@/api'
-import type { Movie, MovieFunction, MovieRelease } from '@/types'
+import type { Movie, MovieFunction } from '@/types'
 
 export const movieService = {
+
+  // ✅ GET /api/movies — igual, está bien
   getAll: async (): Promise<Movie[]> => {
     const response = await apiClient.get<Movie[]>('/movies')
     return response.data
   },
 
+  // ✅ GET /api/movies/:id — igual, está bien
   getById: async (id: string): Promise<Movie> => {
     const response = await apiClient.get<Movie>(`/movies/${id}`)
     return response.data
   },
 
-  getNowShowing: async (): Promise<Movie[]> => {
-    const response = await apiClient.get<Movie[]>('/movies?status=En Cartelera')
+  getToday: async (cityId: string): Promise<Movie[]> => {
+    const response = await apiClient.get<Movie[]>('/movies/today', {
+      params: { cityId }
+    })
     return response.data
   },
 
-  getUpcoming: async (): Promise<Movie[]> => {
-    const response = await apiClient.get<Movie[]>('/movies?status=Próximo Estreno')
+  getWeekly: async (cityId: string): Promise<Movie[]> => {
+    const response = await apiClient.get<Movie[]>('/movies/weekly', {
+      params: { cityId }
+    })
     return response.data
   },
 
+  // ✅ GET /api/movies/:id/functions — igual, está bien
   getFunctionsByMovie: async (movieId: string): Promise<MovieFunction[]> => {
     const response = await apiClient.get<MovieFunction[]>(`/movies/${movieId}/functions`)
     return response.data
   },
 
-  getFunctions: async (): Promise<MovieFunction[]> => {
-    const response = await apiClient.get<MovieFunction[]>('/functions')
+  // ✅ NUEVO: GET /api/movies/:id/recommendations
+  getRecommendations: async (id: string): Promise<Movie[]> => {
+    const response = await apiClient.get<Movie[]>(`/movies/${id}/recommendations`)
     return response.data
   },
 
-  getFunctionById: async (id: string): Promise<MovieFunction> => {
-    const response = await apiClient.get<MovieFunction>(`/functions/${id}`)
+  // ✅ NUEVO: GET /api/movies/filter
+  filter: async (params: {
+    cityId?: string
+    date?: string
+    genre?: string
+    classification?: string
+    language?: string
+    roomType?: string
+    format?: string
+    cinemaId?: string
+    availableOnly?: boolean
+  }): Promise<Movie[]> => {
+    const response = await apiClient.get<Movie[]>('/movies/filter', { params })
     return response.data
   },
-}
 
-export const movieReleaseService = {
-  getByCountry: async (countryId: string): Promise<MovieRelease[]> => {
-    const response = await apiClient.get<MovieRelease[]>(`/movieReleases?countryId=${countryId}`)
-    return response.data
-  },
-
-  getByMovie: async (movieId: string): Promise<MovieRelease[]> => {
-    const response = await apiClient.get<MovieRelease[]>(`/movieReleases?movieId=${movieId}`)
-    return response.data
-  },
 }

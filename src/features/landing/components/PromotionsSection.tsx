@@ -33,7 +33,7 @@ export default function PromotionsSection({
               >
                 <div
                   className={cn(
-                    'flex aspect-[16/9] items-center justify-center bg-gradient-to-br',
+                    'flex aspect-video items-center justify-center bg-linear-to-br',
                     promo.accent,
                   )}
                 >

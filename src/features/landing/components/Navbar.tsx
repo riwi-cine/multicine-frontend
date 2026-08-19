@@ -123,7 +123,7 @@ export default function Navbar() {
               <DropdownMenuContent
                 align="center"
                 className="
-                  w-[360px]
+                  w-90
                   rounded-xl
                   border-[#E8CDD4]/70
                   bg-white/95
@@ -198,7 +198,7 @@ export default function Navbar() {
               className="
                 hidden
                 border-0
-                bg-gradient-to-r from-[#800021] to-[#C24366]
+                bg-linear-to-r from-[#800021] to-[#C24366]
                 text-white
                 shadow-md shadow-[#C24366]/20
                 transition-all duration-200
@@ -302,7 +302,7 @@ export default function Navbar() {
                 className="
                   w-full
                   border-0
-                  bg-gradient-to-r from-[#800021] to-[#C24366]
+                  bg-linear-to-r from-[#800021] to-[#C24366]
                   text-white
                 "
                 onClick={closeMobileMenu}
