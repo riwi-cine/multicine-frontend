@@ -1,8 +1,8 @@
 import { apiClient } from '@/api'
 import type { User } from '@/types'
-import type { AuthResponse, LoginCredentials, RegisterData } from '@/features/auth/types'
+import type { AuthResponse, LoginCredentials, RegisterData } from '../types'
 
-export const authService = {
+export const authApi = {
   login: async (credentials: LoginCredentials): Promise<AuthResponse> => {
     const response = await apiClient.post<AuthResponse>('/auth/login', credentials)
     return response.data

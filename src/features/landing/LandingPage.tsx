@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -12,26 +12,32 @@ import PromotionsSection from './components/PromotionsSection'
 import ExperienceSection from './components/ExperienceSection'
 import Footer from './components/Footer'
 import AmbientSpotlight from '@/components/ui/AmbientSpotlight'
-import {
-  featuredMovies,
-  nowShowing,
-  comingSoon,
-  promotions,
-  benefits,
-} from '@/features/movies/data/movies.mock'
+import { useMovies, promotions, benefits } from '@/features/movies'
 
 export default function LandingPage() {
   const [genre, setGenre] = useState<string | null>(null)
   const [classification, setClassification] = useState<string | null>(null)
   const [search, setSearch] = useState('')
-  const [isLoadingCartelera, setIsLoadingCartelera] = useState(true)
 
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoadingCartelera(false), 900)
-    return () => clearTimeout(timer)
-  }, [])
+  const { data: movies, isLoading } = useMovies()
+
+  const featuredMovie = useMemo(() => {
+    if (!movies || movies.length === 0) return undefined
+    return [...movies].sort((a, b) => b.score - a.score)[0]
+  }, [movies])
+
+  const featuredMovies = useMemo(() => {
+    if (!movies) return []
+    return [...movies].sort((a, b) => b.score - a.score)
+  }, [movies])
+
+  const nowShowing = useMemo(() => {
+    if (!movies) return []
+    return movies
+  }, [movies])
 
   const filteredNowShowing = useMemo(() => {
+    if (!nowShowing) return []
     return nowShowing.filter((movie) => {
       const matchesGenre = !genre || movie.genres.includes(genre)
       const matchesClassification =
@@ -41,7 +47,7 @@ export default function LandingPage() {
         movie.title.toLowerCase().includes(search.toLowerCase())
       return matchesGenre && matchesClassification && matchesSearch
     })
-  }, [genre, classification, search])
+  }, [nowShowing, genre, classification, search])
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#F3F5F8] text-foreground">
@@ -51,7 +57,8 @@ export default function LandingPage() {
       <Navbar />
 
       <main className="relative z-10 flex min-h-screen flex-col">
-        <Hero />
+        <Hero movie={featuredMovie} />
+
         <FeaturedMovies
           id="destacadas"
           title="Películas destacadas"
@@ -75,7 +82,7 @@ export default function LandingPage() {
             />
           </div>
 
-          {isLoadingCartelera ? (
+          {isLoading ? (
             <div className="mx-auto flex max-w-7xl gap-4 overflow-hidden px-4 pb-10 sm:px-6 lg:px-8">
               {Array.from({ length: 6 }).map((_, i) => (
                 <MovieCardSkeleton key={i} />
@@ -91,7 +98,7 @@ export default function LandingPage() {
         <ComingSoonGrid
           id="proximamente"
           title="Próximamente"
-          movies={comingSoon}
+          movies={nowShowing}
         />
 
         <PromotionsSection

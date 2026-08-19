@@ -1,7 +1,7 @@
 import { apiClient } from '@/api'
 import type { User, Membership } from '@/types'
 
-export const userService = {
+export const userApi = {
   getAll: async (): Promise<User[]> => {
     const response = await apiClient.get<User[]>('/users')
     return response.data

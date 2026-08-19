@@ -1,5 +1,5 @@
 import Reveal from '@/components/reveal'
-import type { Promotion } from '@/features/movies/data/movies.mock'
+import type { Promotion } from '@/features/movies'
 import { cn } from '@/utils/cn'
 
 interface PromotionsSectionProps {
