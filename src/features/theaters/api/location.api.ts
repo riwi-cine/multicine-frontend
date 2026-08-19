@@ -1,7 +1,7 @@
 import { apiClient } from '@/api'
 import type { Country, City, Cinema, Room, Seat } from '@/types'
 
-export const locationService = {
+export const locationApi = {
   getCountries: async (): Promise<Country[]> => {
     const response = await apiClient.get<Country[]>('/countries')
     return response.data

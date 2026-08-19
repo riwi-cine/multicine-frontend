@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 
 import Reveal from '@/components/reveal'
-import type { Movie } from '@/features/movies/data/movies.mock'
+import type { Movie } from '@/features/movies'
 import MovieCard from './MovieCard'
 
 interface MovieCarouselProps {
@@ -171,7 +171,7 @@ function MovieCarousel({ movies, title, id }: MovieCarouselProps) {
     return () => window.clearInterval(interval)
   }, [goNext, isPaused, totalMovies])
 
-    const handleHover = useCallback((index: number | null) => {
+  const handleHover = useCallback((index: number | null) => {
     setHoveredIndex(index)
   }, [])
 
@@ -229,7 +229,7 @@ function MovieCarousel({ movies, title, id }: MovieCarouselProps) {
             transition-all
             duration-700
             ease-out
-            sm:h-167
+            sm:h-115
             sm:w-175
           "
         />

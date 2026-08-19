@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Reveal from '@/components/reveal'
-import type { Movie } from '@/features/movies/data/movies.mock'
+import type { Movie } from '@/features/movies'
 import MovieCard from './MovieCard'
 
 interface ComingSoonGridProps {
