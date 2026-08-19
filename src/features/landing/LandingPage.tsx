@@ -21,19 +21,15 @@ export default function LandingPage() {
 
   const { data: movies, isLoading } = useMovies()
 
-  const featuredMovie = useMemo(() => {
-    if (!movies || movies.length === 0) return undefined
-    return [...movies].sort((a, b) => b.score - a.score)[0]
-  }, [movies])
+  const featuredMovie = useMemo(() => movies?.[0], [movies])
 
-  const featuredMovies = useMemo(() => {
-    if (!movies) return []
-    return [...movies].sort((a, b) => b.score - a.score)
-  }, [movies])
+  const featuredMovies = useMemo(() => movies ?? [], [movies])
 
-  const nowShowing = useMemo(() => {
+  const nowShowing = useMemo(() => movies ?? [], [movies])
+
+  const comingSoon = useMemo(() => {
     if (!movies) return []
-    return movies
+    return movies.filter((movie) => movie.status === 'Coming Soon')
   }, [movies])
 
   const filteredNowShowing = useMemo(() => {
@@ -98,7 +94,7 @@ export default function LandingPage() {
         <ComingSoonGrid
           id="proximamente"
           title="Próximamente"
-          movies={nowShowing}
+          movies={comingSoon}
         />
 
         <PromotionsSection

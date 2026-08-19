@@ -1,7 +1,5 @@
 export { default as MovieArtwork } from './components/MovieArtwork'
 export { moviesApi } from './api/movies.api'
-export type { MockMovie } from './data/mappers'
-export { mapMockMoviesToLocal } from './data/mappers'
 export { useMovies } from './hooks/useMovies'
 
 export type {
@@ -11,6 +9,12 @@ export type {
   Promotion,
   Benefit,
 } from './data/movies.mock'
+
+export type {
+  ExtendedMovie,
+  MovieFunctionSchedule,
+  MovieSchedule,
+} from './types'
 
 export {
   featuredMovie,
