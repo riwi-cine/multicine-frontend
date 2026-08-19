@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 
 import Reveal from '@/components/reveal'
 import type { Movie } from '@/features/movies/data/movies.mock'
@@ -12,24 +12,23 @@ interface MovieCarouselProps {
 
 const AUTO_PLAY_INTERVAL = 3500
 
-// Ancho base de la card - RESPONSIVO
+// Base width of the card - RESPONSIVE
 const CARD_WIDTH_BASE = 240
 const CARD_WIDTH_MOBILE = 160
 
-// Relación de aspecto de un póster estándar (2:3)
+// Aspect ratio of a standard poster (2:3)
 const POSTER_RATIO = 3 / 2
 
-// Espacio reservado para la información de la card activa
+// Space reserved for information about the active card
 const DETAIL_PANEL_HEIGHT = 110
 
-// Altura total del escenario del carrusel - RESPONSIVO
-const STAGE_HEIGHT_BASE =
-  CARD_WIDTH_BASE * POSTER_RATIO + DETAIL_PANEL_HEIGHT
+// Total height of the carousel stage - RESPONSIVE
+const STAGE_HEIGHT_BASE = CARD_WIDTH_BASE * POSTER_RATIO + DETAIL_PANEL_HEIGHT
 
 const STAGE_HEIGHT_MOBILE =
   CARD_WIDTH_MOBILE * POSTER_RATIO + DETAIL_PANEL_HEIGHT
 
-// Distancia horizontal desde el centro - RESPONSIVO
+// Horizontal distance from the center - RESPONSIVE
 const POSITION_DISTANCE = {
   base: {
     1: 200,
@@ -88,11 +87,12 @@ const useResponsiveCarousel = () => {
   return breakpoint
 }
 
-export default function MovieCarousel({
-  movies,
-  title,
-  id,
-}: MovieCarouselProps) {
+function MovieCarousel({ movies, title, id }: MovieCarouselProps) {
+  // Defensive: if `movies` is undefined or null, we prevent `.length` and
+  // `.map` from breaking the render. Cached to maintain a stable reference
+  // between renders.
+  const safeMovies = useMemo(() => movies ?? [], [movies])
+
   const [activeIndex, setActiveIndex] = useState(0)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [isPaused, setIsPaused] = useState(false)
@@ -106,23 +106,26 @@ export default function MovieCarousel({
         ? STAGE_HEIGHT_BASE
         : STAGE_HEIGHT_MOBILE
 
-  const getDistance = (absPos: number): number => {
-    const distances =
-      breakpoint === 'lg'
-        ? POSITION_DISTANCE.lg
-        : breakpoint === 'sm'
-          ? POSITION_DISTANCE.sm
-          : POSITION_DISTANCE.base
+  const getDistance = useCallback(
+    (absPos: number): number => {
+      const distances =
+        breakpoint === 'lg'
+          ? POSITION_DISTANCE.lg
+          : breakpoint === 'sm'
+            ? POSITION_DISTANCE.sm
+            : POSITION_DISTANCE.base
 
-    return distances[absPos as keyof typeof distances] || 0
-  }
+      return distances[absPos as keyof typeof distances] || 0
+    },
+    [breakpoint],
+  )
 
-  const totalMovies = movies.length
+  const totalMovies = safeMovies.length
 
   const visibleMovies = useMemo(() => {
     if (!totalMovies) return []
 
-    return movies
+    return safeMovies
       .map((movie, index) => {
         let relativePosition = index - activeIndex
 
@@ -143,7 +146,7 @@ export default function MovieCarousel({
         }
       })
       .filter(({ relativePosition }) => Math.abs(relativePosition) <= 3)
-  }, [movies, activeIndex, totalMovies])
+  }, [safeMovies, activeIndex, totalMovies])
 
   const goToMovie = useCallback(
     (index: number) => {
@@ -168,7 +171,11 @@ export default function MovieCarousel({
     return () => window.clearInterval(interval)
   }, [goNext, isPaused, totalMovies])
 
-  if (!movies.length) return null
+    const handleHover = useCallback((index: number | null) => {
+    setHoveredIndex(index)
+  }, [])
+
+  if (!safeMovies.length) return null
 
   return (
     <section
@@ -182,7 +189,7 @@ export default function MovieCarousel({
         sm:py-12
       "
     >
-      {/* Título */}
+      {/* Title */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal className="relative z-40 mb-6">
           <h2 className="font-heading text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
@@ -191,7 +198,7 @@ export default function MovieCarousel({
         </Reveal>
       </div>
 
-      {/* Viewport del carrusel */}
+      {/* Viewport for carrusel */}
       <div
         className="relative w-full overflow-visible"
         onMouseEnter={() => setIsPaused(true)}
@@ -200,7 +207,7 @@ export default function MovieCarousel({
           setHoveredIndex(null)
         }}
       >
-        {/* Aura de fondo cinemática */}
+        {/* Background*/}
         <div
           aria-hidden="true"
           className="
@@ -210,11 +217,11 @@ export default function MovieCarousel({
             top-1/2
             z-0
             h-80
-            w-[520px]
+            w-130
             -translate-x-1/2
             -translate-y-1/2
             rounded-full
-            bg-gradient-to-r
+            bg-linear-to-r
             from-[#243A66]/14
             via-[#800021]/10
             to-[#C24366]/4
@@ -222,12 +229,12 @@ export default function MovieCarousel({
             transition-all
             duration-700
             ease-out
-            sm:h-[460px]
-            sm:w-[700px]
+            sm:h-167
+            sm:w-175
           "
         />
 
-        {/* Escenario */}
+        {/* Setting */}
         <div
           className="relative z-10 mx-auto w-full"
           style={{ height: `${stageHeight}px` }}
@@ -240,27 +247,21 @@ export default function MovieCarousel({
             const isHovered = hoveredIndex === index
 
             const distance =
-              absolutePosition === 0
-                ? 0
-                : getDistance(absolutePosition)
+              absolutePosition === 0 ? 0 : getDistance(absolutePosition)
 
             const direction = relativePosition < 0 ? -1 : 1
 
             const scale =
-              POSITION_SCALE[
-                absolutePosition as keyof typeof POSITION_SCALE
-              ]
+              POSITION_SCALE[absolutePosition as keyof typeof POSITION_SCALE]
 
             const opacity =
               POSITION_OPACITY[
                 absolutePosition as keyof typeof POSITION_OPACITY
               ]
 
-            const hoverScale =
-              isHovered && !isActive ? scale + 0.06 : scale
+            const hoverScale = isHovered && !isActive ? scale + 0.06 : scale
 
-            const translateX =
-              direction * distance
+            const translateX = direction * distance
 
             return (
               <div
@@ -286,7 +287,7 @@ export default function MovieCarousel({
                       ? 20
                       : 10 - absolutePosition,
                 }}
-                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseEnter={() => handleHover(index)}
                 onClick={() => goToMovie(index)}
               >
                 <MovieCard
@@ -302,3 +303,5 @@ export default function MovieCarousel({
     </section>
   )
 }
+
+export default memo(MovieCarousel)
