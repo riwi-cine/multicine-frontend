@@ -210,11 +210,11 @@ export default function MovieCarousel({
             top-1/2
             z-0
             h-80
-            w-[520px]
+            w-130
             -translate-x-1/2
             -translate-y-1/2
             rounded-full
-            bg-gradient-to-r
+            bg-linear-to-r
             from-[#243A66]/14
             via-[#800021]/10
             to-[#C24366]/4
@@ -222,8 +222,8 @@ export default function MovieCarousel({
             transition-all
             duration-700
             ease-out
-            sm:h-[460px]
-            sm:w-[700px]
+            sm:h-115
+            sm:w-175
           "
         />
 
