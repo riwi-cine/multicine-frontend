@@ -12,6 +12,7 @@ import PromotionsSection from './components/PromotionsSection'
 import ExperienceSection from './components/ExperienceSection'
 import Footer from './components/Footer'
 import AmbientSpotlight from '@/components/ui/AmbientSpotlight'
+import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { useMovies, promotions, benefits } from '@/features/movies'
 
 export default function LandingPage() {
@@ -32,17 +33,38 @@ export default function LandingPage() {
     return movies.filter((movie) => movie.status === 'Coming Soon')
   }, [movies])
 
-  const filteredNowShowing = useMemo(() => {
-    if (!nowShowing) return []
-    return nowShowing.filter((movie) => {
-      const matchesGenre = !genre || movie.genres.includes(genre)
-      const matchesClassification =
-        !classification || movie.rating === classification
-      const matchesSearch =
-        !search ||
-        movie.title.toLowerCase().includes(search.toLowerCase())
-      return matchesGenre && matchesClassification && matchesSearch
-    })
+  // Resultado del filtrado + posible error, calculados juntos para no
+  // disparar setState como efecto secundario dentro del useMemo.
+  const { movies: filteredNowShowing, error: carteleraError } = useMemo(() => {
+    try {
+      const source = nowShowing ?? []
+
+      const result = source.filter((movie) => {
+        // Defensivo: los campos de cada película podrían venir
+        // incompletos; sin esto un dato mal formado (p. ej. `genres`
+        // undefined) tumbaría toda la sección de la Cartelera.
+        const movieGenres = movie?.genres ?? []
+        const movieTitle = movie?.title ?? ''
+
+        const matchesGenre = !genre || movieGenres.includes(genre)
+        const matchesClassification =
+          !classification || movie?.rating === classification
+        const matchesSearch =
+          !search || movieTitle.toLowerCase().includes(search.toLowerCase())
+
+        return matchesGenre && matchesClassification && matchesSearch
+      })
+
+      return { movies: result, error: null as string | null }
+    } catch (error) {
+      if (import.meta.env.DEV) {
+        console.error('[Cartelera] Error al filtrar películas:', error)
+      }
+      return {
+        movies: [] as typeof nowShowing,
+        error: 'No pudimos cargar la cartelera. Intenta de nuevo.',
+      }
+    }
   }, [nowShowing, genre, classification, search])
 
   return (
@@ -78,17 +100,21 @@ export default function LandingPage() {
             />
           </div>
 
-          {isLoading ? (
-            <div className="mx-auto flex max-w-7xl gap-4 overflow-hidden px-4 pb-10 sm:px-6 lg:px-8">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <MovieCardSkeleton key={i} />
-              ))}
-            </div>
-          ) : filteredNowShowing.length === 0 ? (
-            <CarteleraEmptyState />
-          ) : (
-            <MovieCarousel title="" movies={filteredNowShowing} />
-          )}
+          <ErrorBoundary message="Ocurrió un problema mostrando la Cartelera.">
+            {isLoading ? (
+              <div className="mx-auto flex max-w-7xl gap-4 overflow-hidden px-4 pb-10 sm:px-6 lg:px-8">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <MovieCardSkeleton key={i} />
+                ))}
+              </div>
+            ) : carteleraError ? (
+              <CarteleraEmptyState message={carteleraError} />
+            ) : filteredNowShowing.length === 0 ? (
+              <CarteleraEmptyState />
+            ) : (
+              <MovieCarousel title="" movies={filteredNowShowing} />
+            )}
+          </ErrorBoundary>
         </section>
 
         <ComingSoonGrid

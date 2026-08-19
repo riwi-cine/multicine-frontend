@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import Reveal from '@/components/reveal'
 import { Badge } from '@/components/badge'
 import { cn } from '@/utils/cn'
@@ -11,38 +12,49 @@ type MovieCardProps = {
   index?: number
 }
 
-export default function MovieCard({
+function MovieCard({
   movie,
   actionLabel,
   index = 0,
 }: MovieCardProps) {
+  // Defensive safeguards: if the record is incomplete (missing data
+  // from the backend, a malformed mock, etc.), we display a fallback value
+  // instead of letting the entire card fail to render.
+  const title = movie?.title ?? 'Título no disponible'
+  const genres = movie?.genres ?? []
+  const rating = movie?.rating ?? 'N/A'
+  const duration = movie?.duration ?? '—'
+  const score = typeof movie?.score === 'number' ? movie.score : null
+  const description = movie?.description ?? 'Sinopsis no disponible.'
+  const format = movie?.format ?? 'Formato no disponible'
+
+  if (!movie) return null
+
   return (
     <Reveal
       delay={Math.min(index * 60, 360)}
-      className={cn(
-        'group h-full shrink-0',
-      )}
+      className={cn('group h-full shrink-0')}
     >
       <div
         className={cn(
-          'relative rounded-2xl bg-gradient-to-br from-primary via-accent to-secondary p-[2px]',
+          'relative rounded-2xl bg-linear-to-br from-primary via-accent to-secondary p-2px',
           'transition-all duration-300 ease-out',
           'hover:shadow-[0_0_28px_-6px_var(--accent)]',
         )}
       >
         <div className="overflow-hidden rounded-[calc(var(--radius-xl)-2px)] bg-card">
           {/* Poster */}
-          <div className="relative aspect-[2/3] overflow-hidden">
+          <div className="relative aspect-2/3 overflow-hidden">
             <MovieArtwork
               palette={movie.palette}
               image={movie.image}
               className="transition-transform duration-500 group-hover:scale-105"
             />
 
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/10 to-transparent" />
 
             <Badge className="absolute top-3 left-3 border border-white/15 bg-black/40 text-white backdrop-blur-md">
-              {movie.rating}
+              {rating}
             </Badge>
           </div>
 
@@ -59,32 +71,30 @@ export default function MovieCard({
                 {/* Título */}
                 <div>
                   <h3 className="font-heading text-base font-bold leading-tight tracking-tight text-foreground">
-                    {movie.title}
+                    {title}
                   </h3>
 
                   <p className="mt-1 text-xs text-muted-foreground">
-                    {movie.genres.join(' · ')}
+                    {genres.length > 0 ? genres.join(' · ') : 'Sin género'}
                   </p>
                 </div>
 
                 {/* Datos principales */}
                 <div className="flex items-center gap-2 text-xs">
                   <span className="inline-flex items-center rounded-md bg-muted px-2 py-1 font-medium text-foreground">
-                    {movie.rating}
+                    {rating}
                   </span>
 
-                  <span className="text-muted-foreground">
-                    {movie.duration}
-                  </span>
+                  <span className="text-muted-foreground">{duration}</span>
 
                   <span className="font-semibold text-foreground">
-                    ★ {movie.score}
+                    ★ {score !== null ? score.toFixed(1) : 'N/A'}
                   </span>
                 </div>
 
                 {/* Sinopsis */}
                 <p className="line-clamp-3 text-xs leading-relaxed text-muted-foreground">
-                  {movie.description}
+                  {description}
                 </p>
 
                 {/* Formato */}
@@ -94,7 +104,7 @@ export default function MovieCard({
                   </span>
 
                   <span className="text-right text-xs font-medium text-foreground">
-                    {movie.format}
+                    {format}
                   </span>
                 </div>
 
@@ -119,3 +129,11 @@ export default function MovieCard({
     </Reveal>
   )
 }
+
+export default memo(MovieCard, (prev, next) => {
+  return (
+    prev.movie?.id === next.movie?.id &&
+    prev.index === next.index &&
+    prev.actionLabel === next.actionLabel
+  )
+})

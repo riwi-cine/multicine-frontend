@@ -1,6 +1,7 @@
+import { memo } from 'react'
 import { Skeleton } from "@/components/skeleton";
 
-export default function MovieCardSkeleton() {
+function MovieCardSkeleton() {
   return (
     <div className="w-40 shrink-0 sm:w-55 lg:w-60">
       <Skeleton className="aspect-2/3 w-full rounded-2xl" />
@@ -11,3 +12,5 @@ export default function MovieCardSkeleton() {
     </div>
   )
 }
+
+export default memo(MovieCardSkeleton)
