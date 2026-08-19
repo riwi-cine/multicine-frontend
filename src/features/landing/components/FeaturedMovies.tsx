@@ -3,8 +3,8 @@ import { Star, Ticket } from 'lucide-react'
 import { Badge } from '@/components/badge'
 import { Button } from '@/components/button'
 import Reveal from '@/components/reveal'
-import MovieArtwork from '@/features/movies/components/MovieArtwork'
-import type { Movie } from '@/features/movies/data/movies.mock'
+import type { Movie } from '@/features/movies'
+import { MovieArtwork } from '@/features/movies'
 import MovieCard from './MovieCard'
 import TrailerDialog from './TrailerDialog'
 
@@ -48,7 +48,7 @@ export default function FeaturedMovies({
         <div className="grid gap-6 lg:grid-cols-5">
           {/* Película destacada */}
           <Reveal className="h-full lg:col-span-3">
-            <article className="group relative flex h-full min-h-[420px] flex-col justify-end overflow-hidden rounded-2xl border border-white/5 bg-card lg:min-h-[560px]">
+            <article className="group relative flex h-full min-h-105 flex-col justify-end overflow-hidden rounded-2xl border border-white/5 bg-card lg:min-h-140">
               <div className="absolute inset-0">
                 <MovieArtwork
                   palette={featured.palette}
@@ -58,7 +58,7 @@ export default function FeaturedMovies({
                 />
               </div>
 
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/10" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/45 to-black/10" />
 
               <div className="relative flex flex-col gap-3 p-6 sm:p-8">
                 <div className="flex flex-wrap items-center gap-2">
@@ -93,7 +93,7 @@ export default function FeaturedMovies({
                     size="lg"
                     className="
                       h-12 rounded-xl px-7
-                      bg-gradient-to-r from-[#800021] to-[#C24366]
+                      bg-linear-to-r from-[#800021] to-[#C24366]
                       text-base text-white
                       shadow-lg shadow-[#C24366]/25
                       transition-all duration-300

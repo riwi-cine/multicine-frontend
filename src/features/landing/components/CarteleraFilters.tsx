@@ -3,7 +3,7 @@ import { memo, useMemo } from 'react'
 
 import { Input } from '@/components/input'
 import { cn } from '@/utils/cn'
-import type { Movie } from '@/features/movies/data/movies.mock'
+import type { Movie } from '@/features/movies'
 
 const CLASSIFICATIONS = ['G', 'PG', 'PG-13', 'R']
 

@@ -2,8 +2,8 @@ import { memo } from 'react'
 import Reveal from '@/components/reveal'
 import { Badge } from '@/components/badge'
 import { cn } from '@/utils/cn'
-import MovieArtwork from '@/features/movies/components/MovieArtwork'
-import type { Movie } from '@/features/movies/data/movies.mock'
+import { MovieArtwork } from '@/features/movies'
+import type { Movie } from '@/features/movies'
 
 type MovieCardProps = {
   movie: Movie
@@ -54,7 +54,7 @@ function MovieCard({
             <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/10 to-transparent" />
 
             <Badge className="absolute top-3 left-3 border border-white/15 bg-black/40 text-white backdrop-blur-md">
-              {movie.rating}
+              {rating}
             </Badge>
           </div>
 
