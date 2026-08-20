@@ -1,6 +1,6 @@
 import { apiClient } from '@/api'
 import type { MovieFunction } from '@/types'
-import type { Movie } from '@/features/movies/data/movies.mock'
+import type { Movie } from '@/features/movies/types/movies.types'
 import type { ExtendedMovie } from '@/features/movies/types'
 
 export const moviesApi = {

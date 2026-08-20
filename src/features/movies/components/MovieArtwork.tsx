@@ -1,7 +1,7 @@
 import { memo, useId, useState } from 'react'
 
 import { cn } from '@/utils/cn'
-import type { MoviePalette } from '../data/movies.mock'
+import type { MoviePalette } from '@/features/movies/types/movies.types'
 
 interface MovieArtworkProps {
   palette: MoviePalette

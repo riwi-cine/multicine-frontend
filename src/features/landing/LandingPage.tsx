@@ -81,7 +81,7 @@ export default function LandingPage() {
           id="destacadas"
           title="Películas destacadas"
           description="Lo mejor del cine en pantalla ahora mismo. Las historias que más están dando de qué hablar, elegidas por nuestro público."
-          movies={featuredMovies}
+          movies={featuredMovies.slice(0, 5)}
         />
 
         <section id="cartelera" className="w-full bg-[#E3E7EF] pt-10 sm:pt-12">
