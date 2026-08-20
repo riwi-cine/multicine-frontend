@@ -8,7 +8,7 @@ export type {
   MoviePalette,
   Promotion,
   Benefit,
-} from './data/movies.mock'
+} from '@/features/movies/types/movies.types'
 
 export type {
   ExtendedMovie,
@@ -23,4 +23,5 @@ export {
   comingSoon,
   promotions,
   benefits,
-} from './data/movies.mock'
+  fallbackFeaturedMovie,
+} from '@/features/movies/types/movies.types'
