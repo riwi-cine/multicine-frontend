@@ -1,4 +1,5 @@
 import { Star, Ticket } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 import { Badge } from '@/components/badge'
 import { Button } from '@/components/button'
@@ -21,6 +22,7 @@ export default function FeaturedMovies({
   description,
   id,
 }: FeaturedMoviesProps) {
+  const navigate = useNavigate()
   const [featured, ...rest] = movies
 
   if (!featured) return null
@@ -91,6 +93,7 @@ export default function FeaturedMovies({
                 <div className="flex flex-col gap-3 pt-2 sm:flex-row">
                   <Button
                     size="lg"
+                    onClick={() => navigate(`/movie/${featured.id}`)}
                     className="
                       h-12 rounded-xl px-7
                       bg-linear-to-r from-[#800021] to-[#C24366]

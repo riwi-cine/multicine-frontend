@@ -1,6 +1,7 @@
-import { useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-import { Ticket, Star } from 'lucide-react'
+import { toast } from 'sonner'
+import { ArrowLeft, Ticket, Star } from 'lucide-react'
 
 import { Button } from '@/components/button'
 import { MovieArtwork } from '@/features/movies'
@@ -13,6 +14,18 @@ import MovieDetailSkeleton from './MovieDetailSkeleton'
 
 const Details = () => {
   const { id } = useParams<{ id: string }>()
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  // Si la vista se abrió por deep link (sin historial interno),
+  // "Volver" lleva al home en lugar de salir de la app.
+  const handleBack = () => {
+    if (location.key !== 'default') {
+      navigate(-1)
+      return
+    }
+    navigate('/', { replace: true })
+  }
 
   const { data: movie, isLoading, error } = useQuery<Movie, Error>({
     queryKey: ['movie', id],
@@ -23,13 +36,21 @@ const Details = () => {
           return movieData
         }
       } catch {
-        // fall through
+        // El mock de Postman no expone GET /movies/:id; el fallback
+        // siguiente resuelve contra el catálogo completo.
       }
-      // Fallback: fetch all movies and find by ID
-      const allMovies = await moviesApi.getAll()
-      const found = allMovies.find((m) => m.id === id)
-      if (!found) throw new Error('Movie not found')
-      return found
+      try {
+        const allMovies = await moviesApi.getAll()
+        const found = allMovies.find((m) => m.id === id)
+        if (!found) {
+          throw new Error(`La película "${id}" no existe en el catálogo`)
+        }
+        return found
+      } catch (fallbackError) {
+        throw new Error('No se pudo cargar la película', {
+          cause: fallbackError,
+        })
+      }
     },
     enabled: !!id,
     staleTime: 5 * 60 * 1000,
@@ -42,10 +63,18 @@ const Details = () => {
 
   if (error || !movie) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-background">
+      <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-background">
         <p className="text-muted-foreground">
           Película no encontrada
         </p>
+        <Button
+          variant="ghost"
+          onClick={handleBack}
+          className="inline-flex items-center gap-2"
+        >
+          <ArrowLeft className="size-4" />
+          Volver
+        </Button>
       </main>
     )
   }
@@ -60,6 +89,26 @@ const Details = () => {
         <nav>
             <Navbar/>
         </nav>
+
+        {/* Botón volver — debajo del navbar fijo */}
+        <button
+          type="button"
+          onClick={handleBack}
+          className="
+            absolute left-4 top-24 z-20
+            inline-flex items-center gap-2
+            rounded-lg border border-white/20
+            bg-black/40 px-3 py-2
+            text-sm font-medium text-white
+            backdrop-blur-md
+            transition-colors duration-200
+            hover:bg-black/60
+            sm:left-6 lg:left-8
+          "
+        >
+          <ArrowLeft className="size-4" />
+          Volver
+        </button>
 
         {/* Imagen de fondo */}
         <div className="absolute inset-0 -z-20">
@@ -270,6 +319,9 @@ const Details = () => {
               <div className="mt-8 flex justify-center md:justify-start">
                 <Button
                   size="lg"
+                  onClick={() =>
+                    toast.info('La programación de funciones estará disponible pronto.')
+                  }
                   className="
                     h-12
                     rounded-xl

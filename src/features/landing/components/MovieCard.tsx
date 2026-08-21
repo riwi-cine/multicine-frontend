@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { memo, useCallback } from 'react'
 import Reveal from '@/components/reveal'
 import { Badge } from '@/components/badge'
 import { cn } from '@/utils/cn'
@@ -11,18 +11,29 @@ type MovieCardProps = {
   actionLabel: string
   meta?: string
   index?: number
+  /**
+   * Callback estable compartido (p. ej. rotar un carrusel). Si se omite,
+   * la card navega a la vista de detalles de la película.
+   */
+  onRotate?: (index: number) => void
 }
 
 function MovieCard({
   movie,
   actionLabel,
   index = 0,
+  onRotate,
 }: MovieCardProps) {
   const navigate = useNavigate()
 
-  const handleClick = useCallback(() => {
+  // Único punto de activación: rotación delegada o navegación a detalles.
+  const handleActivate = useCallback(() => {
+    if (onRotate) {
+      onRotate(index)
+      return
+    }
     navigate(`/movie/${movie.id}`)
-  }, [movie.id, navigate])
+  }, [movie.id, navigate, onRotate, index])
 
   // Defensive safeguards: if the record is incomplete (missing data
   // from the backend, a malformed mock, etc.), we display a fallback value
@@ -41,7 +52,6 @@ function MovieCard({
     <Reveal
       delay={Math.min(index * 60, 360)}
       className={cn('group h-full shrink-0')}
-      onClick={handleClick}
     >
       <div
         className={cn(
@@ -50,7 +60,7 @@ function MovieCard({
           'hover:shadow-[0_0_28px_-6px_var(--accent)]',
           'cursor-pointer',
         )}
-        onClick={handleClick}
+        onClick={handleActivate}
       >
         <div className="overflow-hidden rounded-[calc(var(--radius-xl)-2px)] bg-card">
           {/* Poster */}
@@ -118,9 +128,10 @@ function MovieCard({
                   </span>
                 </div>
 
-                {/* Acción */}
-                <a
-                  href="#"
+                {/* Acción — sin onClick propio: el click burbujea una sola
+                    vez al contenedor activable, evitando navegación doble. */}
+                <button
+                  type="button"
                   className={cn(
                     'mt-1 inline-flex w-full items-center justify-center rounded-lg',
                     'bg-primary px-3 py-2.5',
@@ -128,13 +139,9 @@ function MovieCard({
                     'transition-all duration-200',
                     'hover:bg-secondary hover:shadow-md',
                   )}
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    handleClick()
-                  }}
                 >
                   {actionLabel}
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -144,4 +151,10 @@ function MovieCard({
   )
 }
 
-export default MovieCard
+export default memo(MovieCard, (prev, next) => (
+  prev.movie?.id === next.movie?.id &&
+  prev.index === next.index &&
+  prev.actionLabel === next.actionLabel &&
+  prev.meta === next.meta &&
+  prev.onRotate === next.onRotate
+))

@@ -288,12 +288,15 @@ function MovieCarousel({ movies, title, id }: MovieCarouselProps) {
                       : 10 - absolutePosition,
                 }}
                 onMouseEnter={() => handleHover(index)}
-                onClick={() => goToMovie(index)}
               >
                 <MovieCard
                   movie={movie}
                   actionLabel="Ver funciones"
                   index={index}
+                  // Card lateral rota el carrusel (goToMovie es estable vía
+                  // useCallback → preserva la memoización de MovieCard).
+                  // Card activa: navega a detalles por defecto.
+                  onRotate={isActive ? undefined : goToMovie}
                 />
               </div>
             )

@@ -1,24 +1,34 @@
-"use client"
+import { Navigate, useLocation } from 'react-router-dom'
 
-import React, { useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+const LOCATION_STORAGE_KEY = 'selectedLocation'
 
+/**
+ * Guard de ubicación evaluado durante el render (no en useEffect):
+ * evita el flash del contenido protegido y los fetches desperdiciados
+ * antes del redirect. Preserva la ruta de origen en `state.from`.
+ */
 export default function RequireLocation({ children }: { children: React.ReactNode }) {
-    const navigate = useNavigate()
     const location = useLocation()
 
-    useEffect(() => {
-        // only run client-side
+    const hasLocation = (() => {
         try {
-            const selected = localStorage.getItem('selectedLocation')
-            const onSelectPage = location.pathname === '/location'
-            if (!selected && !onSelectPage) {
-                navigate('/location', { replace: true })
-            }
+            return Boolean(localStorage.getItem(LOCATION_STORAGE_KEY))
         } catch {
-            // fallback: do nothing
+            // Storage no disponible (modo privado/lockdown): tratar como sin
+            // ubicación para que el usuario pueda llegar a la página de selección.
+            return false
         }
-    }, [location.pathname, navigate])
+    })()
+
+    if (!hasLocation && location.pathname !== '/location') {
+        return (
+            <Navigate
+                to="/location"
+                replace
+                state={{ from: location.pathname }}
+            />
+        )
+    }
 
     return <>{children}</>
 }

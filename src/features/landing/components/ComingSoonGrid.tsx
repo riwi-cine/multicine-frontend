@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef } from 'react'
 import Reveal from '@/components/reveal'
 import type { Movie } from '@/features/movies'
 import MovieCard from './MovieCard'
@@ -10,30 +10,36 @@ interface ComingSoonGridProps {
 }
 
 export default function ComingSoonGrid({ movies, title, id }: ComingSoonGridProps) {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  // La máscara radial se muta directamente sobre el nodo (sin estado):
+  // el mousemove ya no dispara re-renders del grid completo.
+  const gridRef = useRef<HTMLDivElement>(null)
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const grid = gridRef.current
+    if (!grid) return
+
     const rect = e.currentTarget.getBoundingClientRect()
-    setMousePos({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    })
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const mask = `radial-gradient(300px circle at ${x}px ${y}px, black 20%, transparent 100%)`
+
+    grid.style.setProperty('-webkit-mask-image', mask)
+    grid.style.setProperty('mask-image', mask)
   }
 
   return (
     <section
-  id={id}
-  onMouseMove={handleMouseMove}
-  className="relative w-full overflow-hidden bg-[#E3E7EF] py-20 sm:py-28"
->
+      id={id}
+      onMouseMove={handleMouseMove}
+      className="relative w-full overflow-hidden bg-[#E3E7EF] py-20 sm:py-28"
+    >
       {/* Micro-Grilla interactiva visible únicamente mediante máscara radial alrededor del cursor */}
       <div
+        ref={gridRef}
         className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300"
         style={{
           backgroundImage: `radial-gradient(rgba(15, 23, 42, 0.16) 1px, transparent 1px)`,
           backgroundSize: '24px 24px',
-          WebkitMaskImage: `radial-gradient(300px circle at ${mousePos.x}px ${mousePos.y}px, black 20%, transparent 100%)`,
-          maskImage: `radial-gradient(300px circle at ${mousePos.x}px ${mousePos.y}px, black 20%, transparent 100%)`,
         }}
         aria-hidden="true"
       />

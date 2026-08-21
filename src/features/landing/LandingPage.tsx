@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -14,13 +15,30 @@ import Footer from './components/Footer'
 import AmbientSpotlight from '@/components/ui/AmbientSpotlight'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { useMovies, promotions, benefits } from '@/features/movies'
+import { usePromotions } from '@/features/promotions'
 
 export default function LandingPage() {
   const [genre, setGenre] = useState<string | null>(null)
   const [classification, setClassification] = useState<string | null>(null)
   const [search, setSearch] = useState('')
 
-  const { data: movies, isLoading } = useMovies()
+  const location = useLocation()
+  const { data: movies, isLoading, isError } = useMovies()
+  const { data: activePromotions } = usePromotions()
+
+  // Fallback estático mientras carga o si la API de promociones falla.
+  const promotionsList = activePromotions ?? promotions
+
+  // Scroll a la sección indicada en el hash (p. ej. "/#cartelera" al
+  // volver desde la vista de detalle vía los links del Navbar).
+  useEffect(() => {
+    if (!location.hash) return
+
+    const sectionId = location.hash.slice(1)
+    const el = document.getElementById(sectionId)
+
+    el?.scrollIntoView({ behavior: 'smooth' })
+  }, [location])
 
   const featuredMovie = useMemo(() => movies?.[0], [movies])
 
@@ -107,6 +125,8 @@ export default function LandingPage() {
                   <MovieCardSkeleton key={i} />
                 ))}
               </div>
+            ) : isError ? (
+              <CarteleraEmptyState message="No pudimos cargar la cartelera. Verifica tu conexión e intenta de nuevo." />
             ) : carteleraError ? (
               <CarteleraEmptyState message={carteleraError} />
             ) : filteredNowShowing.length === 0 ? (
@@ -126,7 +146,7 @@ export default function LandingPage() {
         <PromotionsSection
           id="promociones"
           title="Promociones"
-          promotions={promotions}
+          promotions={promotionsList}
         />
 
         <ExperienceSection

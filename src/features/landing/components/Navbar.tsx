@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
   ChevronDown,
   Film,
@@ -19,35 +20,37 @@ import {
 } from '@/components/dropdown-menu'
 import Logo from '@/components/logo'
 
+// Rutas con hash: funcionan tanto desde el landing (scroll nativo via
+// efecto de LandingPage) como desde otras vistas (navegan a "/" primero).
 const NAV_LINKS = [
-  { label: 'Cartelera', href: '#cartelera' },
-  { label: 'Cines', href: '#cines' },
-  { label: 'Promociones', href: '#promociones' },
+  { label: 'Cartelera', href: '/#cartelera' },
+  { label: 'Cines', href: '/#experiencia' },
+  { label: 'Promociones', href: '/#promociones' },
 ]
 
 const MORE_LINKS = [
   {
     label: 'Próximos estrenos',
     description: 'Descubre las próximas películas.',
-    href: '#proximamente',
+    href: '/#proximamente',
     icon: Film,
   },
   {
     label: 'Bonos de regalo',
     description: 'Regala una experiencia de cine.',
-    href: '#bonos',
+    href: '/#promociones',
     icon: Gift,
   },
   {
     label: 'Membresía',
     description: 'Consulta tus beneficios y puntos.',
-    href: '#membresia',
+    href: '/#experiencia',
     icon: Star,
   },
   {
     label: 'Confitería',
     description: 'Disfruta nuestros combos y productos.',
-    href: '#confiteria',
+    href: '/#promociones',
     icon: Popcorn,
   },
 ]
@@ -84,9 +87,9 @@ export default function Navbar() {
           {/* Navegación desktop */}
           <div className="hidden items-center gap-1 lg:flex">
             {NAV_LINKS.map((link) => (
-              <a
+              <Link
                 key={link.href}
-                href={link.href}
+                to={link.href}
                 className="
                   rounded-lg px-4 py-2
                   text-sm font-medium
@@ -97,7 +100,7 @@ export default function Navbar() {
                 "
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
 
             {/* Más */}
@@ -141,8 +144,8 @@ export default function Navbar() {
                       asChild
                       className="rounded-lg p-0"
                     >
-                      <a
-                        href={link.href}
+                      <Link
+                        to={link.href}
                         className="
                           flex cursor-pointer items-center gap-3
                           rounded-lg p-3
@@ -170,7 +173,7 @@ export default function Navbar() {
                             {link.description}
                           </span>
                         </div>
-                      </a>
+                      </Link>
                     </DropdownMenuItem>
                   )
                 })}
@@ -181,20 +184,7 @@ export default function Navbar() {
           {/* Acciones */}
           <div className="flex items-center gap-2">
             <Button
-              variant="ghost"
-              className="
-                hidden
-                text-foreground
-                transition-all duration-200
-                hover:bg-black/5
-                hover:text-foreground
-                md:inline-flex
-              "
-            >
-              Iniciar sesión
-            </Button>
-
-            <Button
+              asChild
               className="
                 hidden
                 border-0
@@ -207,8 +197,10 @@ export default function Navbar() {
                 md:inline-flex
               "
             >
-              <Ticket className="mr-1.5 size-4" />
-              Comprar entradas
+              <Link to="/#cartelera">
+                <Ticket className="mr-1.5 size-4" />
+                Comprar entradas
+              </Link>
             </Button>
 
             {/* Menú móvil */}
@@ -239,9 +231,9 @@ export default function Navbar() {
           <div className="border-t border-black/5 px-4 pb-4 lg:hidden">
             <div className="flex flex-col gap-1 pt-3">
               {NAV_LINKS.map((link) => (
-                <a
+                <Link
                   key={link.href}
-                  href={link.href}
+                  to={link.href}
                   onClick={closeMobileMenu}
                   className="
                     rounded-lg px-4 py-3
@@ -253,7 +245,7 @@ export default function Navbar() {
                   "
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
 
               <div className="my-2 border-t border-black/5" />
@@ -262,9 +254,9 @@ export default function Navbar() {
                 const Icon = link.icon
 
                 return (
-                  <a
+                  <Link
                     key={link.href}
-                    href={link.href}
+                    to={link.href}
                     onClick={closeMobileMenu}
                     className="
                       flex items-center gap-3
@@ -284,21 +276,14 @@ export default function Navbar() {
                         {link.description}
                       </span>
                     </div>
-                  </a>
+                  </Link>
                 )
               })}
 
               <div className="my-2 border-t border-black/5" />
 
               <Button
-                variant="ghost"
-                className="w-full justify-start"
-                onClick={closeMobileMenu}
-              >
-                Iniciar sesión
-              </Button>
-
-              <Button
+                asChild
                 className="
                   w-full
                   border-0
@@ -307,8 +292,10 @@ export default function Navbar() {
                 "
                 onClick={closeMobileMenu}
               >
-                <Ticket className="mr-1.5 size-4" />
-                Comprar entradas
+                <Link to="/#cartelera">
+                  <Ticket className="mr-1.5 size-4" />
+                  Comprar entradas
+                </Link>
               </Button>
             </div>
           </div>
