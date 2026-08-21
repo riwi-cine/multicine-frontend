@@ -1,9 +1,10 @@
-import { memo } from 'react'
+import { useCallback } from 'react'
 import Reveal from '@/components/reveal'
 import { Badge } from '@/components/badge'
 import { cn } from '@/utils/cn'
 import { MovieArtwork } from '@/features/movies'
 import type { Movie } from '@/features/movies'
+import { useNavigate } from 'react-router-dom'
 
 type MovieCardProps = {
   movie: Movie
@@ -17,6 +18,12 @@ function MovieCard({
   actionLabel,
   index = 0,
 }: MovieCardProps) {
+  const navigate = useNavigate()
+
+  const handleClick = useCallback(() => {
+    navigate(`/movie/${movie.id}`)
+  }, [movie.id, navigate])
+
   // Defensive safeguards: if the record is incomplete (missing data
   // from the backend, a malformed mock, etc.), we display a fallback value
   // instead of letting the entire card fail to render.
@@ -34,13 +41,16 @@ function MovieCard({
     <Reveal
       delay={Math.min(index * 60, 360)}
       className={cn('group h-full shrink-0')}
+      onClick={handleClick}
     >
       <div
         className={cn(
           'relative rounded-2xl bg-linear-to-br from-primary via-accent to-secondary p-2px',
           'transition-all duration-300 ease-out',
           'hover:shadow-[0_0_28px_-6px_var(--accent)]',
+          'cursor-pointer',
         )}
+        onClick={handleClick}
       >
         <div className="overflow-hidden rounded-[calc(var(--radius-xl)-2px)] bg-card">
           {/* Poster */}
@@ -118,6 +128,10 @@ function MovieCard({
                     'transition-all duration-200',
                     'hover:bg-secondary hover:shadow-md',
                   )}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleClick()
+                  }}
                 >
                   {actionLabel}
                 </a>
@@ -130,10 +144,4 @@ function MovieCard({
   )
 }
 
-export default memo(MovieCard, (prev, next) => {
-  return (
-    prev.movie?.id === next.movie?.id &&
-    prev.index === next.index &&
-    prev.actionLabel === next.actionLabel
-  )
-})
+export default MovieCard

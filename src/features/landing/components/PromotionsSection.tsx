@@ -1,11 +1,19 @@
 import Reveal from '@/components/reveal'
 import type { Promotion } from '@/features/movies'
 import { cn } from '@/utils/cn'
+import { Ticket, BadgePercent, Crown, Popcorn } from 'lucide-react'
 
 interface PromotionsSectionProps {
   promotions: Promotion[]
   title: string
   id?: string
+}
+
+const iconMap: Record<string, React.ComponentType> = {
+  Ticket,
+  BadgePercent,
+  Crown,
+  Popcorn,
 }
 
 export default function PromotionsSection({
@@ -24,7 +32,7 @@ export default function PromotionsSection({
 
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {promotions.map((promo, index) => {
-            const Icon = promo.icon
+            const Icon = iconMap[promo.icon] as React.ComponentType<{ className?: string; strokeWidth?: number }>
             return (
               <Reveal
                 key={promo.id}

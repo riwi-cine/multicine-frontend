@@ -1,26 +1,46 @@
-import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
 import { Ticket, Star } from 'lucide-react'
 
 import { Button } from '@/components/button'
 import { MovieArtwork } from '@/features/movies'
 import type { Movie } from '@/features/movies'
-import { featuredMovies } from '@/features/movies/types/movies.types'
+import { moviesApi } from '@/features/movies/api'
 
 import Footer from '../landing/components/Footer'
 import Navbar from '../landing/components/Navbar'
+import MovieDetailSkeleton from './MovieDetailSkeleton'
 
 const Details = () => {
-  const [movie, setMovie] = useState<Movie | null>(null)
+  const { id } = useParams<{ id: string }>()
 
-  useEffect(() => {
-    const movieToShow = featuredMovies.find(
-      (movie) => movie.id === 'dune-part-two',
-    )
+  const { data: movie, isLoading, error } = useQuery<Movie, Error>({
+    queryKey: ['movie', id],
+    queryFn: async () => {
+      try {
+        const movieData = await moviesApi.getById(id ?? '')
+        if (movieData && typeof movieData === 'object' && 'id' in movieData) {
+          return movieData
+        }
+      } catch {
+        // fall through
+      }
+      // Fallback: fetch all movies and find by ID
+      const allMovies = await moviesApi.getAll()
+      const found = allMovies.find((m) => m.id === id)
+      if (!found) throw new Error('Movie not found')
+      return found
+    },
+    enabled: !!id,
+    staleTime: 5 * 60 * 1000,
+    retry: 1,
+  })
 
-    setMovie(movieToShow ?? null)
-  }, [])
+  if (isLoading) {
+    return <MovieDetailSkeleton />
+  }
 
-  if (!movie) {
+  if (error || !movie) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-background">
         <p className="text-muted-foreground">
@@ -32,7 +52,6 @@ const Details = () => {
 
   return (
     <main className="min-h-screen bg-background">
-
       {/* =========================
           HERO / DETALLE PRINCIPAL
           ========================= */}
