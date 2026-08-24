@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { registerSchema } from '@/validations/auth.validation'
+import { registerSchema, loginSchema } from '@/validations/auth.validation'
 
 describe('auth.validation - registerSchema', () => {
   it('should validate a valid registration form data', () => {
@@ -67,3 +67,33 @@ describe('auth.validation - registerSchema', () => {
     }
   })
 })
+
+describe('auth.validation - loginSchema', () => {
+  it('should validate valid login credentials', () => {
+    const validData = {
+      email: 'usuario@ejemplo.com',
+      password: 'Password123',
+      rememberMe: true,
+    }
+
+    const result = loginSchema.safeParse(validData)
+    expect(result.success).toBe(true)
+  })
+
+  it('should reject empty or invalid email', () => {
+    const emptyEmail = { email: '', password: 'Password123' }
+    const res1 = loginSchema.safeParse(emptyEmail)
+    expect(res1.success).toBe(false)
+
+    const invalidEmail = { email: 'formato-invalido', password: 'Password123' }
+    const res2 = loginSchema.safeParse(invalidEmail)
+    expect(res2.success).toBe(false)
+  })
+
+  it('should reject empty password', () => {
+    const emptyPassword = { email: 'usuario@ejemplo.com', password: '' }
+    const result = loginSchema.safeParse(emptyPassword)
+    expect(result.success).toBe(false)
+  })
+})
+
