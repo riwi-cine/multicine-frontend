@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   ChevronDown,
   Film,
@@ -7,8 +8,12 @@ import {
   Popcorn,
   Star,
   Ticket,
+  User as UserIcon,
+  LogOut,
   X,
 } from 'lucide-react'
+import { toast } from 'sonner'
+import { useAuthStore } from '@/store'
 
 import { Button } from '@/components/button'
 import {
@@ -53,10 +58,19 @@ const MORE_LINKS = [
 ]
 
 export default function Navbar() {
+  const navigate = useNavigate()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const { isAuthenticated, user, logout } = useAuthStore()
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false)
+  }
+
+  const handleLogout = async () => {
+    await logout()
+    toast.success('Sesión cerrada correctamente')
+    closeMobileMenu()
+    navigate('/')
   }
 
   return (
@@ -180,19 +194,42 @@ export default function Navbar() {
 
           {/* Acciones */}
           <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              className="
-                hidden
-                text-foreground
-                transition-all duration-200
-                hover:bg-black/5
-                hover:text-foreground
-                md:inline-flex
-              "
-            >
-              Iniciar sesión
-            </Button>
+            {isAuthenticated ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="hidden md:inline-flex items-center gap-2 text-foreground">
+                    <UserIcon className="size-4 text-primary" />
+                    <span className="font-semibold text-sm">{user?.fullName || 'Mi Cuenta'}</span>
+                    <ChevronDown className="size-3.5" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48 bg-white p-1 rounded-xl shadow-lg border">
+                  <DropdownMenuItem onClick={() => navigate('/profile')} className="cursor-pointer">
+                    <UserIcon className="mr-2 size-4 text-muted-foreground" />
+                    Mi Perfil
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-destructive focus:text-destructive">
+                    <LogOut className="mr-2 size-4" />
+                    Cerrar Sesión
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button
+                variant="ghost"
+                onClick={() => navigate('/login')}
+                className="
+                  hidden
+                  text-foreground
+                  transition-all duration-200
+                  hover:bg-black/5
+                  hover:text-foreground
+                  md:inline-flex
+                "
+              >
+                Iniciar sesión
+              </Button>
+            )}
 
             <Button
               className="
@@ -290,13 +327,40 @@ export default function Navbar() {
 
               <div className="my-2 border-t border-black/5" />
 
-              <Button
-                variant="ghost"
-                className="w-full justify-start"
-                onClick={closeMobileMenu}
-              >
-                Iniciar sesión
-              </Button>
+              {isAuthenticated ? (
+                <>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start text-foreground"
+                    onClick={() => {
+                      closeMobileMenu()
+                      navigate('/profile')
+                    }}
+                  >
+                    <UserIcon className="mr-2 size-4 text-primary" />
+                    Mi Perfil ({user?.fullName})
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start text-destructive"
+                    onClick={handleLogout}
+                  >
+                    <LogOut className="mr-2 size-4" />
+                    Cerrar sesión
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start"
+                  onClick={() => {
+                    closeMobileMenu()
+                    navigate('/login')
+                  }}
+                >
+                  Iniciar sesión
+                </Button>
+              )}
 
               <Button
                 className="
