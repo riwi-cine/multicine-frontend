@@ -7,15 +7,18 @@ import {
   DialogTrigger,
 } from '@/components/dialog'
 import { Button } from '@/components/button'
+import { cn } from '@/utils/cn'
 
 interface TrailerDialogProps {
   trailerUrl?: string
   movieTitle: string
+  className?: string
 }
 
 export default function TrailerDialog({
   trailerUrl,
   movieTitle,
+  className,
 }: TrailerDialogProps) {
   if (!trailerUrl) {
     return (
@@ -40,12 +43,11 @@ export default function TrailerDialog({
         <Button
           size="lg"
           variant="ghost"
-          className="
-            h-12 rounded-xl px-7
-            text-base text-white
-            hover:bg-white/10
-            hover:text-white
-          "
+          className={cn(
+            'h-12 rounded-xl px-7 text-base text-white',
+            'hover:bg-white/10 hover:text-white',
+            className,
+          )}
         >
           <Play data-icon="inline-start" className="fill-current" />
           Ver tráiler

@@ -2,14 +2,24 @@ import { useRef } from 'react'
 import Reveal from '@/components/reveal'
 import type { Movie } from '@/features/movies'
 import MovieCard from './MovieCard'
+import MovieCardSkeleton from './MovieCardSkeleton'
+import CarteleraEmptyState from './CarteleraEmptyState'
 
 interface ComingSoonGridProps {
   movies: Movie[]
   title: string
   id?: string
+  isLoading?: boolean
+  isError?: boolean
 }
 
-export default function ComingSoonGrid({ movies, title, id }: ComingSoonGridProps) {
+export default function ComingSoonGrid({
+  movies,
+  title,
+  id,
+  isLoading = false,
+  isError = false,
+}: ComingSoonGridProps) {
   // La máscara radial se muta directamente sobre el nodo (sin estado):
   // el mousemove ya no dispara re-renders del grid completo.
   const gridRef = useRef<HTMLDivElement>(null)
@@ -51,17 +61,29 @@ export default function ComingSoonGrid({ movies, title, id }: ComingSoonGridProp
           </h2>
         </Reveal>
 
-        <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
-          {movies.map((movie, index) => (
-            <MovieCard
-              key={movie.id}
-              movie={movie}
-              actionLabel="Ver más"
-              meta={movie.releaseDate ? `Estreno: ${movie.releaseDate}` : undefined}
-              index={index}
-            />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <MovieCardSkeleton key={i} />
+            ))}
+          </div>
+        ) : isError ? (
+          <CarteleraEmptyState message="No pudimos cargar los próximos estrenos. Verifica tu conexión e intenta de nuevo." />
+        ) : movies.length === 0 ? (
+          <CarteleraEmptyState message="Por ahora no hay estrenos programados. Vuelve pronto." />
+        ) : (
+          <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
+            {movies.map((movie, index) => (
+              <MovieCard
+                key={movie.id}
+                movie={movie}
+                actionLabel="Ver más"
+                meta={movie.releaseDate ? `Estreno: ${movie.releaseDate}` : undefined}
+                index={index}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   )

@@ -141,6 +141,8 @@ export default function LandingPage() {
           id="proximamente"
           title="Próximamente"
           movies={comingSoon}
+          isLoading={isLoading}
+          isError={isError}
         />
 
         <PromotionsSection

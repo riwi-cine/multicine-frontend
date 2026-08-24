@@ -5,6 +5,7 @@ import { cn } from '@/utils/cn'
 import { MovieArtwork } from '@/features/movies'
 import type { Movie } from '@/features/movies'
 import { useNavigate } from 'react-router-dom'
+import TrailerDialog from './TrailerDialog'
 
 type MovieCardProps = {
   movie: Movie
@@ -21,6 +22,7 @@ type MovieCardProps = {
 function MovieCard({
   movie,
   actionLabel,
+  meta,
   index = 0,
   onRotate,
 }: MovieCardProps) {
@@ -76,6 +78,12 @@ function MovieCard({
             <Badge className="absolute top-3 left-3 border border-white/15 bg-black/40 text-white backdrop-blur-md">
               {rating}
             </Badge>
+
+            {meta && (
+              <span className="absolute bottom-3 left-3 rounded-md border border-white/15 bg-black/50 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-md">
+                {meta}
+              </span>
+            )}
           </div>
 
           {/* Información desplegable */}
@@ -127,6 +135,24 @@ function MovieCard({
                     {format}
                   </span>
                 </div>
+
+                {/* Tráiler — solo cuando la película lo expone; el click
+                    no debe burbujear al contenedor que navega al detalle. */}
+                {movie.trailerUrl && (
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <TrailerDialog
+                      trailerUrl={movie.trailerUrl}
+                      movieTitle={title}
+                      className="
+                        h-9 w-full rounded-lg px-3
+                        text-xs font-semibold
+                        border border-border/70
+                        bg-muted text-foreground
+                        hover:bg-secondary hover:text-secondary-foreground
+                      "
+                    />
+                  </div>
+                )}
 
                 {/* Acción — sin onClick propio: el click burbujea una sola
                     vez al contenedor activable, evitando navegación doble. */}
