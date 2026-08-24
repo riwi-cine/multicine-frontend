@@ -31,15 +31,6 @@ const Details = () => {
     queryKey: ['movie', id],
     queryFn: async () => {
       try {
-        const movieData = await moviesApi.getById(id ?? '')
-        if (movieData && typeof movieData === 'object' && 'id' in movieData) {
-          return movieData
-        }
-      } catch {
-        // El mock de Postman no expone GET /movies/:id; el fallback
-        // siguiente resuelve contra el catálogo completo.
-      }
-      try {
         const allMovies = await moviesApi.getAll()
         const found = allMovies.find((m) => m.id === id)
         if (!found) {
