@@ -1,6 +1,33 @@
+import {
+  Armchair,
+  BadgePercent,
+  CalendarClock,
+  Crown,
+  CupSoda,
+  MonitorPlay,
+  Popcorn,
+  Smartphone,
+  Ticket,
+  Waves,
+  type LucideIcon,
+} from 'lucide-react'
+
 import Reveal from '@/components/reveal'
 import type { Promotion } from '@/features/movies'
 import { cn } from '@/utils/cn'
+
+const iconMap: Record<string, LucideIcon> = {
+  Ticket,
+  BadgePercent,
+  Crown,
+  Popcorn,
+  MonitorPlay,
+  Waves,
+  Armchair,
+  Smartphone,
+  CalendarClock,
+  CupSoda,
+}
 
 interface PromotionsSectionProps {
   promotions: Promotion[]
@@ -24,7 +51,7 @@ export default function PromotionsSection({
 
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {promotions.map((promo, index) => {
-            const Icon = promo.icon
+            const Icon = iconMap[promo.icon] ?? Ticket
             return (
               <Reveal
                 key={promo.id}
@@ -40,7 +67,12 @@ export default function PromotionsSection({
                   <Icon className="size-10 text-primary" strokeWidth={1.6} />
                 </div>
                 <div className="flex flex-1 flex-col gap-2 p-5">
-                  <span className={cn('font-mono text-[0.65rem] tracking-[0.2em] uppercase', promo.text)}>
+                  <span
+                    className={cn(
+                      'font-mono text-[0.65rem] tracking-[0.2em] uppercase',
+                      promo.text,
+                    )}
+                  >
                     {promo.tag}
                   </span>
                   <h3 className="font-heading text-base font-semibold text-foreground">

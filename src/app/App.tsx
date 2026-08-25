@@ -1,7 +1,11 @@
-import AppRoutes from '@/routes'
+import Details from '@/features/details/Details'
 
 function App() {
-  return <AppRoutes />
+  return (
+    <div className="App">
+      <Details />
+    </div>
+  )
 }
 
 export default App
