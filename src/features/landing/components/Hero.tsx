@@ -1,4 +1,5 @@
 import { Ticket } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@/components/button'
 import Reveal from '@/components/reveal'
@@ -14,6 +15,8 @@ interface HeroProps {
 }
 
 export default function Hero({ movie }: HeroProps) {
+  const navigate = useNavigate()
+
   if (!movie) return null
   return (
     <section
@@ -95,6 +98,7 @@ export default function Hero({ movie }: HeroProps) {
             <div className="flex flex-col gap-3 pt-2 sm:flex-row">
               <Button
                 size="lg"
+                onClick={() => navigate(`/movie/${movie.id}`)}
                 className="
                   h-12 rounded-xl px-7
                   bg-linear-to-r

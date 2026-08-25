@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import { cn } from '@/utils/cn'
 
 interface LogoProps {
@@ -7,8 +9,8 @@ interface LogoProps {
 
 function Logo({ className, showText = true }: LogoProps) {
   return (
-    <a
-      href="#home"
+    <Link
+      to="/"
       aria-label="Multicine - home"
       className={cn(
         'group inline-flex items-center gap-2.5',
@@ -37,7 +39,7 @@ function Logo({ className, showText = true }: LogoProps) {
           MINE<span className="text-primary">ROYAL</span>
         </span>
       )}
-    </a>
+    </Link>
   )
 }
 

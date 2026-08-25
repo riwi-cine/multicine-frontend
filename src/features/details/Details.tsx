@@ -1,14 +1,25 @@
 import { useEffect, useMemo, useState } from 'react'
-import { CalendarDays, Clock3, Film, MapPin, Star, Ticket } from 'lucide-react'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
+import {
+  ArrowLeft,
+  CalendarDays,
+  Clock3,
+  Film,
+  MapPin,
+  Star,
+  Ticket,
+} from 'lucide-react'
 
 import { Button } from '@/components/button'
-import { MovieArtwork } from '@/features/movies'
+import { MovieArtwork, moviesApi } from '@/features/movies'
 import type { Movie } from '@/features/movies'
 import { featuredMovies } from '@/features/movies/types/movies.types'
 import { LOCATIONS } from '@/features/landing/data/locations'
 
 import Footer from '../landing/components/Footer'
 import Navbar from '../landing/components/Navbar'
+import MovieDetailSkeleton from './MovieDetailSkeleton'
 
 type LocationOption = {
   country: string
@@ -47,7 +58,10 @@ const buildRandomTimes = () => {
 const roomTypes = ['3D - DOB', 'Ultra 2D - DOB', '2D - DOB']
 
 const Details = () => {
-  const [movie, setMovie] = useState<Movie | null>(null)
+  const { id } = useParams<{ id: string }>()
+  const navigate = useNavigate()
+  const location = useLocation()
+
   const [allLocations, setAllLocations] = useState<LocationOption[]>([])
   const [selectedLocation, setSelectedLocation] =
     useState<LocationOption | null>(null)
@@ -60,12 +74,50 @@ const Details = () => {
 
   const dateOptions = useMemo(() => getDateOptions(), [])
 
-  useEffect(() => {
-    const movieToShow = featuredMovies.find(
-      (item) => item.id === 'dune-part-two',
-    )
-    setMovie(movieToShow ?? null)
+  const handleBack = () => {
+    if (location.key !== 'default') {
+      navigate(-1)
+      return
+    }
+    navigate('/', { replace: true })
+  }
 
+  const {
+    data: movie,
+    isLoading,
+    error,
+  } = useQuery<Movie, Error>({
+    queryKey: ['movie', id],
+    queryFn: async () => {
+      if (!id) {
+        throw new Error('Falta el id de la película')
+      }
+
+      try {
+        const allMovies = await moviesApi.getAll()
+        const found = allMovies.find((m) => m.id === id)
+        if (found) {
+          return found
+        }
+      } catch {
+        // Fallback silencioso si la API no está disponible.
+      }
+
+      const fallbackMovie =
+        featuredMovies.find((item) => item.id === id) ?? featuredMovies[0]
+
+      if (!fallbackMovie) {
+        throw new Error(`La película "${id}" no existe en el catálogo`)
+      }
+
+      return fallbackMovie
+    },
+    enabled: !!id,
+    staleTime: 5 * 60 * 1000,
+    retry: 1,
+  })
+
+  useEffect(() => {
     const locations = getAllLocations()
     setAllLocations(locations)
 
@@ -182,10 +234,22 @@ const Details = () => {
     setConfirmed(true)
   }
 
-  if (!movie) {
+  if (isLoading) {
+    return <MovieDetailSkeleton />
+  }
+
+  if (error || !movie) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-background">
+      <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-background">
         <p className="text-muted-foreground">Película no encontrada</p>
+        <Button
+          variant="ghost"
+          onClick={handleBack}
+          className="inline-flex items-center gap-2"
+        >
+          <ArrowLeft className="size-4" />
+          Volver
+        </Button>
       </main>
     )
   }
@@ -196,6 +260,25 @@ const Details = () => {
         <nav>
           <Navbar />
         </nav>
+
+        <button
+          type="button"
+          onClick={handleBack}
+          className="
+            absolute left-4 top-24 z-20
+            inline-flex items-center gap-2
+            rounded-lg border border-white/20
+            bg-black/40 px-3 py-2
+            text-sm font-medium text-white
+            backdrop-blur-md
+            transition-colors duration-200
+            hover:bg-black/60
+            sm:left-6 lg:left-8
+          "
+        >
+          <ArrowLeft className="size-4" />
+          Volver
+        </button>
 
         <div className="absolute inset-0 -z-20">
           <MovieArtwork
