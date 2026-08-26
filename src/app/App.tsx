@@ -1,9 +1,9 @@
-import Details from '@/features/details/Details'
+import AppRoutes from '@/routes'
 
 function App() {
   return (
     <div className="App">
-      <Details />
+      <AppRoutes />
     </div>
   )
 }

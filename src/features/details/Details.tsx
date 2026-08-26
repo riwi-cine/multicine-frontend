@@ -34,6 +34,40 @@ const getAllLocations = (): LocationOption[] =>
     ),
   )
 
+const getInitialSelectedLocation = (
+  locations: LocationOption[],
+): LocationOption | null => {
+  try {
+    const stored = localStorage.getItem('selectedLocation')
+    if (!stored) {
+      return locations[0] ?? null
+    }
+
+    const parsed = JSON.parse(stored) as {
+      country?: string
+      city?: string
+      venue?: string
+    }
+
+    if (parsed.country && parsed.city && parsed.venue) {
+      const matched = locations.find(
+        (location) =>
+          location.country === parsed.country &&
+          location.city === parsed.city &&
+          location.venue === parsed.venue,
+      )
+
+      if (matched) {
+        return matched
+      }
+    }
+
+    return locations[0] ?? null
+  } catch {
+    return locations[0] ?? null
+  }
+}
+
 const getDateOptions = () => {
   const today = new Date()
 
@@ -62,9 +96,11 @@ const Details = () => {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const [allLocations, setAllLocations] = useState<LocationOption[]>([])
+  const [allLocations] = useState<LocationOption[]>(getAllLocations)
   const [selectedLocation, setSelectedLocation] =
-    useState<LocationOption | null>(null)
+    useState<LocationOption | null>(() =>
+      getInitialSelectedLocation(allLocations),
+    )
   const [selectedDateIndex, setSelectedDateIndex] = useState<number | null>(
     null,
   )
@@ -118,39 +154,6 @@ const Details = () => {
   })
 
   useEffect(() => {
-    const locations = getAllLocations()
-    setAllLocations(locations)
-
-    try {
-      const stored = localStorage.getItem('selectedLocation')
-      if (stored) {
-        const parsed = JSON.parse(stored) as {
-          country?: string
-          city?: string
-          venue?: string
-        }
-        if (parsed.country && parsed.city && parsed.venue) {
-          const matched = locations.find(
-            (location) =>
-              location.country === parsed.country &&
-              location.city === parsed.city &&
-              location.venue === parsed.venue,
-          )
-
-          if (matched) {
-            setSelectedLocation(matched)
-            return
-          }
-        }
-      }
-
-      setSelectedLocation(locations[0] ?? null)
-    } catch {
-      setSelectedLocation(locations[0] ?? null)
-    }
-  }, [])
-
-  useEffect(() => {
     if (!selectedLocation) {
       return
     }
@@ -189,29 +192,6 @@ const Details = () => {
 
     return schedule
   }, [allLocations])
-
-  useEffect(() => {
-    if (!selectedLocation) {
-      setSelectedRoomType('')
-      setSelectedTime('')
-      return
-    }
-
-    const allowedLocations = locationOptionsForSelection.map(
-      (location) => location.venue,
-    )
-    const isValidVenue = allowedLocations.includes(selectedLocation.venue)
-
-    if (!isValidVenue) {
-      setSelectedLocation(locationOptionsForSelection[0] ?? null)
-    }
-
-    if (selectedRoomType && !roomTypes.includes(selectedRoomType)) {
-      setSelectedRoomType('')
-    }
-
-    setSelectedTime('')
-  }, [locationOptionsForSelection, selectedLocation, selectedRoomType])
 
   const isSelectionComplete =
     !!selectedLocation &&
@@ -504,7 +484,7 @@ const Details = () => {
                       ? 'w-[50%]'
                       : selectedDateIndex !== null
                         ? 'w-[25%]'
-                        : !!selectedLocation
+                        : selectedLocation
                           ? 'w-[12.5%]'
                           : 'w-0'
                 }`}
@@ -581,6 +561,7 @@ const Details = () => {
 
                       if (nextLocation) {
                         setSelectedLocation(nextLocation)
+                        setSelectedTime('')
                       }
                     }}
                     className="w-full appearance-none rounded-xl border border-[#eadfe1] bg-[#f7f4f4] px-3 py-3 pr-10 text-sm font-medium text-[#2d1d20] outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
@@ -665,7 +646,10 @@ const Details = () => {
                   <button
                     key={roomType}
                     type="button"
-                    onClick={() => setSelectedRoomType(roomType)}
+                    onClick={() => {
+                      setSelectedRoomType(roomType)
+                      setSelectedTime('')
+                    }}
                     className={`w-full rounded-xl border px-3 py-2 text-left text-sm font-semibold transition-all ${
                       selectedRoomType === roomType
                         ? 'border-[#800021] bg-linear-to-r from-[#800021] to-[#C24366] text-white shadow-md shadow-[#C24366]/20'

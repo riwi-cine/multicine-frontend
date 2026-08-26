@@ -1,9 +1,11 @@
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { Link, Route, Routes, useLocation } from 'react-router-dom'
 
 import LandingPage, { SelectLocationPage } from '@/features/landing'
+import MovieDetailSkeleton from '@/features/details/MovieDetailSkeleton'
 import RequireLocation from '@/routes/RequireLocation'
-import Details from '../features/details/Details'
+
+const Details = lazy(() => import('@/features/details/Details'))
 
 /**
  * Restaura la posición de scroll en cada cambio de ruta. Si la URL trae
@@ -51,7 +53,14 @@ function AppRoutes() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/location" element={<SelectLocationPage />} />
-        <Route path="/movie/:id" element={<Details />} />
+        <Route
+          path="/movie/:id"
+          element={
+            <Suspense fallback={<MovieDetailSkeleton />}>
+              <Details />
+            </Suspense>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </RequireLocation>
