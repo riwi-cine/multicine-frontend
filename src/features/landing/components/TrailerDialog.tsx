@@ -11,11 +11,14 @@ import { Button } from '@/components/button'
 interface TrailerDialogProps {
   trailerUrl?: string
   movieTitle: string
+  /** Versión reducida del trigger, pensada para las cards de cartelera. */
+  compact?: boolean
 }
 
 export default function TrailerDialog({
   trailerUrl,
   movieTitle,
+  compact = false,
 }: TrailerDialogProps) {
   if (!trailerUrl) {
     return (
@@ -37,19 +40,33 @@ export default function TrailerDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          size="lg"
-          variant="ghost"
-          className="
-            h-12 rounded-xl px-7
-            text-base text-white
-            hover:bg-white/10
-            hover:text-white
-          "
-        >
-          <Play data-icon="inline-start" className="fill-current" />
-          Ver tráiler
-        </Button>
+        {compact ? (
+          <Button
+            size="sm"
+            className="
+              rounded-full border border-white/20 bg-black/50
+              text-xs text-white backdrop-blur-md
+              hover:bg-black/70 hover:text-white
+            "
+          >
+            <Play data-icon="inline-start" className="fill-current" />
+            Ver tráiler
+          </Button>
+        ) : (
+          <Button
+            size="lg"
+            variant="ghost"
+            className="
+              h-12 rounded-xl px-7
+              text-base text-white
+              hover:bg-white/10
+              hover:text-white
+            "
+          >
+            <Play data-icon="inline-start" className="fill-current" />
+            Ver tráiler
+          </Button>
+        )}
       </DialogTrigger>
 
       <DialogContent
