@@ -113,6 +113,7 @@ export const featuredMovies: Movie[] = [
     format: 'IMAX · Dolby Atmos',
     image:
       'https://image.tmdb.org/t/p/original/mFnF8tpPMqEwti2J2aMhYGZYdv0.jpg',
+    trailerUrl: 'https://www.youtube.com/embed/Way9Dexny3w',
     palette: {
       from: '#1c1208',
       to: '#c27b32',
@@ -133,6 +134,7 @@ export const featuredMovies: Movie[] = [
     format: 'IMAX · Dolby Atmos',
     image:
       'https://image.tmdb.org/t/p/original/bMwjsrY3tR6BZEy9dhEAhS9FqKk.jpg',
+    trailerUrl: 'https://www.youtube.com/embed/bK6ldnjE3Y0',
     palette: {
       from: '#160909',
       to: '#9f251f',
@@ -153,6 +155,7 @@ export const featuredMovies: Movie[] = [
     format: 'IMAX · Dolby Atmos',
     image:
       'https://image.tmdb.org/t/p/original/7CxL8W0J8bzpIVVznQ0whiOKeDH.jpg',
+    trailerUrl: 'https://www.youtube.com/embed/qSqVVswa420',
     palette: {
       from: '#07111f',
       to: '#155e75',
@@ -173,6 +176,7 @@ export const featuredMovies: Movie[] = [
     format: 'IMAX · Dolby Atmos',
     image:
       'https://image.tmdb.org/t/p/original/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg',
+    trailerUrl: 'https://www.youtube.com/embed/JfVOs4VSpmA',
     palette: {
       from: '#0b1026',
       to: '#b91c1c',
@@ -197,6 +201,7 @@ export const nowShowing: Movie[] = [
     format: 'IMAX · Dolby Atmos',
     image:
       'https://image.tmdb.org/t/p/original/mFnF8tpPMqEwti2J2aMhYGZYdv0.jpg',
+    trailerUrl: 'https://www.youtube.com/embed/Way9Dexny3w',
     palette: {
       from: '#1c1208',
       to: '#c27b32',
@@ -217,6 +222,7 @@ export const nowShowing: Movie[] = [
     format: 'IMAX · Dolby Atmos',
     image:
       'https://image.tmdb.org/t/p/original/bMwjsrY3tR6BZEy9dhEAhS9FqKk.jpg',
+    trailerUrl: 'https://www.youtube.com/embed/bK6ldnjE3Y0',
     palette: {
       from: '#160909',
       to: '#9f251f',
@@ -237,6 +243,7 @@ export const nowShowing: Movie[] = [
     format: 'IMAX · Dolby Atmos',
     image:
       'https://image.tmdb.org/t/p/original/zjGVwDFpHLKueusW5TF9r4gn8Er.jpg',
+    trailerUrl: 'https://www.youtube.com/embed/73_1biulkYk',
     palette: {
       from: '#250509',
       to: '#b91c1c',
@@ -257,6 +264,7 @@ export const nowShowing: Movie[] = [
     format: '4DX · IMAX',
     image:
       'https://media.themoviedb.org/t/p/w220_and_h330_face/z1p34vh7dEOnLDmyCrlUVLuoDzd.jpg',
+    trailerUrl: 'https://www.youtube.com/embed/lV1OOlGwExM',
     palette: {
       from: '#06151a',
       to: '#075985',
@@ -277,6 +285,7 @@ export const nowShowing: Movie[] = [
     format: 'IMAX · Dolby Atmos',
     image:
       'https://image.tmdb.org/t/p/original/lqGqvmqHr8T2Ll8w7mzAtNshUpb.jpg',
+    trailerUrl: 'https://www.youtube.com/embed/mqqft2x_Aa4',
     palette: {
       from: '#08090d',
       to: '#450a0a',
@@ -297,6 +306,7 @@ export const nowShowing: Movie[] = [
     format: 'IMAX · Dolby Atmos',
     image:
       'https://image.tmdb.org/t/p/original/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg',
+    trailerUrl: 'https://www.youtube.com/embed/JfVOs4VSpmA',
     palette: {
       from: '#0b1026',
       to: '#b91c1c',
@@ -317,6 +327,7 @@ export const nowShowing: Movie[] = [
     format: 'IMAX · 4DX',
     image:
       'https://image.tmdb.org/t/p/original/ckeTumMS4G31UQ9NNkmtW2QhfMF.jpg',
+    trailerUrl: 'https://www.youtube.com/embed/d9MyW72ELq0',
     palette: {
       from: '#032b3a',
       to: '#0284c7',
@@ -337,6 +348,7 @@ export const nowShowing: Movie[] = [
     format: 'IMAX · Dolby Atmos',
     image:
       'https://image.tmdb.org/t/p/original/7CxL8W0J8bzpIVVznQ0whiOKeDH.jpg',
+    trailerUrl: 'https://www.youtube.com/embed/qSqVVswa420',
     palette: {
       from: '#07111f',
       to: '#155e75',
@@ -357,6 +369,7 @@ export const nowShowing: Movie[] = [
     format: '4K · Dolby Atmos',
     image:
       'https://image.tmdb.org/t/p/original/p5ozvmdgsmbWe0H8Xk7Rc8SCwAB.jpg',
+    trailerUrl: 'https://www.youtube.com/embed/LEjhY15eCx0',
     palette: {
       from: '#18133b',
       to: '#7c3aed',
@@ -380,6 +393,7 @@ export const comingSoon: Movie[] = [
     format: 'IMAX · Dolby Atmos',
     image:
       'https://image.tmdb.org/t/p/original/u8L5FEUcO8ygXAMwk06aWMqdSrl.jpg',
+    trailerUrl: 'https://www.youtube.com/embed/bKGxHflevuk',
     palette: {
       from: '#160605',
       to: '#7f1d1d',
@@ -401,6 +415,7 @@ export const comingSoon: Movie[] = [
     format: 'IMAX · Dolby Atmos',
     image:
       'https://image.tmdb.org/t/p/original/9PXZIUsSDh4alB80jheWX4fhZmy.jpg',
+    trailerUrl: 'https://www.youtube.com/embed/QUEfsDJq2DY',
     palette: {
       from: '#090d18',
       to: '#b91c1c',
@@ -422,6 +437,7 @@ export const comingSoon: Movie[] = [
     format: 'IMAX · Dolby Atmos',
     image:
       'https://image.tmdb.org/t/p/original/6azpBJGcLx9SKif8h9VMnflBfa.jpg',
+    trailerUrl: 'https://www.youtube.com/embed/ybji16u608U',
     palette: {
       from: '#15080d',
       to: '#9f1239',
@@ -443,6 +459,7 @@ export const comingSoon: Movie[] = [
     format: 'Dolby Atmos',
     image:
       'https://image.tmdb.org/t/p/original/ojtkat19816bUNfpvCjn6KqWn5G.jpg',
+    trailerUrl: 'https://www.youtube.com/embed/BpdDN9d9Jio',
     palette: {
       from: '#07130e',
       to: '#365314',
@@ -464,6 +481,7 @@ export const comingSoon: Movie[] = [
     format: 'IMAX · 4DX',
     image:
       'https://image.tmdb.org/t/p/original/ckeTumMS4G31UQ9NNkmtW2QhfMF.jpg',
+    trailerUrl: 'https://www.youtube.com/embed/d9MyW72ELq0',
     palette: {
       from: '#032b3a',
       to: '#0284c7',
@@ -485,6 +503,7 @@ export const comingSoon: Movie[] = [
     format: 'IMAX · Dolby Atmos',
     image:
       'https://image.tmdb.org/t/p/original/dhroRryMGr6V2JPAPQSvoVYVeG8.jpg',
+    trailerUrl: 'https://www.youtube.com/embed/8g18jFHCLXk',
     palette: {
       from: '#17100a',
       to: '#92400e',
@@ -593,4 +612,47 @@ export const fallbackFeaturedMovie: Movie = {
     to: '#8b1e2d',
     glow: '#ef4444',
   },
+}
+
+/* Respaldo de tráilers locales: la API aún no expone `trailerUrl`,
+   así que completamos cada película usando id o título normalizado. */
+const normalizeKey = (value: string) =>
+  value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim()
+
+const TRAILER_FALLBACKS = new Map<string, string>()
+
+for (const movie of [...nowShowing, ...featuredMovies, ...comingSoon]) {
+  if (!movie.trailerUrl) continue
+
+  TRAILER_FALLBACKS.set(movie.id, movie.trailerUrl)
+  TRAILER_FALLBACKS.set(normalizeKey(movie.title), movie.trailerUrl)
+}
+
+export function withTrailerFallback<T extends Pick<Movie, 'id' | 'title'>>(
+  movie: T,
+): T & { trailerUrl?: string } {
+  const own = (movie as { trailerUrl?: string }).trailerUrl
+  if (own) return { ...movie, trailerUrl: own }
+
+  const id = TRAILER_FALLBACKS.get(movie.id)
+  if (id) return { ...movie, trailerUrl: id }
+
+  const titleKey = normalizeKey(movie.title ?? '')
+  const title = TRAILER_FALLBACKS.get(titleKey)
+  if (title) return { ...movie, trailerUrl: title }
+
+  // Última pasada: coincidencia parcial de título (p. ej. la API devuelve
+  // "Dune Parte Dos" vs el mock "Dune: Parte Dos").
+  for (const [key, url] of TRAILER_FALLBACKS) {
+    if (titleKey && (titleKey.includes(key) || key.includes(titleKey))) {
+      return { ...movie, trailerUrl: url }
+    }
+  }
+
+  return { ...movie, trailerUrl: undefined }
 }

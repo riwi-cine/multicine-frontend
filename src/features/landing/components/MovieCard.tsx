@@ -4,6 +4,7 @@ import { Badge } from '@/components/badge'
 import { cn } from '@/utils/cn'
 import { MovieArtwork } from '@/features/movies'
 import type { Movie } from '@/features/movies'
+import TrailerDialog from './TrailerDialog'
 import { useNavigate } from 'react-router-dom'
 
 type MovieCardProps = {
@@ -76,6 +77,21 @@ function MovieCard({
             <Badge className="absolute top-3 left-3 border border-white/15 bg-black/40 text-white backdrop-blur-md">
               {rating}
             </Badge>
+
+            {/* Tráiler — mismo botón que el de la sección destacada,
+                visible sin hover. stopPropagation evita navegar a detalles. */}
+            {movie.trailerUrl && (
+              <div
+                className="absolute inset-x-0 bottom-3 z-10 flex justify-center px-3"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <TrailerDialog
+                  trailerUrl={movie.trailerUrl}
+                  movieTitle={movie.title}
+                  compact
+                />
+              </div>
+            )}
           </div>
 
           {/* Información desplegable */}
