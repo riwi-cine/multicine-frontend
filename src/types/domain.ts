@@ -69,7 +69,7 @@ export interface MovieFunction {
   status: string
 }
 
-export interface User {
+export interface DomainUser {
   id: string
   email: string
   password: string

@@ -1,10 +1,12 @@
 import AppRoutes from '@/routes'
+import { Toaster } from '@/components/sonner'
 
 function App() {
   return (
-    <div className="App">
+    <>
       <AppRoutes />
-    </div>
+      <Toaster position="top-right" richColors />
+    </>
   )
 }
 

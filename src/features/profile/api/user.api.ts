@@ -1,24 +1,24 @@
 import { apiClient } from '@/api'
-import type { User, Membership } from '@/types'
+import type { DomainUser, Membership } from '@/types'
 
 export const userApi = {
-  getAll: async (): Promise<User[]> => {
-    const response = await apiClient.get<User[]>('/users')
+  getAll: async (): Promise<DomainUser[]> => {
+    const response = await apiClient.get<DomainUser[]>('/users')
     return response.data
   },
 
-  getById: async (id: string): Promise<User> => {
-    const response = await apiClient.get<User>(`/users/${id}`)
+  getById: async (id: string): Promise<DomainUser> => {
+    const response = await apiClient.get<DomainUser>(`/users/${id}`)
     return response.data
   },
 
-  create: async (data: Omit<User, 'id'>): Promise<User> => {
-    const response = await apiClient.post<User>('/users', data)
+  create: async (data: Omit<DomainUser, 'id'>): Promise<DomainUser> => {
+    const response = await apiClient.post<DomainUser>('/users', data)
     return response.data
   },
 
-  update: async (id: string, data: Partial<User>): Promise<User> => {
-    const response = await apiClient.patch<User>(`/users/${id}`, data)
+  update: async (id: string, data: Partial<DomainUser>): Promise<DomainUser> => {
+    const response = await apiClient.patch<DomainUser>(`/users/${id}`, data)
     return response.data
   },
 
