@@ -4,8 +4,8 @@ import { Badge } from '@/components/badge'
 import { cn } from '@/utils/cn'
 import { MovieArtwork } from '@/features/movies'
 import type { Movie } from '@/features/movies'
-import { useNavigate } from 'react-router-dom'
 import TrailerDialog from './TrailerDialog'
+import { useNavigate } from 'react-router-dom'
 
 type MovieCardProps = {
   movie: Movie
@@ -83,6 +83,18 @@ function MovieCard({
               <span className="absolute bottom-3 left-3 rounded-md border border-white/15 bg-black/50 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-md">
                 {meta}
               </span>
+            )}
+            {movie.trailerUrl && (
+              <div
+                className="absolute inset-x-0 bottom-3 z-10 flex justify-center px-3"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <TrailerDialog
+                  trailerUrl={movie.trailerUrl}
+                  movieTitle={movie.title}
+                  compact
+                />
+              </div>
             )}
           </div>
 
