@@ -40,13 +40,9 @@ export default function ExperienceSection({ benefits, id }: ExperienceSectionPro
             ))}
           </ul>
 
-          <a
-            href="#"
-            className="mt-auto inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
-          >
-            Conocer más
-            <span aria-hidden="true">→</span>
-          </a>
+          <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground">
+            Información próximamente
+          </span>
         </Reveal>
       </div>
     </section>

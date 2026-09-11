@@ -41,6 +41,7 @@ export interface Seat {
   row: string
   number: string
   seatType: string
+  status?: 'available' | 'occupied' | string
 }
 
 export interface Movie {
@@ -58,15 +59,21 @@ export interface Movie {
 }
 
 export interface MovieFunction {
-  id: string
-  movieId: string
-  roomId: string
+  functionId: number
   startsAt: string
+  time: string
+  cinemaId: number
+  cinemaName: string
+  roomId: number
+  roomName: string
+  roomType: string
   format: string
   language: string
-  audioType: string
-  basePrice: number
-  status: string
+  availableSeats: number
+  isSoldOut: boolean
+  basePrice?: number
+  movieId?: string
+  status?: string
 }
 
 export interface DomainUser {
@@ -149,11 +156,11 @@ export interface Promotion {
   id: string
   title: string
   description: string
-  discount: number
-  code: string
-  validFrom: string
-  validTo: string
-  active: boolean
+  discount?: number
+  code?: string
+  validFrom?: string
+  validTo?: string
+  active?: boolean
 }
 
 export interface GiftCard {

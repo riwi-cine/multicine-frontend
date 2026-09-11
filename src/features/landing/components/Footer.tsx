@@ -39,22 +39,18 @@ const SOCIAL_LINKS = [
   {
     icon: Send,
     label: 'Facebook',
-    href: '#',
   },
   {
     icon: Share2,
     label: 'Instagram',
-    href: '#',
   },
   {
     icon: ExternalLink,
     label: 'Twitter',
-    href: '#',
   },
   {
     icon: Globe,
     label: 'YouTube',
-    href: '#',
   },
 ]
 
@@ -129,22 +125,19 @@ export default function Footer() {
                 const Icon = social.icon
 
                 return (
-                  <a
+                  <span
                     key={social.label}
-                    href={social.href}
                     aria-label={social.label}
+                    title={`${social.label}: próximamente`}
                     className="
                       flex size-9 items-center justify-center
                       rounded-full
                       bg-white/5
                       text-muted-foreground
-                      transition-colors
-                      hover:bg-primary/15
-                      hover:text-primary
                     "
                   >
                     <Icon className="size-4" />
-                  </a>
+                  </span>
                 )
               })}
             </div>

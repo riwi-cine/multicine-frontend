@@ -82,12 +82,9 @@ export default function PromotionsSection({
                   <p className="text-sm leading-relaxed text-muted-foreground">
                     {promo.description}
                   </p>
-                  <a
-                    href="#"
-                    className="mt-auto pt-3 text-sm font-medium text-primary hover:underline"
-                  >
-                    Ver promoción
-                  </a>
+                  <span className="mt-auto pt-3 text-sm font-medium text-muted-foreground">
+                    Información próximamente
+                  </span>
                 </div>
               </Reveal>
             )

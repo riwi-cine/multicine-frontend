@@ -23,6 +23,7 @@ function ProfilePage() {
 }
 
 const Details = lazy(() => import('@/features/details/Details'))
+const PurchasePage = lazy(() => import('@/features/checkout/pages/PurchasePage'))
 
 /**
  * Restaura la posición de scroll en cada cambio de ruta. Si la URL trae
@@ -82,6 +83,16 @@ function CinemaRoutes() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/location" element={<SelectLocationPage />} />
+        <Route
+          path="/purchase/:id"
+          element={
+            <ProtectedRoute>
+              <Suspense fallback={<MovieDetailSkeleton />}>
+                <PurchasePage />
+              </Suspense>
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/movie/:id"
           element={

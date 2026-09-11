@@ -1,11 +1,11 @@
-"use client"
-
 import { useMemo, useState } from 'react'
 import { LOCATIONS, COUNTRIES } from '../data/locations'
 import { useNavigate } from 'react-router-dom'
+import { useLocationStore } from '@/store'
 
 export default function SelectLocationPage() {
   const navigate = useNavigate()
+  const setLocation = useLocationStore((state) => state.setLocation)
   const [country, setCountry] = useState('')
   const [city, setCity] = useState('')
   const [venue, setVenue] = useState('')
@@ -14,9 +14,7 @@ export default function SelectLocationPage() {
   const venues = useMemo(() => (country && city ? LOCATIONS[country]?.[city] || [] : []), [country, city])
 
   function handleSave() {
-    const payload = { country, city, venue }
-    localStorage.setItem('selectedLocation', JSON.stringify(payload))
-    localStorage.setItem('locationSelected', '1')
+    setLocation({ country, city, venue })
     navigate('/')
   }
 

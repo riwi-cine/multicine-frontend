@@ -212,6 +212,7 @@ const Details = () => {
     }
 
     setConfirmed(true)
+    navigate(`/purchase/${id}`)
   }
 
   if (isLoading) {

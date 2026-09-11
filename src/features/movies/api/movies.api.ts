@@ -5,8 +5,14 @@ import { withTrailerFallback } from '@/features/movies/types/movies.types'
 import type { ExtendedMovie } from '@/features/movies/types'
 
 export const moviesApi = {
-  getAll: async (): Promise<Movie[]> => {
-    const response = await apiClient.get<Movie[]>('/movies')
+  getAll: async (location?: {
+    cityId?: string
+    cinemaId?: string
+  }): Promise<Movie[]> => {
+    const hasRegionalFilter = Boolean(location?.cityId || location?.cinemaId)
+    const response = hasRegionalFilter
+      ? await apiClient.get<Movie[]>('/movies/filter', { params: location })
+      : await apiClient.get<Movie[]>('/movies')
     return response.data.map(withTrailerFallback)
   },
 

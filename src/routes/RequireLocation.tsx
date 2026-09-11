@@ -1,6 +1,5 @@
 import { Navigate, useLocation } from 'react-router-dom'
-
-const LOCATION_STORAGE_KEY = 'selectedLocation'
+import { useLocationStore } from '@/store'
 
 /**
  * Guard de ubicación evaluado durante el render (no en useEffect):
@@ -9,16 +8,7 @@ const LOCATION_STORAGE_KEY = 'selectedLocation'
  */
 export default function RequireLocation({ children }: { children: React.ReactNode }) {
     const location = useLocation()
-
-    const hasLocation = (() => {
-        try {
-            return Boolean(localStorage.getItem(LOCATION_STORAGE_KEY))
-        } catch {
-            // Storage no disponible (modo privado/lockdown): tratar como sin
-            // ubicación para que el usuario pueda llegar a la página de selección.
-            return false
-        }
-    })()
+    const hasLocation = Boolean(useLocationStore((state) => state.location))
 
     if (!hasLocation && location.pathname !== '/location') {
         return (
