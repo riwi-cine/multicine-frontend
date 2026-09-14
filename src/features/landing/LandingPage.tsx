@@ -14,7 +14,7 @@ import ExperienceSection from './components/ExperienceSection'
 import Footer from './components/Footer'
 import AmbientSpotlight from '@/components/ui/AmbientSpotlight'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
-import { useMovies, promotions, benefits } from '@/features/movies'
+import { useMovies, benefits } from '@/features/movies'
 import { usePromotions } from '@/features/promotions'
 
 export default function LandingPage() {
@@ -26,8 +26,7 @@ export default function LandingPage() {
   const { data: movies, isLoading, isError } = useMovies()
   const { data: activePromotions } = usePromotions()
 
-  // Fallback estático mientras carga o si la API de promociones falla.
-  const promotionsList = activePromotions ?? promotions
+  const promotionsList = activePromotions ?? []
 
   // Scroll a la sección indicada en el hash (p. ej. "/#cartelera" al
   // volver desde la vista de detalle vía los links del Navbar).
@@ -44,7 +43,10 @@ export default function LandingPage() {
 
   const featuredMovies = useMemo(() => movies ?? [], [movies])
 
-  const nowShowing = useMemo(() => movies ?? [], [movies])
+  const nowShowing = useMemo(
+    () => movies?.filter((movie) => movie.status !== 'Coming Soon') ?? [],
+    [movies],
+  )
 
   const comingSoon = useMemo(() => {
     if (!movies) return []
@@ -99,7 +101,7 @@ export default function LandingPage() {
           id="destacadas"
           title="Películas destacadas"
           description="Lo mejor del cine en pantalla ahora mismo. Las historias que más están dando de qué hablar, elegidas por nuestro público."
-          movies={featuredMovies.slice(0, 5)}
+          movies={featuredMovies}
         />
 
         <section id="cartelera" className="w-full bg-[#E3E7EF] pt-10 sm:pt-12">

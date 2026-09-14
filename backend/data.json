@@ -1,0 +1,343 @@
+{
+  "countries": [
+    {
+      "id": "country-001",
+      "name": "Colombia",
+      "code": "CO",
+      "active": true
+    },
+    {
+      "id": "country-002",
+      "name": "Estados Unidos",
+      "code": "US",
+      "active": true
+    }
+  ],
+  "departments": [
+    {
+      "id": "department-001",
+      "countryId": "country-001",
+      "name": "Antioquia",
+      "active": true
+    },
+    {
+      "id": "department-002",
+      "countryId": "country-001",
+      "name": "Atlantico",
+      "active": true
+    }
+  ],
+  "cities": [
+    {
+      "id": "city-001",
+      "departmentId": "department-001",
+      "name": "Medellin",
+      "active": true
+    },
+    {
+      "id": "city-002",
+      "departmentId": "department-002",
+      "name": "Barranquilla",
+      "active": true
+    },
+    {
+      "id": "city-003",
+      "departmentId": "department-001",
+      "name": "Cali",
+      "active": true
+    }
+  ],
+  "cinemas": [
+    {
+      "id": "cinema-001",
+      "cityId": "city-001",
+      "name": "Multicine Medellin Centro",
+      "address": "Carrera 00 #00-00",
+      "active": true
+    },
+    {
+      "id": "cinema-002",
+      "cityId": "city-001",
+      "name": "Multicine Poblado",
+      "address": "Carrera 43A #10-10",
+      "active": true
+    }
+  ],
+  "rooms": [
+    {
+      "id": "room-001",
+      "cinemaId": "cinema-001",
+      "name": "Sala 1 IMAX",
+      "roomType": "IMAX",
+      "capacity": 120
+    },
+    {
+      "id": "room-002",
+      "cinemaId": "cinema-001",
+      "name": "Sala 2 4DX",
+      "roomType": "4DX",
+      "capacity": 80
+    },
+    {
+      "id": "room-003",
+      "cinemaId": "cinema-002",
+      "name": "Sala 1 Premium",
+      "roomType": "Premium",
+      "capacity": 60
+    }
+  ],
+  "seats": [
+    {
+      "id": "seat-001-A1",
+      "roomId": "room-001",
+      "row": "A",
+      "number": "1",
+      "seatType": "standard",
+      "status": "available"
+    },
+    {
+      "id": "seat-001-A2",
+      "roomId": "room-001",
+      "row": "A",
+      "number": "2",
+      "seatType": "standard",
+      "status": "available"
+    },
+    {
+      "id": "seat-001-B1",
+      "roomId": "room-001",
+      "row": "B",
+      "number": "1",
+      "seatType": "accessible",
+      "status": "available"
+    },
+    {
+      "id": "seat-002-A1",
+      "roomId": "room-002",
+      "row": "A",
+      "number": "1",
+      "seatType": "standard",
+      "status": "available"
+    },
+    {
+      "id": "seat-002-A2",
+      "roomId": "room-002",
+      "row": "A",
+      "number": "2",
+      "seatType": "standard",
+      "status": "occupied"
+    }
+  ],
+  "movies": [
+    {
+      "id": "movie-001",
+      "title": "Spider-Man: Brand New Day",
+      "genres": [
+        "Accion",
+        "Aventura"
+      ],
+      "duration": "2h 25min",
+      "rating": "PG-13",
+      "score": 8.5,
+      "description": "Peter Parker enfrenta una nueva amenaza que pone en peligro todo lo que conoce.",
+      "status": "Today",
+      "releaseDate": "2026-07-31",
+      "format": "IMAX · Dolby Atmos",
+      "image": "https://image.tmdb.org/t/p/original/vjMvFSmGUxEtqVdaZgvFee9XkZl.jpg",
+      "trailerUrl": "https://www.youtube.com/embed/example1",
+      "palette": {
+        "from": "#090b18",
+        "to": "#8b1e2d",
+        "glow": "#ef4444"
+      }
+    },
+    {
+      "id": "movie-002",
+      "title": "Dune: Parte Tres",
+      "genres": [
+        "Ciencia Ficcion",
+        "Drama"
+      ],
+      "duration": "2h 45min",
+      "rating": "PG-13",
+      "score": 9.1,
+      "description": "La saga epica de Paul Atreides llega a su conclusion definitiva.",
+      "status": "Today",
+      "releaseDate": "2026-08-15",
+      "format": "IMAX · 4DX",
+      "image": "https://image.tmdb.org/t/p/original/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg",
+      "trailerUrl": "https://www.youtube.com/embed/example2",
+      "palette": {
+        "from": "#1a0e00",
+        "to": "#8b6914",
+        "glow": "#f59e0b"
+      }
+    },
+    {
+      "id": "movie-003",
+      "title": "El Laberinto del Tiempo",
+      "genres": [
+        "Thriller",
+        "Misterio"
+      ],
+      "duration": "1h 58min",
+      "rating": "R",
+      "score": 7.8,
+      "description": "Un detective descubre que puede viajar en el tiempo para resolver crimenes.",
+      "status": "ComingSoon",
+      "releaseDate": "2026-10-01",
+      "format": "2D",
+      "image": "https://image.tmdb.org/t/p/original/6azpBJGcLx9SKif8h9VMnflBfa.jpg",
+      "trailerUrl": "https://www.youtube.com/embed/example3",
+      "palette": {
+        "from": "#0a0a1a",
+        "to": "#1e3a8a",
+        "glow": "#3b82f6"
+      }
+    }
+  ],
+  "users": [
+    {
+      "id": "usr-101",
+      "email": "demo@multicine.com",
+      "password": "demo123",
+      "name": "Usuario Demo",
+      "fullName": "Usuario Demo",
+      "phone": "+573001234567",
+      "role": "CLIENT"
+    },
+    {
+      "id": "usr-admin",
+      "email": "admin@multicine.com",
+      "password": "admin123",
+      "name": "Administrador",
+      "fullName": "Administrador",
+      "role": "ADMIN"
+    }
+  ],
+  "promotions": [
+    {
+      "id": "promotion-001",
+      "title": "Martes de descuento",
+      "description": "Todas las boletas con 50% de descuento los martes.",
+      "discount": 50,
+      "code": "MARTES50",
+      "active": true
+    },
+    {
+      "id": "promotion-002",
+      "title": "Combo familiar",
+      "description": "Descuento especial en combos para grupos.",
+      "discount": 20,
+      "code": "FAMILIA20",
+      "active": true
+    }
+  ],
+  "memberships": [],
+  "seatLocks": [
+    {
+      "id": "lock-194c347e",
+      "seatId": "seat-001-A1",
+      "functionId": "101",
+      "userId": "usr-101",
+      "expiresAt": "2026-09-14T02:21:02.754Z"
+    },
+    {
+      "id": "lock-453bff0a",
+      "seatId": "seat-001-A1",
+      "functionId": "101",
+      "userId": "usr-101",
+      "expiresAt": "2026-09-14T02:40:02.356Z"
+    },
+    {
+      "id": "lock-ba36ddcb",
+      "seatId": "seat-001-A2",
+      "functionId": "101",
+      "userId": "usr-101",
+      "expiresAt": "2026-09-14T02:40:08.203Z"
+    },
+    {
+      "id": "lock-124978fd",
+      "seatId": "seat-001-B1",
+      "functionId": "101",
+      "userId": "usr-101",
+      "expiresAt": "2026-09-14T02:41:44.846Z"
+    },
+    {
+      "id": "lock-9bb5573c",
+      "seatId": "seat-002-A1",
+      "functionId": "102",
+      "userId": "usr-101",
+      "expiresAt": "2026-09-14T02:42:33.889Z"
+    }
+  ],
+  "carts": [
+    {
+      "id": "cart-f60933eb",
+      "userId": "usr-101",
+      "updatedAt": "2026-09-13T00:00:00.000Z"
+    },
+    {
+      "id": "cart-ce23db34",
+      "userId": "usr-101"
+    }
+  ],
+  "cartSnacks": [],
+  "snacks": [
+    {
+      "id": "snack-001",
+      "name": "Combo clasico",
+      "description": "Crispetas y gaseosa",
+      "price": 18000,
+      "imageUrl": "",
+      "category": "combos"
+    },
+    {
+      "id": "snack-002",
+      "name": "Combo premium",
+      "description": "Crispetas grandes, nachos y dos bebidas",
+      "price": 32000,
+      "imageUrl": "",
+      "category": "combos"
+    }
+  ],
+  "orders": [
+    {
+      "id": "order-3e40c752",
+      "total": 28000,
+      "cartId": "cart-ce23db34",
+      "userId": "usr-101",
+      "status": "pending_payment"
+    }
+  ],
+  "payments": [
+    {
+      "id": "payment-d26de51a",
+      "orderId": "order-3e40c752",
+      "method": "card",
+      "amount": 28000,
+      "status": "approved",
+      "transactionId": "LOCAL-TEST"
+    }
+  ],
+  "tickets": [
+    {
+      "id": "ticket-03729485",
+      "status": "confirmed",
+      "qrCode": "LOCAL-QR",
+      "orderId": "order-3e40c752",
+      "price": 28000,
+      "functionId": "101",
+      "seatId": "seat-001-A1"
+    }
+  ],
+  "giftCards": [
+    {
+      "id": "gift-001",
+      "code": "MULTI-2026",
+      "balance": 100000,
+      "expiresAt": "2026-12-31T23:59:59.000Z",
+      "active": true
+    }
+  ]
+}

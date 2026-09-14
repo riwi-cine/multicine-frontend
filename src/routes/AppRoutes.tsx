@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { Link, Route, Routes, useLocation } from 'react-router-dom'
 
 import LandingPage, { SelectLocationPage } from '@/features/landing'
@@ -7,18 +8,53 @@ import RequireLocation from '@/routes/RequireLocation'
 import ProtectedRoute from '@/routes/ProtectedRoute'
 import { RegisterPage } from '@/pages/RegisterPage'
 import { LoginPage } from '@/pages/LoginPage'
+import { bookingApi } from '@/features/reservations'
+import { useAuthStore } from '@/store'
 
 function ProfilePage() {
+  const user = useAuthStore((state) => state.user)
+  const ordersQuery = useQuery({
+    queryKey: ['profile-orders', user?.id],
+    queryFn: () => bookingApi.getOrdersByUser(user?.id ?? ''),
+    enabled: Boolean(user?.id),
+  })
+
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-muted/20">
-      <div className="w-full max-w-md text-center p-6 space-y-4 rounded-xl border bg-card text-card-foreground shadow-lg">
-        <h2 className="text-2xl font-bold">Perfil Privado de Usuario</h2>
-        <p className="text-sm text-muted-foreground">¡Bienvenido a tu área privada protegida!</p>
-        <Link to="/" className="inline-block w-full py-2 px-4 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90">
-          Volver al Inicio
-        </Link>
+    <main className="min-h-screen bg-background px-4 py-10 text-foreground sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-4xl space-y-8">
+        <header className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+          <div>
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-primary">Mi cuenta</p>
+            <h1 className="mt-2 font-heading text-3xl font-bold">{user?.fullName ?? 'Usuario'}</h1>
+            <p className="mt-1 text-sm text-muted-foreground">{user?.email}</p>
+          </div>
+          <Link to="/" className="text-sm font-semibold text-primary hover:underline">Volver al inicio</Link>
+        </header>
+
+        <section className="rounded-2xl border bg-card p-6 shadow-sm">
+          <h2 className="font-heading text-xl font-bold">Mis compras</h2>
+          {ordersQuery.isLoading && <p className="mt-4 text-sm text-muted-foreground">Cargando compras...</p>}
+          {ordersQuery.isError && <p className="mt-4 text-sm text-destructive">No pudimos cargar tus compras.</p>}
+          {!ordersQuery.isLoading && !ordersQuery.isError && ordersQuery.data?.length === 0 && (
+            <p className="mt-4 text-sm text-muted-foreground">Todavía no tienes compras registradas.</p>
+          )}
+          <div className="mt-4 grid gap-3">
+            {ordersQuery.data?.map((order) => (
+              <article key={order.id} className="flex flex-col justify-between gap-3 rounded-xl border p-4 sm:flex-row sm:items-center">
+                <div>
+                  <p className="font-semibold">Orden {order.id}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{new Date(order.createdAt).toLocaleString('es-CO')}</p>
+                </div>
+                <div className="text-left sm:text-right">
+                  <p className="font-semibold">${order.total.toLocaleString('es-CO')}</p>
+                  <p className="text-xs uppercase text-primary">{order.status}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
       </div>
-    </div>
+    </main>
   )
 }
 

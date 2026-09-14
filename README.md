@@ -68,10 +68,36 @@ El proyecto se configura mediante variables de entorno (ver `.env.example`):
 | Comando                  | Descripción                                        |
 | ------------------------ | -------------------------------------------------- |
 | `npm run dev`            | Inicia el servidor de desarrollo                    |
+| `npm run dev:api`        | Inicia la API local en `http://localhost:4000`      |
 | `npm run build`          | Compila el proyecto para producción                 |
 | `npm run preview`        | Previsualiza la compilación de producción           |
 | `npm run lint`           | Ejecuta el análisis estático del código             |
 | `npm run format`         | Formatea el código según Prettier                   |
+
+### API local
+
+El proyecto incluye una API REST local independiente en la carpeta `backend/`. Usa persistencia JSON en
+`backend/data.json` y cubre
+autenticación, ubicaciones, películas, funciones, asientos, bloqueos, carrito,
+snacks, promociones, órdenes, pagos, tickets, membresías y tarjetas regalo.
+
+En desarrollo se puede iniciar en dos terminales:
+
+```bash
+npm run dev:api
+npm run dev
+```
+
+El frontend usa `VITE_API_URL=http://localhost:4000` en `.env.development`.
+Para ejecutar el API y el frontend en contenedores, usa `docker compose up --build`.
+
+El backend se desarrolla de forma independiente desde `backend/`:
+
+```bash
+cd backend
+npm install
+npm run dev
+```
 
 ### Docker
 

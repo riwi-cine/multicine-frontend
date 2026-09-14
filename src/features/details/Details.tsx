@@ -14,17 +14,22 @@ import {
 import { Button } from '@/components/button'
 import { MovieArtwork, moviesApi } from '@/features/movies'
 import type { Movie } from '@/features/movies'
-import { featuredMovies } from '@/features/movies/types/movies.types'
+import { bookingApi } from '@/features/reservations'
+import type { MovieFunction } from '@/types'
 import { LOCATIONS } from '@/features/landing/data/locations'
 
 import Footer from '../landing/components/Footer'
 import Navbar from '../landing/components/Navbar'
 import MovieDetailSkeleton from './MovieDetailSkeleton'
+import { useLocationStore } from '@/store'
 
 type LocationOption = {
   country: string
   city: string
   venue: string
+  countryId?: string
+  cityId?: string
+  cinemaId?: string
 }
 
 const getAllLocations = (): LocationOption[] =>
@@ -83,23 +88,16 @@ const getDateOptions = () => {
   })
 }
 
-const buildRandomTimes = () => {
-  const times = ['12:00 PM', '2:45 PM', '5:30 PM', '8:15 PM', '10:20 PM']
-  const shuffled = [...times].sort(() => Math.random() - 0.5)
-  return shuffled.slice(0, 5)
-}
-
-const roomTypes = ['3D - DOB', 'Ultra 2D - DOB', '2D - DOB']
-
 const Details = () => {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const location = useLocation()
+  const activeLocation = useLocationStore((state) => state.location)
 
   const [allLocations] = useState<LocationOption[]>(getAllLocations)
   const [selectedLocation, setSelectedLocation] =
     useState<LocationOption | null>(() =>
-      getInitialSelectedLocation(allLocations),
+      activeLocation ?? getInitialSelectedLocation(allLocations),
     )
   const [selectedDateIndex, setSelectedDateIndex] = useState<number | null>(
     null,
@@ -129,28 +127,17 @@ const Details = () => {
         throw new Error('Falta el id de la película')
       }
 
-      try {
-        const allMovies = await moviesApi.getAll()
-        const found = allMovies.find((m) => m.id === id)
-        if (found) {
-          return found
-        }
-      } catch {
-        // Fallback silencioso si la API no está disponible.
-      }
-
-      const fallbackMovie =
-        featuredMovies.find((item) => item.id === id) ?? featuredMovies[0]
-
-      if (!fallbackMovie) {
-        throw new Error(`La película "${id}" no existe en el catálogo`)
-      }
-
-      return fallbackMovie
+      return moviesApi.getById(id)
     },
     enabled: !!id,
     staleTime: 5 * 60 * 1000,
     retry: 1,
+  })
+
+  const functionsQuery = useQuery<MovieFunction[], Error>({
+    queryKey: ['movie-functions', id],
+    queryFn: () => bookingApi.getFunction(id as string),
+    enabled: Boolean(id),
   })
 
   useEffect(() => {
@@ -164,6 +151,9 @@ const Details = () => {
         country: selectedLocation.country,
         city: selectedLocation.city,
         venue: selectedLocation.venue,
+        countryId: selectedLocation.countryId,
+        cityId: selectedLocation.cityId,
+        cinemaId: selectedLocation.cinemaId,
       }),
     )
   }, [selectedLocation])
@@ -178,20 +168,15 @@ const Details = () => {
     )
   }, [allLocations, selectedLocation])
 
-  const scheduleByVenue = useMemo<
-    Record<string, Record<string, string[]>>
-  >(() => {
-    const schedule: Record<string, Record<string, string[]>> = {}
+  const roomTypes = useMemo(
+    () => Array.from(new Set((functionsQuery.data ?? []).map((item) => item.roomType))),
+    [functionsQuery.data],
+  )
 
-    allLocations.forEach((location) => {
-      schedule[location.venue] = {}
-      roomTypes.forEach((roomType) => {
-        schedule[location.venue][roomType] = buildRandomTimes()
-      })
-    })
-
-    return schedule
-  }, [allLocations])
+  const availableFunctions = useMemo(
+    () => (functionsQuery.data ?? []).filter((item) => item.roomType === selectedRoomType),
+    [functionsQuery.data, selectedRoomType],
+  )
 
   const isSelectionComplete =
     !!selectedLocation &&
@@ -677,24 +662,24 @@ const Details = () => {
                 Elegir el horario
               </p>
 
-              {selectedLocation && selectedRoomType ? (
+              {functionsQuery.isLoading ? (
+                <div className="rounded-xl border border-dashed border-[#e7d1d7] bg-[#faf7f7] p-3 text-sm text-[#7d5d62]">
+                  Cargando horarios disponibles...
+                </div>
+              ) : selectedRoomType ? (
                 <div className="flex flex-wrap gap-2">
-                  {(
-                    scheduleByVenue[selectedLocation.venue]?.[
-                      selectedRoomType
-                    ] ?? []
-                  ).map((time) => (
+                  {availableFunctions.map((functionItem) => (
                     <button
-                      key={`${selectedLocation.venue}-${selectedRoomType}-${time}`}
+                      key={functionItem.functionId}
                       type="button"
-                      onClick={() => setSelectedTime(time)}
+                      onClick={() => setSelectedTime(functionItem.time)}
                       className={`rounded-xl border px-2.5 py-2 text-sm font-semibold transition-all ${
-                        selectedTime === time
+                        selectedTime === functionItem.time
                           ? 'border-[#800021] bg-linear-to-r from-[#800021] to-[#C24366] text-white shadow-md shadow-[#C24366]/20'
                           : 'border-[#eadfe1] bg-[#f9f5f5] text-[#2d1d20] hover:border-[#C24366]/50 hover:text-[#800021]'
                       }`}
                     >
-                      {time}
+                      {functionItem.time}
                     </button>
                   ))}
                 </div>

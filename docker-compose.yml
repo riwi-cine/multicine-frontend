@@ -1,6 +1,14 @@
 services:
+  api:
+    build:
+      context: ./backend
+    container_name: multicine-api
+    ports:
+      - "4000:4000"
   app:
     build: .
     container_name: multicine-frontend
     ports:
       - "8080:80"
+    depends_on:
+      - api

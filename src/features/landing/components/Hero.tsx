@@ -8,7 +8,6 @@ import { MovieArtwork } from '@/features/movies'
 import TrailerDialog from './TrailerDialog'
 
 const FEATURED_YEAR = 2026
-const FALLBACK_TRAILER = 'https://www.youtube.com/embed/62bIsvRcPv0'
 
 interface HeroProps {
   movie?: Movie
@@ -117,10 +116,12 @@ export default function Hero({ movie }: HeroProps) {
                 Ver funciones
               </Button>
 
-              <TrailerDialog
-                trailerUrl={movie.trailerUrl ?? FALLBACK_TRAILER}
-                movieTitle={movie.title}
-              />
+              {movie.trailerUrl && (
+                <TrailerDialog
+                  trailerUrl={movie.trailerUrl}
+                  movieTitle={movie.title}
+                />
+              )}
             </div>
           </Reveal>
         </div>
