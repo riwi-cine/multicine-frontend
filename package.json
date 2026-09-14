@@ -8,6 +8,7 @@
     "dev:api": "npm --prefix backend run dev",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "test": "vitest run",
     "format": "prettier --write .",
     "preview": "vite preview"
   },

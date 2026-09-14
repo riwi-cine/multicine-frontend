@@ -25,7 +25,9 @@ Proveer una interfaz de usuario moderna, accesible y de alto rendimiento para la
 - **Sonner** — Notificaciones (toasts)
 - **React Helmet Async** — Gestión de metadatos y SEO
 - **ESLint + Prettier** — Calidad y formato del código
-- **Docker** — Contenedorización de la aplicación
+- **Node.js + Express + TypeScript** — API REST independiente en `backend/`
+- **Zod + dotenv + CORS** — Validación, configuración y comunicación del backend
+- **Docker** — Contenedorización de frontend y backend
 
 ## Requisitos previos
 
@@ -56,7 +58,7 @@ El proyecto se configura mediante variables de entorno (ver `.env.example`):
 | Variable            | Descripción                                        | Ejemplo                          |
 | ------------------- | -------------------------------------------------- | -------------------------------- |
 | `VITE_APP_NAME`     | Nombre de la aplicación                            | `Multicine`                      |
-| `VITE_API_URL`      | URL base de la API REST                            | `https://api.multicine.com/api/v1` |
+| `VITE_API_URL`      | URL base de la API REST                            | `http://localhost:4000`          |
 | `VITE_API_TIMEOUT`  | Tiempo máximo de espera de peticiones (ms)         | `10000`                          |
 | `VITE_APP_ENV`      | Entorno de ejecución (`development` o `production`)| `development`                    |
 | `VITE_PUBLIC_KEY`   | Claves públicas de servicios externos              | *(completar según entorno)*      |
@@ -72,6 +74,7 @@ El proyecto se configura mediante variables de entorno (ver `.env.example`):
 | `npm run build`          | Compila el proyecto para producción                 |
 | `npm run preview`        | Previsualiza la compilación de producción           |
 | `npm run lint`           | Ejecuta el análisis estático del código             |
+| `npm run test`           | Ejecuta las pruebas automatizadas                   |
 | `npm run format`         | Formatea el código según Prettier                   |
 
 ### API local
@@ -106,7 +109,7 @@ docker build -t multicine-frontend .
 docker run -p 8080:80 multicine-frontend
 ```
 
-La aplicación quedará disponible en `http://localhost:8080`.
+La aplicación quedará disponible en `http://localhost:8080` y la API en `http://localhost:4000/api`.
 
 ## Arquitectura general del proyecto
 

@@ -142,18 +142,21 @@ export default function PurchasePage() {
 
     setIsSubmitting(true)
     setErrorMessage(null)
+    const createdLockIds: string[] = []
     try {
-      await Promise.all(
-        selectedSeatIds.map((seatId) =>
-          bookingApi.createSeatLock({
+      for (const seatId of selectedSeatIds) {
+        const lock = await bookingApi.createSeatLock({
             seatId,
             functionId: String(selectedFunction.functionId),
             userId: user.id,
-          }),
-        ),
-      )
+        })
+        createdLockIds.push(lock.id)
+      }
       setStep('checkout')
     } catch (error) {
+      await Promise.all(
+        createdLockIds.map((lockId) => bookingApi.deleteSeatLock(lockId)),
+      )
       setError(error)
     } finally {
       setIsSubmitting(false)

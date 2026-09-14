@@ -10,6 +10,7 @@ import { RegisterPage } from '@/pages/RegisterPage'
 import { LoginPage } from '@/pages/LoginPage'
 import { bookingApi } from '@/features/reservations'
 import { useAuthStore } from '@/store'
+import AdminDashboardPage from '@/features/admin/pages/AdminDashboardPage'
 
 function ProfilePage() {
   const user = useAuthStore((state) => state.user)
@@ -17,6 +18,13 @@ function ProfilePage() {
     queryKey: ['profile-orders', user?.id],
     queryFn: () => bookingApi.getOrdersByUser(user?.id ?? ''),
     enabled: Boolean(user?.id),
+  })
+  const ticketsQuery = useQuery({
+    queryKey: ['profile-tickets', ordersQuery.data?.map((order) => order.id)],
+    queryFn: async () => Promise.all(
+      (ordersQuery.data ?? []).map((order) => bookingApi.getTicketsByOrder(order.id)),
+    ).then((tickets) => tickets.flat()),
+    enabled: Boolean(ordersQuery.data?.length),
   })
 
   return (
@@ -52,6 +60,19 @@ function ProfilePage() {
               </article>
             ))}
           </div>
+          {ticketsQuery.data && ticketsQuery.data.length > 0 && (
+            <div className="mt-8">
+              <h3 className="font-heading text-lg font-bold">Tickets emitidos</h3>
+              <div className="mt-3 grid gap-3">
+                {ticketsQuery.data.map((ticket) => (
+                  <article key={ticket.id} className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm">
+                    <p className="font-semibold">Asiento {ticket.seatId}</p>
+                    <p className="mt-1 font-mono text-xs text-muted-foreground">{ticket.qrCode}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          )}
         </section>
       </div>
     </main>
@@ -107,6 +128,7 @@ function AppRoutes() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/registro" element={<RegisterPage />} />
       <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+      <Route path="/admin" element={<ProtectedRoute allowedRoles={['ADMIN']}><AdminDashboardPage /></ProtectedRoute>} />
       <Route path="*" element={<CinemaRoutes />} />
     </Routes>
   )

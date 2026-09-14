@@ -1,5 +1,14 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { useAuthStore } from '@/store/useAuthStore'
+import { authService } from '@/services/auth.service'
+
+vi.mock('@/services/auth.service', () => ({
+  authService: {
+    login: vi.fn(),
+    logout: vi.fn(),
+    getProfile: vi.fn(),
+  },
+}))
 
 describe('useAuthStore', () => {
   beforeEach(() => {
@@ -22,6 +31,11 @@ describe('useAuthStore', () => {
 
   it('should login successfully and save token and user in localStorage', async () => {
     const credentials = { email: 'juan@ejemplo.com', password: 'Password123' }
+    vi.mocked(authService.login).mockResolvedValueOnce({
+      message: 'Inicio de sesión exitoso',
+      token: 'test-token',
+      user: { id: 'user-1', fullName: 'Juan Ejemplo', email: credentials.email, role: 'CLIENT' },
+    })
     const response = await useAuthStore.getState().login(credentials)
 
     expect(response.token).toBeDefined()
@@ -35,6 +49,12 @@ describe('useAuthStore', () => {
 
   it('should logout cleanly and clear localStorage', async () => {
     // Perform login first
+    vi.mocked(authService.login).mockResolvedValueOnce({
+      message: 'Inicio de sesión exitoso',
+      token: 'test-token',
+      user: { id: 'user-2', fullName: 'Test User', email: 'test@ejemplo.com', role: 'CLIENT' },
+    })
+    vi.mocked(authService.logout).mockResolvedValueOnce()
     await useAuthStore.getState().login({ email: 'test@ejemplo.com', password: 'Password123' })
     expect(useAuthStore.getState().isAuthenticated).toBe(true)
 

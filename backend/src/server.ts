@@ -2,36 +2,20 @@ import 'dotenv/config'
 import cors from 'cors'
 import express, { type Request, type Response } from 'express'
 import { randomUUID } from 'node:crypto'
-import { existsSync, readFileSync, writeFileSync } from 'node:fs'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { z } from 'zod'
+import { config } from './config.js'
+import { collection, createId, findById, publicUser, store, stringValue } from './store.js'
+import { getMovieFunctions, getMovieRecommendations } from './services/movie.service.js'
+import type { Collection, RecordData } from './types.js'
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const dataPath = path.resolve(__dirname, '../data.json')
-const port = Number(process.env.PORT ?? 4000)
-
-type RecordData = Record<string, unknown>
-type Collection = RecordData[]
-
-const initialData = JSON.parse(readFileSync(dataPath, 'utf8')) as Record<string, Collection>
-const data = existsSync(dataPath) ? (JSON.parse(readFileSync(dataPath, 'utf8')) as Record<string, Collection>) : initialData
+const data = store.data
 const sessions = new Map<string, RecordData>()
 
 const app = express()
 app.use(cors({ origin: true, credentials: true }))
 app.use(express.json())
 
-const createId = (prefix: string) => `${prefix}-${randomUUID().slice(0, 8)}`
-const save = () => writeFileSync(dataPath, JSON.stringify(data, null, 2))
-const collection = (name: string): Collection => data[name] ?? []
-const findById = (items: Collection, value: string) => items.find((item) => String(item.id) === value)
-const stringValue = (value: unknown) => (typeof value === 'string' ? value : '')
-const publicUser = (user: RecordData) => {
-  const result = { ...user }
-  delete result.password
-  return result
-}
+const save = store.save
 
 function queryFilter(items: Collection, request: Request) {
   return items.filter((item) =>
@@ -59,30 +43,6 @@ const registerSchema = z.object({
   phone: z.string().optional(),
 })
 const seatLockSchema = z.object({ seatId: z.string(), functionId: z.string(), userId: z.string() })
-
-const movieFunctions = (movieId: string) => {
-  const cinemas = collection('cinemas')
-  const rooms = collection('rooms')
-  const cinema = cinemas[0]
-  if (!cinema) return []
-  return rooms.filter((room) => room.cinemaId === cinema.id).slice(0, 2).map((room, index) => ({
-    functionId: 101 + index,
-    movieId,
-    startsAt: `2026-09-${15 + index}T${19 + index}:30:00.000Z`,
-    time: `${19 + index}:30`,
-    cinemaId: cinema.id,
-    cinemaName: cinema.name,
-    roomId: room.id,
-    roomName: room.name,
-    roomType: room.roomType,
-    format: index === 0 ? 'IMAX' : '4DX',
-    language: 'Español',
-    availableSeats: collection('seats').filter((seat) => seat.roomId === room.id && seat.status === 'available').length,
-    isSoldOut: false,
-    basePrice: index === 0 ? 28000 : 32000,
-    status: 'available',
-  }))
-}
 
 app.get('/api/health', (_request, response) => response.json({ status: 'ok', service: 'multicine-backend' }))
 
@@ -116,17 +76,43 @@ app.post('/api/auth/logout', (_request, response) => response.status(204).send()
 app.post('/api/auth/refresh', (_request, response) => response.json({ token: `local-${randomUUID()}` }))
 
 app.get('/api/movies', (_request, response) => response.json(collection('movies')))
+app.post('/api/movies', (request, response) => {
+  const movie = { id: createId('movie'), ...request.body }
+  data.movies.push(movie); save(); return response.status(201).json(movie)
+})
+app.patch('/api/movies/:id', (request, response) => {
+  const movie = findById(collection('movies'), request.params.id)
+  if (!movie) return sendNotFound(response, 'Película no encontrada.')
+  Object.assign(movie, request.body); save(); return response.json(movie)
+})
+app.delete('/api/movies/:id', (request, response) => {
+  const movies = collection('movies').filter((movie) => movie.id !== request.params.id)
+  data.movies.splice(0, data.movies.length, ...movies); save(); return response.status(204).send()
+})
 app.get('/api/movies/filter', (request, response) => response.json(collection('movies').filter(() => (!request.query.cityId || request.query.cityId === 'city-001') && (!request.query.cinemaId || request.query.cinemaId === 'cinema-001'))))
 app.get('/api/movies/today', (_request, response) => response.json(collection('movies').filter((movie) => movie.status === 'Today')))
 app.get('/api/movies/weekly', (_request, response) => response.json(collection('movies')))
-app.get('/api/movies/:id/functions', (request, response) => response.json(movieFunctions(request.params.id)))
-app.get('/api/movies/:id/recommendations', (request, response) => response.json(collection('movies').filter((movie) => movie.id !== request.params.id)))
+app.get('/api/movies/:id/functions', (request, response) => response.json(getMovieFunctions(request.params.id)))
+app.get('/api/movies/:id/recommendations', (request, response) => response.json(getMovieRecommendations(request.params.id)))
 app.get('/api/movies/:id', (request, response) => {
   const movie = findById(collection('movies'), request.params.id)
   return movie ? response.json(movie) : sendNotFound(response, 'Película no encontrada.')
 })
 
 app.get('/api/promotions/active', (_request, response) => response.json(collection('promotions').filter((promotion) => promotion.active !== false)))
+app.post('/api/promotions', (request, response) => {
+  const promotion = { id: createId('promotion'), ...request.body }
+  data.promotions.push(promotion); save(); return response.status(201).json(promotion)
+})
+app.patch('/api/promotions/:id', (request, response) => {
+  const promotion = findById(collection('promotions'), request.params.id)
+  if (!promotion) return sendNotFound(response, 'Promoción no encontrada.')
+  Object.assign(promotion, request.body); save(); return response.json(promotion)
+})
+app.delete('/api/promotions/:id', (request, response) => {
+  const promotions = collection('promotions').filter((promotion) => promotion.id !== request.params.id)
+  data.promotions.splice(0, data.promotions.length, ...promotions); save(); return response.status(204).send()
+})
 app.get('/api/promotions/:id', (request, response) => {
   const promotion = findById(collection('promotions'), request.params.id)
   return promotion ? response.json(promotion) : sendNotFound(response, 'Promoción no encontrada.')
@@ -144,7 +130,7 @@ for (const resource of ['countries', 'departments', 'cities', 'cinemas', 'rooms'
 app.get('/api/seats', (request, response) => {
   const functionId = stringValue(request.query.functionId)
   if (!functionId) return response.json(queryFilter(collection('seats'), request))
-  const show = movieFunctions(stringValue(collection('movies')[0]?.id)).find((item) => String(item.functionId) === functionId)
+  const show = getMovieFunctions(stringValue(collection('movies')[0]?.id)).find((item) => String(item.functionId) === functionId)
   return response.json(collection('seats').filter((seat) => !show || seat.roomId === show.roomId))
 })
 
@@ -193,4 +179,4 @@ app.get('/api/tickets/:id', (request, response) => {
 })
 
 app.use((_request, response) => response.status(404).json({ message: 'Ruta no encontrada.' }))
-app.listen(port, () => console.log(`Multicine backend listening on http://localhost:${port}/api`))
+app.listen(config.port, () => console.log(`Multicine backend listening on http://localhost:${config.port}/api`))
