@@ -89,7 +89,19 @@ app.delete('/api/movies/:id', (request, response) => {
   const movies = collection('movies').filter((movie) => movie.id !== request.params.id)
   data.movies.splice(0, data.movies.length, ...movies); save(); return response.status(204).send()
 })
-app.get('/api/movies/filter', (request, response) => response.json(collection('movies').filter(() => (!request.query.cityId || request.query.cityId === 'city-001') && (!request.query.cinemaId || request.query.cinemaId === 'cinema-001'))))
+app.get('/api/movies/filter', (request, response) => {
+  const countryId = stringValue(request.query.countryId)
+  const cityId = stringValue(request.query.cityId)
+  const cinemaId = stringValue(request.query.cinemaId)
+  const cinema = collection('cinemas').find((item) => !cinemaId || item.id === cinemaId)
+  const city = collection('cities').find((item) => !cityId || item.id === cityId || item.id === cinema?.cityId)
+  const department = collection('departments').find((item) => item.id === city?.departmentId)
+  const locationMatches = (!countryId || department?.countryId === countryId) &&
+    (!cityId || city?.id === cityId) &&
+    (!cinemaId || cinema?.id === cinemaId)
+
+  return response.json(locationMatches ? collection('movies') : [])
+})
 app.get('/api/movies/today', (_request, response) => response.json(collection('movies').filter((movie) => movie.status === 'Today')))
 app.get('/api/movies/weekly', (_request, response) => response.json(collection('movies')))
 app.get('/api/movies/:id/functions', (request, response) => response.json(getMovieFunctions(request.params.id)))

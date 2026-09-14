@@ -11,7 +11,11 @@ export const useMovies = () => {
     queryFn: () =>
       moviesApi.getAll(
         location
-          ? { cityId: location.cityId, cinemaId: location.cinemaId }
+          ? {
+              countryId: location.countryId,
+              cityId: location.cityId,
+              cinemaId: location.cinemaId,
+            }
           : undefined,
       ),
     enabled: Boolean(location),

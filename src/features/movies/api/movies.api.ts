@@ -21,6 +21,7 @@ const normalizeMovie = (movie: ApiMovie): Movie => {
 
 export const moviesApi = {
   getAll: async (location?: {
+    countryId?: string
     cityId?: string
     cinemaId?: string
   }): Promise<Movie[]> => {
@@ -63,6 +64,7 @@ export const moviesApi = {
   },
 
   filter: async (params: {
+    countryId?: string
     cityId?: string
     date?: string
     genre?: string
